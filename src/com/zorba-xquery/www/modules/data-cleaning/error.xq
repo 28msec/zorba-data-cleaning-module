@@ -18,6 +18,7 @@
  : This module defines all errors for the data-cleaning modules.
  :
  : @author Bruno Martins
+ : @project data-processing/data-cleaning
  :
  :)
 module namespace err = "http://www.zorba-xquery.com/modules/data-cleaning/error";

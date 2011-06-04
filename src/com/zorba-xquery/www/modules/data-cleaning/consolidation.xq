@@ -19,6 +19,7 @@
  : The logic contained in this module is not specific to any particular XQuery implementation.
  :
  : @author Bruno Martins
+ : @project data-processing/data-cleaning
  :)
 
 module namespace con = "http://www.zorba-xquery.com/modules/data-cleaning/consolidation";

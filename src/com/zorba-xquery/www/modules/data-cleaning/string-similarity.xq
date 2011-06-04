@@ -20,6 +20,7 @@
  : although it requires the trigonometic functions of XQuery 1.1 or a math extension function for computing sqrt().
  :
  : @author Bruno Martins
+ : @project data-processing/data-cleaning
  :)
 
 module namespace sim = "http://www.zorba-xquery.com/modules/data-cleaning/string-similarity";
