@@ -25,6 +25,11 @@
 
 module namespace sim = "http://www.zorba-xquery.com/modules/data-cleaning/string-similarity";
 
+(:~
+ : W3C Math namespace URI.
+:)
+declare namespace math="http://www.w3.org/2005/xpath-functions/math";
+
 import module namespace set  = "http://www.zorba-xquery.com/modules/data-cleaning/set-similarity";
 
 (:~
