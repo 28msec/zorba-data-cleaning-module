@@ -45,3 +45,5 @@ ADD_SUBDIRECTORY("src")
 #     COMMENT "Building XQDoc XML's for zorba_data-cleaning modules..."
 # )
 # SET_TARGET_PROPERTIES(data_cleaning_xqdoc PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
+
+SETUP_EXTERNAL_MODULE()
