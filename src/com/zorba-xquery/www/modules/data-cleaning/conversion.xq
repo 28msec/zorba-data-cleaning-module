@@ -19,7 +19,7 @@
  : The logic contained in this module is not specific to any particular XQuery implementation.
  :
  : @author Bruno Martins
- : @project data-processing/data-cleaning
+ : @project data processing/data cleaning
  :)
 
 module namespace conversion = "http://www.zorba-xquery.com/modules/data-cleaning/conversion";
