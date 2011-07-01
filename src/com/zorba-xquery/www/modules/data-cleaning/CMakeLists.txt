@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/data-cleaning/consolidation" 1.0 "consolidation.xq")
-DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/data-cleaning/conversion" 1.0 "conversion.xq")
-DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/data-cleaning/error" 1.0 "error.xq")
-DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/data-cleaning/set-similarity" 1.0 "set-similarity.xq")
-DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/data-cleaning/string-similarity" 1.0 "string-similarity.xq")
+DECLARE_ZORBA_MODULE (URI "http://www.zorba-xquery.com/modules/data-cleaning/consolidation" VERSION 1.0 FILE "consolidation.xq")
+DECLARE_ZORBA_MODULE (URI "http://www.zorba-xquery.com/modules/data-cleaning/conversion" VERSION 1.0 FILE "conversion.xq")
+DECLARE_ZORBA_MODULE(URI "http://www.zorba-xquery.com/modules/data-cleaning/error" VERSION 1.0 FILE "error.xq")
+DECLARE_ZORBA_MODULE (URI "http://www.zorba-xquery.com/modules/data-cleaning/set-similarity" VERSION 1.0 FILE "set-similarity.xq")
+DECLARE_ZORBA_MODULE (URI "http://www.zorba-xquery.com/modules/data-cleaning/string-similarity" VERSION 1.0 FILE "string-similarity.xq")
