@@ -26,24 +26,4 @@ ADD_TEST_DIRECTORY("${PROJECT_SOURCE_DIR}/test")
 
 ADD_SUBDIRECTORY("src")
 
-# # create the XQDOC target PROJECT_xqdoc that creates xml files
-# # for all modules in that project
-# SET(PROJECT_XQDOC "${PROJECT_SOURCE_DIR}/build/zorba/doc")
-# file(MAKE_DIRECTORY ${PROJECT_XQDOC})
-# 
-# FILE(GLOB_RECURSE XQ_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/src/*.xq")
-# 
-# # Add the xqdoc command for which a working zorba cmd is required.
-# ADD_CUSTOM_TARGET(data_cleaning_xqdoc
-#   ${ZORBA_EXE_SCRIPT}
-#     --omit-xml-declaration
-#     -f
-#     -q "\"${CMAKE_CURRENT_SOURCE_DIR}/doc/xqdoc-main.xq\""
-#     -e "\"modulePaths:=${CMAKE_CURRENT_SOURCE_DIR}/src\""    
-#     -e "\"xqdocBuildPath:=${PROJECT_XQDOC}\""
-#     WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/build"
-#     COMMENT "Building XQDoc XML's for zorba_data-cleaning modules..."
-# )
-# SET_TARGET_PROPERTIES(data_cleaning_xqdoc PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
-
 SETUP_EXTERNAL_MODULE()

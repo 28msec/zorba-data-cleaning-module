@@ -14,7 +14,6 @@
 
 DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/data-cleaning/consolidation" 1.0 "consolidation.xq")
 DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/data-cleaning/conversion" 1.0 "conversion.xq")
-DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/data-cleaning/error"
-  1.0 "error.xq")
+DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/data-cleaning/error" 1.0 "error.xq")
 DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/data-cleaning/set-similarity" 1.0 "set-similarity.xq")
 DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/data-cleaning/string-similarity" 1.0 "string-similarity.xq")
