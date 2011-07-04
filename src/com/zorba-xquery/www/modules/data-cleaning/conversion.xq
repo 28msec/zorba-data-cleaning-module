@@ -26,6 +26,8 @@ module namespace conversion = "http://www.zorba-xquery.com/modules/data-cleaning
 
 import module namespace err  = "http://www.zorba-xquery.com/modules/data-cleaning/error";
 
+import module namespace http = "http://expath.org/ns/http-client";
+
 declare namespace exref = "http://www.ecb.int/vocabulary/2002-08-01/eurofxref";
 
 (:~
@@ -53,7 +55,7 @@ declare function conversion:unitconvert ( $v as xs:double, $t as xs:string, $m1 
  let $cto     := concat("cto=",$m2)
  let $camount := concat("camount=",$v)
  let $par     := string-join(($url,$ctype,$cfrom,$cto,$camount),"&amp;")
- let $result  := doc($par)
+ let $result  := http:send-request(<http:request method="GET" href="{$par}"/>)
  return if (matches(data($result),"-?[0-9]+(\.[0-9]+)?")) then data($result) 
         else fn:error($err:notsupported, data($result))
 };
@@ -69,7 +71,7 @@ declare function conversion:geocode ( $q as xs:string* ) as xs:double* {
  let $url  := "http://where.yahooapis.com/geocode?q="
  let $q2   := string-join(for $i in $q return translate($i," ","+"),",")
  let $call := concat($url,$q2,"&amp;appid=",$id)
- let $doc  := doc($call)
+ let $doc  := http:send-request(<http:request method="GET" href="{$call}"/>)
  return    ( $doc//*:latitude/xs:double(text()) , $doc//*:longitude/xs:double(text()) )
 };
 
@@ -85,7 +87,7 @@ declare function conversion:reversegeocode ( $lat as xs:double, $lon as xs:doubl
  let $url  := "http://where.yahooapis.com/geocode?q="
  let $q    := concat($lat,",+",$lon) 
  let $call := concat($url,$q,"&amp;gflags=R&amp;appid=",$id)
- let $doc    := doc($call)
+ let $doc  := http:send-request(<http:request method="GET" href="{$call}"/>)
  return distinct-values(($doc//xs:string(*:country),
                          $doc//xs:string(*:state),
                          $doc//xs:string(*:county),
