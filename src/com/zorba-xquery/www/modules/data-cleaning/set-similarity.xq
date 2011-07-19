@@ -15,7 +15,11 @@
  :)
 
 (:~
- : This library module provides simple set similarity operations.
+ : This library module provides similarity functions for comparing sets of XML 
+ : nodes (e.g., sets of XML elements, attributes or atomic values).
+ :
+ : These functions are particularly useful for matching near duplicate sets of XML nodes.
+ :
  : The logic contained in this module is not specific to any particular XQuery implementation.
  :
  : @author Bruno Martins
@@ -25,18 +29,18 @@
 module namespace set = "http://www.zorba-xquery.com/modules/data-cleaning/set-similarity";
 
 (:~
- : Return the union between two sets, using deep-equal() to remove the duplicates.
+ : Returns the union between two sets, using the deep-equal() function to compare the XML nodes from the sets.
  :
  : <br/>
- : Example usage : <pre> set:dup-union ( ( "a", "b", "c") , ( "a", "a", "d") ) </pre>
+ : Example usage : <pre> deep-union ( ( "a", "b", "c") , ( "a", "a", <d/> ) ) </pre>
  : <br/>
- : Returns : <pre> ("a", "b", "c", "d") </pre>
+ : The function invocation in the example above returns : <pre> ("a", "b", "c", <d/> ) </pre>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
  : @return The union of both sets.
  :)
-declare function set:dup-union ( $s1 , $s2 ) {
+declare function set:deep-union ( $s1 , $s2 ) {
  let $s := ( $s1 , $s2 )
  for $a at $apos in $s
  where every $ba in subsequence($s, 1, $apos - 1) satisfies not(deep-equal($ba,$a))
@@ -44,18 +48,18 @@ declare function set:dup-union ( $s1 , $s2 ) {
 };
 
 (:~
- : Return the intersection between two sets, using deep-equal() to detect the equal set elements.
+ : Returns the intersection between two sets, using the deep-equal() function to compare the XML nodes from the sets.
  :
  : <br/>
- : Example usage : <pre> set:dup-intersect ( ( "a", "b", "c") , ( "a", "a", "d") ) </pre>
+ : Example usage : <pre> deep-intersect ( ( "a", "b", "c") , ( "a", "a", <d/> ) ) </pre>
  : <br/>
- : Returns : <pre> ("a") </pre>
+ : The function invocation in the example above returns : <pre> ("a") </pre>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
  : @return The intersection of both sets.
  :)
-declare function set:dup-intersect ( $s1 , $s2 ) {
+declare function set:deep-intersect ( $s1 , $s2 ) {
  for $a at $apos in $s1
  let $t1 := every $ba in subsequence($s1, 1, $apos - 1) satisfies not(deep-equal($ba,$a))
  let $t2 := some $bb in $s2 satisfies deep-equal($bb,$a)
@@ -64,15 +68,15 @@ declare function set:dup-intersect ( $s1 , $s2 ) {
 };
 
 (:~
- : Remove exact duplicates from a set, using deep-equal() to detect the duplicates.
+ : Removes exact duplicates from a set, using the deep-equal() function to compare the XML nodes from the sets.
  :
  : <br/>
- : Example usage : <pre> set:distinct ( ( "a", "a", "b") ) </pre>
+ : Example usage : <pre> distinct ( ( "a", "a", <b/> ) ) </pre>
  : <br/>
- : Returns : <pre> ("a", "b") </pre>
+ : The function invocation in the example above returns : <pre> ("a", <b/> ) </pre>
  :
  : @param $s A set.
- : @return The set without the duplicates.
+ : @return The set provided as input without the exact duplicates (i.e., returns the distinct nodes from the set provided as input).
  :)
 declare function set:distinct ( $s ) {
  for $a at $apos in $s
@@ -81,33 +85,55 @@ declare function set:distinct ( $s ) {
 };
 
 (:~
- : Dice similarity coefficient between two sets.
+ : Returns the overlap coefficient between two sets of XML nodes.
+ : The overlap coefficient is defined as the shared information between the input sets 
+ : (i.e., the size of the intersection) over the size of the smallest input set.
  :
  : <br/>
- : Example usage : <pre> set:dice ( ( "a", "b", "c") , ( "a", "a", "d") ) </pre>
+ : Example usage : <pre> overlap ( ( "a", "b", <c/> ) , ( "a", "a", "b" ) ) </pre>
  : <br/>
- : Returns : <pre> 0.4 </pre>
+ : The function invocation in the example above returns : <pre> 1.0 </pre>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
- : @return Dice similarity coefficient between the two sets.
+ : @return The overlap coefficient between the two sets.
  :)
-declare function set:dice ( $s1 , $s2 ) as xs:double {
-  2 * count( set:dup-intersect($s1,$s2) ) div ( count(set:distinct($s1)) + count(set:distinct($s2)) )
+declare function set:overlap ( $s1 , $s2 ) as xs:double {
+  count( set:deep-intersect($s1, $s2) ) div min((count(set:distinct($s1)) , count(set:distinct($s2))))
 };
 
 (:~
- : Jaccard similarity coefficient between two sets.
+ : Returns the Dice similarity coefficient between two sets of XML nodes.
+ : The Dice coefficient is defined as defined as twice the shared information between the input sets 
+ : (i.e., the size of the intersection) over the sum of the cardinalities for the input sets.
  :
  : <br/>
- : Example usage : <pre> set:jaccard ( ( "a", "b", "c") , ( "a", "a", "d") ) </pre>
+ : Example usage : <pre> dice ( ( "a", "b", <c/> ) , ( "a", "a", "d") ) </pre>
  : <br/>
- : Returns : <pre> 0.25 </pre>
+ : The function invocation in the example above returns : <pre> 0.4 </pre>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
- : @return Jaccard similarity coefficient between the two sets.
+ : @return The Dice similarity coefficient between the two sets.
+ :)
+declare function set:dice ( $s1 , $s2 ) as xs:double {
+  2 * count( set:deep-intersect($s1,$s2) ) div ( count(set:distinct($s1)) + count(set:distinct($s2)) )
+};
+
+(:~
+ : Returns the Jaccard similarity coefficient between two sets of XML nodes.
+ : The Jaccard coefficient is defined as the size of the intersection divided by the size of the 
+ : union of the input sets.
+ :
+ : <br/>
+ : Example usage : <pre> jaccard ( ( "a", "b", <c/> ) , ( "a", "a", "d") ) </pre>
+ : <br/>
+ : The function invocation in the example above returns : <pre> 0.25 </pre>
+ :
+ : @param $s1 The first set.
+ : @param $s2 The second set.
+ : @return The Jaccard similarity coefficient between the two sets.
  :)
 declare function set:jaccard ( $s1 , $s2  ) as xs:double {
- count( set:dup-intersect($s1,$s2) ) div count( set:dup-union($s1,$s2) )
+ count( set:deep-intersect($s1,$s2) ) div count( set:deep-union($s1,$s2) )
 };
