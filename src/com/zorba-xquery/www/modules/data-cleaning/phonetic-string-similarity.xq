@@ -28,6 +28,9 @@
 
 module namespace simp = "http://www.zorba-xquery.com/modules/data-cleaning/phonetic-string-similarity";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "3.0";
+
 (:~
  : Returns the Soundex key for a given string.
  :

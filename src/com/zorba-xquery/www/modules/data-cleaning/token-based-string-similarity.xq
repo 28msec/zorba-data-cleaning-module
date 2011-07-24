@@ -39,6 +39,9 @@ declare namespace math="http://www.w3.org/2005/xpath-functions/math";
 
 import module namespace set  = "http://www.zorba-xquery.com/modules/data-cleaning/set-similarity";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "3.0";
+
 (:~
  : Returns the individual character n-grams forming a string.
  :

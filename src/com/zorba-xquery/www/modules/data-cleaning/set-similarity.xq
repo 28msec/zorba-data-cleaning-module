@@ -28,6 +28,9 @@
 
 module namespace set = "http://www.zorba-xquery.com/modules/data-cleaning/set-similarity";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "3.0";
+
 (:~
  : Returns the union between two sets, using the deep-equal() function to compare the XML nodes from the sets.
  :

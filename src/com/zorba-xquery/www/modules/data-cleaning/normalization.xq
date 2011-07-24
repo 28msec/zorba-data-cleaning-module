@@ -30,6 +30,9 @@ module namespace normalization = "http://www.zorba-xquery.com/modules/data-clean
 
 import module namespace http = "http://expath.org/ns/http-client";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "3.0";
+
 (:~
  : Converts a given string representation of a date value into a date representation valid according 
  : to the corresponding XML Schema type.

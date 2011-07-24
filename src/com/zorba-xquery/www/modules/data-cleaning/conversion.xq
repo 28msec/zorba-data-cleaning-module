@@ -32,6 +32,9 @@ import schema namespace wp = 'http://api.whitepages.com/schema/';
 
 import module namespace http = "http://expath.org/ns/http-client";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "3.0";
+
 (: The key to be used when accessing the White Pages Web service :)
 declare variable $conversion:key := "06ea2f21cc15602b6a3e242e3225a81a";
 

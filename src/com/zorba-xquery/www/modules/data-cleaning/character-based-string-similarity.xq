@@ -30,6 +30,9 @@
 
 module namespace simc = "http://www.zorba-xquery.com/modules/data-cleaning/character-based-string-similarity";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "3.0";
+
 (:~
  : Returns the edit distance between two strings.
  :

@@ -32,6 +32,9 @@ module namespace con = "http://www.zorba-xquery.com/modules/data-cleaning/consol
 import module namespace set = "http://www.zorba-xquery.com/modules/data-cleaning/set-similarity";
 import module namespace simc = "http://www.zorba-xquery.com/modules/data-cleaning/character-based-string-similarity";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "3.0";
+
 (:~
  : Returns the single most frequent node in a sequence of nodes provided as input.
  : If more then one answer is possible, returns the first node according to the order of the input sequence.

@@ -37,6 +37,9 @@ import module namespace simt = "http://www.zorba-xquery.com/modules/data-cleanin
 import module namespace simc = "http://www.zorba-xquery.com/modules/data-cleaning/character-based-string-similarity";
 import module namespace simp = "http://www.zorba-xquery.com/modules/data-cleaning/phonetic-string-similarity";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "3.0";
+
 (:~
  : Returns the cosine similarity coefficient between sets of tokens extracted from two strings.
  :

@@ -29,6 +29,9 @@
 
 module namespace thesaurus = "http://www.zorba-xquery.com/modules/data-cleaning/thesaurus";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "3.0";
+
 (:~
  : Checks if two strings have a relationship defined in a given thesaurus.
  : The implementation of this function depends on the thesaurus capabilities offered by XQuery Full-Text.
