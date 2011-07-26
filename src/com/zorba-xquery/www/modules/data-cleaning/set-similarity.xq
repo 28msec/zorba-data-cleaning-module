@@ -29,7 +29,7 @@
 module namespace set = "http://www.zorba-xquery.com/modules/data-cleaning/set-similarity";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
-declare option ver:module-version "3.0";
+declare option ver:module-version "2.0";
 
 (:~
  : Returns the union between two sets, using the deep-equal() function to compare the XML nodes from the sets.
@@ -42,6 +42,7 @@ declare option ver:module-version "3.0";
  : @param $s1 The first set.
  : @param $s2 The second set.
  : @return The union of both sets.
+ : @example test/Queries/data-cleaning/set-similarity/deep-union.xq
  :)
 declare function set:deep-union ( $s1 , $s2 ) {
  let $s := ( $s1 , $s2 )
@@ -61,6 +62,7 @@ declare function set:deep-union ( $s1 , $s2 ) {
  : @param $s1 The first set.
  : @param $s2 The second set.
  : @return The intersection of both sets.
+ : @example test/Queries/data-cleaning/set-similarity/deep-intersect.xq
  :)
 declare function set:deep-intersect ( $s1 , $s2 ) {
  for $a at $apos in $s1
@@ -80,6 +82,7 @@ declare function set:deep-intersect ( $s1 , $s2 ) {
  :
  : @param $s A set.
  : @return The set provided as input without the exact duplicates (i.e., returns the distinct nodes from the set provided as input).
+ : @example test/Queries/data-cleaning/set-similarity/distinct.xq
  :)
 declare function set:distinct ( $s ) {
  for $a at $apos in $s
@@ -100,6 +103,7 @@ declare function set:distinct ( $s ) {
  : @param $s1 The first set.
  : @param $s2 The second set.
  : @return The overlap coefficient between the two sets.
+ : @example test/Queries/data-cleaning/set-similarity/overlap.xq
  :)
 declare function set:overlap ( $s1 , $s2 ) as xs:double {
   count( set:deep-intersect($s1, $s2) ) div min((count(set:distinct($s1)) , count(set:distinct($s2))))
@@ -118,6 +122,7 @@ declare function set:overlap ( $s1 , $s2 ) as xs:double {
  : @param $s1 The first set.
  : @param $s2 The second set.
  : @return The Dice similarity coefficient between the two sets.
+ : @example test/Queries/data-cleaning/set-similarity/dice.xq
  :)
 declare function set:dice ( $s1 , $s2 ) as xs:double {
   2 * count( set:deep-intersect($s1,$s2) ) div ( count(set:distinct($s1)) + count(set:distinct($s2)) )
@@ -136,6 +141,7 @@ declare function set:dice ( $s1 , $s2 ) as xs:double {
  : @param $s1 The first set.
  : @param $s2 The second set.
  : @return The Jaccard similarity coefficient between the two sets.
+ : @example test/Queries/data-cleaning/set-similarity/jaccard.xq
  :)
 declare function set:jaccard ( $s1 , $s2  ) as xs:double {
  count( set:deep-intersect($s1,$s2) ) div count( set:deep-union($s1,$s2) )

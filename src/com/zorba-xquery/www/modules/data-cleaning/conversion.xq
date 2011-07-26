@@ -33,7 +33,7 @@ import schema namespace wp = 'http://api.whitepages.com/schema/';
 import module namespace http = "http://expath.org/ns/http-client";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
-declare option ver:module-version "3.0";
+declare option ver:module-version "2.0";
 
 (: The key to be used when accessing the White Pages Web service :)
 declare variable $conversion:key := "06ea2f21cc15602b6a3e242e3225a81a";
@@ -49,12 +49,13 @@ declare variable $conversion:key := "06ea2f21cc15602b6a3e242e3225a81a";
  :
  : @param $name The name of person or organization.
  : @return A sequence of strings for the phone numbers associated to the name.
+ : @example test/Queries/data-cleaning/conversion/phone-from-user.xq
  :)
 declare function conversion:phone-from-user ( $name as xs:string) as xs:string*{
 	let $name-value := replace($name, " ", "%20")
 	let $url := concat("http://api.whitepages.com/find_person/1.0/?name=",$name-value,";api_key=",$conversion:key)
 	let $doc := http:send-request(<http:request method="GET" href="{$url}"/>, ())[2]
-	let $phonenumbers := $doc//*:fullphone/text()
+	let $phonenumbers := $doc/wp:wp/wp:listings/wp:listing/wp:phonenumbers/wp:phone/wp:fullphone/text()
 	return $phonenumbers 
 };
 
@@ -70,16 +71,17 @@ declare function conversion:phone-from-user ( $name as xs:string) as xs:string*{
  :
  : @param $name The name of person or organization.
  : @return A sequence of strings for the addresses associated to the name.
+ : @example test/Queries/data-cleaning/conversion/address-from-user.xq
  :)
 declare function conversion:address-from-user ( $name as xs:string) as xs:string*{
 	let $name-value := replace($name, " ", "%20")
 	let $url := concat("http://api.whitepages.com/find_person/1.0/?name=",$name-value,";api_key=",$conversion:key)
 	let $doc := http:send-request(<http:request method="GET" href="{$url}"/>, ())[2]
-	for $a in $doc//*:address
-		let $fullstreet := $a//*:fullstreet/text()
-		let $city := $a//*:city/text()
-		let $state := $a//*:state/text()
-		let $country := $a//*:country/text()
+	for $a in $doc/wp:wp/wp:listings/wp:listing/wp:address
+		let $fullstreet := $a/wp:fullstreet/text()
+		let $city := $a/wp:city/text()
+		let $state := $a/wp:state/text()
+		let $country := $a/wp:country/text()
 		return concat($fullstreet, ", ", $city, ", ", $state, ", ", $country)
 };
 
@@ -96,11 +98,12 @@ declare function conversion:address-from-user ( $name as xs:string) as xs:string
  :
  : @param $phone-number A string with 10 digits corresponding to the phone number.
  : @return A sequence of strings for the person or organization's name associated to the phone number.
+ : @example test/Queries/data-cleaning/conversion/user-from-phone.xq
  :)
 declare function conversion:user-from-phone ( $phone-number as xs:string) as xs:string*{
 	let $url := concat("http://api.whitepages.com/reverse_phone/1.0/?phone=",$phone-number,";api_key=",$conversion:key)
 	let $doc := http:send-request(<http:request method="GET" href="{$url}"/>, ())[2]
-	return $doc//*:displayname/text()	
+	return $doc/wp:wp/wp:listings/wp:listing/wp:displayname/text()	
 };
 
 (:~
@@ -114,16 +117,17 @@ declare function conversion:user-from-phone ( $phone-number as xs:string) as xs:
  :
  : @param $phone-number A string with 10 digits corresponding to the phone number.
  : @return A string for the addresses associated to the phone number.
+ : @example test/Queries/data-cleaning/conversion/address-from-phone.xq
  :)
 declare function conversion:address-from-phone ( $phone-number as xs:string) as xs:string*{
 	let $url := concat("http://api.whitepages.com/reverse_phone/1.0/?phone=",$phone-number,";api_key=",$conversion:key)
 	let $doc := http:send-request(<http:request method="GET" href="{$url}"/>, ())[2]
 	let $addresses :=
-		for $a in $doc//*:address
-			let $fullstreet := $a//*:fullstreet/text()
-			let $city := $a//*:city/text()
-			let $state := $a//*:state/text()
-			let $country := $a//*:country/text()
+		for $a in $doc/wp:wp/wp:listings/wp:listing/wp:address
+			let $fullstreet := $a/wp:fullstreet/text()
+		  let $city := $a/wp:city/text()
+		  let $state := $a/wp:state/text()
+		  let $country := $a/wp:country/text()
 			return concat($fullstreet, ", ", $city, ", ", $state, ", ", $country)
 	return distinct-values($addresses)           
 };
@@ -139,6 +143,7 @@ declare function conversion:address-from-phone ( $phone-number as xs:string) as 
  :
  : @param $address A string corresponding to the address (ex: 5655 E Gaskill Rd, Willcox, AZ, US).
  : @return A sequence of strings for the person or organization's names associated to the address.
+ : @example test/Queries/data-cleaning/conversion/user-from-address.xq
  :)
 declare function conversion:user-from-address ( $address as xs:string) as xs:string*{
 	let $tokens := tokenize ($address, ",")
@@ -154,7 +159,7 @@ declare function conversion:user-from-address ( $address as xs:string) as xs:str
 	let $street := replace(replace($token-full-street, "[0-9]+[ ]", ""), " ", "%20")
 	let $url := concat("http://api.whitepages.com/reverse_address/1.0/?house=",$house, ";street=",$street, ";state=",$state,";api_key=",$conversion:key)
 	let $doc := http:send-request(<http:request method="GET" href="{$url}"/>, ())[2]
-	return $doc//*:displayname/text()
+	return $doc/wp:wp/wp:listings/wp:listing/wp:displayname/text()
 };
 
 (:~
@@ -168,6 +173,7 @@ declare function conversion:user-from-address ( $address as xs:string) as xs:str
  :
  : @param $address A string corresponding to the address (ex: 5655 E Gaskill Rd, Willcox, AZ, US).
  : @return A sequence of strings for the phone number or organization's names associated to the address.
+ : @example test/Queries/data-cleaning/conversion/phone-from-address.xq
  :)
 declare function conversion:phone-from-address ( $address as xs:string) as xs:string*{
 	let $tokens := tokenize ($address, ",")
@@ -191,7 +197,7 @@ declare function conversion:phone-from-address ( $address as xs:string) as xs:st
 	let $street-form := replace($street, " ", "%20")
 	let $url := concat("http://api.whitepages.com/reverse_address/1.0/?house=",$house, ";street=",$street-form, ";state=",$state,";api_key=",$conversion:key)
 	let $doc := http:send-request(<http:request method="GET" href="{$url}"/>, ())[2]
-	return $doc//*:fullphone/text()(: if($state = "TN") then "iguais" else "dif":)
+	return $doc/wp:wp/wp:listings/wp:listing/wp:phonenumbers/wp:phone/wp:fullphone/text()(: if($state = "TN") then "iguais" else "dif":)
 };
 
 (:~
@@ -211,6 +217,7 @@ declare function conversion:phone-from-address ( $address as xs:string) as xs:st
  : @return The value resulting from the conversion
  : @error Returns err:notsupported if the type of metric, the source unit or the target unit are not known to the service.
  : @see http://www.cuppait.com/UnitConversionGateway-war/UnitConversion?format=XML
+ : @example test/Queries/data-cleaning/conversion/unit-convert.xq
  :)
 declare function conversion:unit-convert ( $v as xs:double, $t as xs:string, $m1 as xs:string, $m2 as xs:string ) {
  let $url     := "http://www.cuppait.com/UnitConversionGateway-war/UnitConversion?format=XML"
@@ -234,6 +241,7 @@ declare function conversion:unit-convert ( $v as xs:double, $t as xs:string, $m1
  : 
  : @param $q A sequence of strings corresponding to the different components (e.g., street, city, country, etc.) of the place name.
  : @return The pair of latitude and longitude coordinates associated with the input address.
+ : @example test/Queries/data-cleaning/conversion/geocode-from-address.xq
  :)
 declare function conversion:geocode-from-address ( $q as xs:string* ) as xs:double* {
  let $id   := ""
@@ -241,7 +249,7 @@ declare function conversion:geocode-from-address ( $q as xs:string* ) as xs:doub
  let $q2   := string-join(for $i in $q return translate($i," ","+"),",")
  let $call := concat($url,$q2,"&amp;appid=",$id)
  let $doc  := http:send-request(<http:request method="GET" href="{$call}"/>, ())[2]
- return    ( $doc//*:latitude/xs:double(text()) , $doc//*:longitude/xs:double(text()) )
+ return    ( xs:double($doc/ResultSet/Result/latitude/text()) , xs:double($doc/ResultSet/Result/longitude/text()) )
 };
 
 (:~
@@ -255,6 +263,7 @@ declare function conversion:geocode-from-address ( $q as xs:string* ) as xs:doub
  : @param $lat Geospatial latitude.
  : @param $lon Geospatial longitude.
  : @param $q The sequence of strings corresponding to the different components (e.g., street, city, country, etc.) of the place name that corresponds to the input geospatial coordinates.
+ : @example test/Queries/data-cleaning/conversion/address-from-geocode.xq
  :)
 declare function conversion:address-from-geocode ( $lat as xs:double, $lon as xs:double ) as xs:string* {
  let $id   := ""
@@ -288,6 +297,7 @@ declare function conversion:address-from-geocode ( $lat as xs:double, $lon as xs
  : @return The value resulting from the conversion.
  : @error Returns err:notsupported if the date, the source currency type or the target currency type are not known to the service.
  : @see http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
+ : @example test/Queries/data-cleaning/conversion/currency-convert.xq
  :)
 declare function conversion:currency-convert ( $v as xs:double, $m1 as xs:string, $m2 as xs:string, $date as xs:string ) {
  let $daily   := "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"

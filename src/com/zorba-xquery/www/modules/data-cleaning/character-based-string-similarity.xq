@@ -31,7 +31,7 @@
 module namespace simc = "http://www.zorba-xquery.com/modules/data-cleaning/character-based-string-similarity";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
-declare option ver:module-version "3.0";
+declare option ver:module-version "2.0";
 
 (:~
  : Returns the edit distance between two strings.
@@ -48,6 +48,7 @@ declare option ver:module-version "3.0";
  : @param $s1 The first string.
  : @param $s2 The second string.
  : @return The edit distance between the two strings.
+ : @example test/Queries/data-cleaning/character-based-string-similarity/edit-distance.xq
  :)
 declare function simc:edit-distance ( $s1 as xs:string, $s2 as xs:string ) as xs:integer {
  if(string-length($s1) = 0) then string-length($s2) else
@@ -75,6 +76,7 @@ declare function simc:edit-distance ( $s1 as xs:string, $s2 as xs:string ) as xs
  : @param $s1 The first string.
  : @param $s2 The second string.
  : @return The Jaro similarity coefficient between the two strings.
+ : @example test/Queries/data-cleaning/character-based-string-similarity/jaro.xq
  :)
 declare function simc:jaro ( $s1 as xs:string, $s2 as xs:string ) as xs:double {
  let $s    := for $i in ($s1,$s2) order by string-length($i) return $i
@@ -108,6 +110,7 @@ declare function simc:jaro ( $s1 as xs:string, $s2 as xs:string ) as xs:double {
  : @param $prefix The number of characters to consider when testing for equal prefixes in the strings.
  : @param $fact The weighting factor to consider when the input strings have equal prefixes.
  : @return The Jaro-Winkler similarity coefficient between the two strings.
+ : @example test/Queries/data-cleaning/character-based-string-similarity/jaro-winkler.xq
  :)
 declare function simc:jaro-winkler ( $s1 as xs:string, $s2 as xs:string, $prefix as xs:integer, $fact as xs:double ) as xs:double {
  let $jaro := simc:jaro( $s1 , $s2 )
@@ -133,6 +136,7 @@ declare function simc:jaro-winkler ( $s1 as xs:string, $s2 as xs:string, $prefix
  : @param $score The score value.
  : @param $penalty The penalty value.
  : @return The Needleman-Wunsch distance between the two strings.
+ : @example test/Queries/data-cleaning/character-based-string-similarity/needleman-wunsch.xq
  :)
 declare function simc:needleman-wunsch ( $s1 as xs:string, $s2 as xs:string, $score as xs:integer, $penalty as xs:integer ) as xs:double{
  
@@ -158,7 +162,7 @@ declare function simc:needleman-wunsch ( $s1 as xs:string, $s2 as xs:string, $sc
  : @param $score The score value.
  : @param $penalty The penalty value.
  : @return The Smith-Waterman distance between the two strings.
- :)
+  :)
 declare function simc:smith-waterman ( $s1 as xs:string, $s2 as xs:string, $score as xs:integer, $penalty as xs:integer ) as xs:double{ 
  if(string-length($s1) = 0) then 0 else
  if(string-length($s2) = 0) then 0 else

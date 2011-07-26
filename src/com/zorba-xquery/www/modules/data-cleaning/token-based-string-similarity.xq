@@ -40,7 +40,7 @@ declare namespace math="http://www.w3.org/2005/xpath-functions/math";
 import module namespace set  = "http://www.zorba-xquery.com/modules/data-cleaning/set-similarity";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
-declare option ver:module-version "3.0";
+declare option ver:module-version "2.0";
 
 (:~
  : Returns the individual character n-grams forming a string.
@@ -53,6 +53,7 @@ declare option ver:module-version "3.0";
  : @param $s The input string.
  : @param $n The number of characters to consider when extracting n-grams.
  : @return The sequence of strings with the extracted n-grams.
+ : @example test/Queries/data-cleaning/token-based-string-similarity/ngrams.xq
  :)
 declare function simt:ngrams ( $s as xs:string, $n as xs:integer ) as xs:string* {
  let $pad := '_'
@@ -81,6 +82,7 @@ declare function simt:ngrams ( $s as xs:string, $n as xs:integer ) as xs:string*
  : @param $desc1 The descriptor for the first string.
  : @param $desc2 The descriptor for the second string.
  : @return The cosine similarity coefficient between the descriptors for the two strings.
+ : @example test/Queries/data-cleaning/token-based-string-similarity/cosine.xq
  :)
 declare function simt:cosine ( $desc1 as xs:string*, $desc2 as xs:string* ) as xs:double {
  let $vocab     := distinct-values( ($desc1, $desc2) )
@@ -104,6 +106,7 @@ declare function simt:cosine ( $desc1 as xs:string*, $desc2 as xs:string* ) as x
  : @param $s2 The second string.
  : @param $n The number of characters to consider when extracting n-grams.
  : @return The Dice similarity coefficient between the sets of character n-grams extracted from the two strings.
+ : @example test/Queries/data-cleaning/token-based-string-similarity/dice-ngrams.xq
  :)
 declare function simt:dice-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as xs:integer ) as xs:double {
  set:dice(simt:ngrams($s1,$n),simt:ngrams($s2,$n))
@@ -121,6 +124,7 @@ declare function simt:dice-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as xs
  : @param $s2 The second string.
  : @param $n The number of characters to consider when extracting n-grams.
  : @return The overlap similarity coefficient between the sets of character n-grams extracted from the two strings.
+ : @example test/Queries/data-cleaning/token-based-string-similarity/overlap-ngrams.xq
  :)
 declare function simt:overlap-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as xs:integer ) as xs:double {
  set:overlap(simt:ngrams($s1,$n),simt:ngrams($s2,$n))
@@ -138,6 +142,7 @@ declare function simt:overlap-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as
  : @param $s2 The second string.
  : @param $n The number of characters to consider when extracting n-grams.
  : @return The Jaccard similarity coefficient between the sets of character n-grams extracted from the two strings.
+ : @example test/Queries/data-cleaning/token-based-string-similarity/jaccard-ngrams.xq
  :)
 declare function simt:jaccard-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as xs:integer ) as xs:double {
  set:jaccard(simt:ngrams($s1,$n),simt:ngrams($s2,$n))
@@ -157,6 +162,7 @@ declare function simt:jaccard-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as
  : @param $s2 The second string.
  : @param $n The number of characters to consider when extracting n-grams.
  : @return The cosine similarity coefficient between the sets n-grams extracted from the two strings.
+ : @example test/Queries/data-cleaning/token-based-string-similarity/cosine-ngrams.xq
  :)
 declare function simt:cosine-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as xs:integer ) as xs:double {
  let $ngrams1   := simt:ngrams($s1,$n) 
@@ -176,6 +182,7 @@ declare function simt:cosine-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as 
  : @param $s2 The second string.
  : @param $r A regular expression forming the delimiter character(s) which mark the boundaries between adjacent tokens.
  : @return The Dice similarity coefficient between the sets tokens extracted from the two strings.
+ : @example test/Queries/data-cleaning/token-based-string-similarity/dice-tokens.xq
  :)
 declare function simt:dice-tokens ( $s1 as xs:string, $s2 as xs:string, $r as xs:string ) as xs:double {
  set:dice( tokenize($s1,$r) , tokenize($s2,$r) )
@@ -193,6 +200,7 @@ declare function simt:dice-tokens ( $s1 as xs:string, $s2 as xs:string, $r as xs
  : @param $s2 The second string.
  : @param $r A regular expression forming the delimiter character(s) which mark the boundaries between adjacent tokens.
  : @return The overlap similarity coefficient between the sets tokens extracted from the two strings.
+ : @example test/Queries/data-cleaning/token-based-string-similarity/overlap-tokens.xq
  :)
 declare function simt:overlap-tokens ( $s1 as xs:string, $s2 as xs:string, $r as xs:string ) as xs:double {
  set:overlap( tokenize($s1,$r) , tokenize($s2,$r) )
@@ -210,6 +218,7 @@ declare function simt:overlap-tokens ( $s1 as xs:string, $s2 as xs:string, $r as
  : @param $s2 The second string.
  : @param $r A regular expression forming the delimiter character(s) which mark the boundaries between adjacent tokens.
  : @return The Jaccard similarity coefficient between the sets tokens extracted from the two strings.
+ : @example test/Queries/data-cleaning/token-based-string-similarity/jaccard-tokens.xq
  :)
 declare function simt:jaccard-tokens ( $s1 as xs:string, $s2 as xs:string, $r as xs:string ) as xs:double {
  set:jaccard( tokenize($s1,$r) , tokenize($s2,$r) )
@@ -229,6 +238,7 @@ declare function simt:jaccard-tokens ( $s1 as xs:string, $s2 as xs:string, $r as
  : @param $s2 The second string.
  : @param $r A regular expression forming the delimiter character(s) which mark the boundaries between adjacent tokens.
  : @return The cosine similarity coefficient between the sets tokens extracted from the two strings.
+ : @example test/Queries/data-cleaning/token-based-string-similarity/cosine-tokens.xq
  :)
 declare function simt:cosine-tokens ( $s1 as xs:string, $s2 as xs:string, $r as xs:string ) as xs:double {
  let $tokens1   := tokenize($s1,$r) 

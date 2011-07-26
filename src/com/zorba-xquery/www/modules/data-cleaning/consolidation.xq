@@ -33,7 +33,7 @@ import module namespace set = "http://www.zorba-xquery.com/modules/data-cleaning
 import module namespace simc = "http://www.zorba-xquery.com/modules/data-cleaning/character-based-string-similarity";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
-declare option ver:module-version "3.0";
+declare option ver:module-version "2.0";
 
 (:~
  : Returns the single most frequent node in a sequence of nodes provided as input.
@@ -46,6 +46,7 @@ declare option ver:module-version "3.0";
  :
  : @param $s A sequence of nodes.
  : @return The most frequent node in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/most-frequent.xq
  :)
 declare function con:most-frequent ( $s ) {
  (for $str in set:distinct($s) order by count($s[deep-equal(.,$str)]) descending return $str)[1]
@@ -62,6 +63,7 @@ declare function con:most-frequent ( $s ) {
  :
  : @param $s A sequence of nodes.
  : @return The least frequent node in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/leastfrequent_1.xq
  :)
 declare function con:least-frequent ( $s ) {
  let $aux := for $str in set:distinct($s) order by count($s[deep-equal(.,$str)]) return $str
@@ -79,6 +81,7 @@ declare function con:least-frequent ( $s ) {
  :
  : @param $s A sequence of strings.
  : @return The longest string in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/longest_1.xq
  :)
 declare function con:longest ( $s as xs:string* ) as xs:string? {
  let $aux := for $str in $s order by string-length($str) descending return $str
@@ -96,6 +99,7 @@ declare function con:longest ( $s as xs:string* ) as xs:string? {
  :
  : @param $s A sequence of strings.
  : @return The shortest string in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/shortest_1.xq
  :)
 declare function con:shortest( $s as xs:string* ) as xs:string? {
  let $aux := for $str in $s order by string-length($str) return $str
@@ -114,6 +118,7 @@ declare function con:shortest( $s as xs:string* ) as xs:string? {
  : @param $s A sequence of strings.
  : @param $r A regular expression forming the delimiter character(s) which mark the boundaries between adjacent tokens.
  : @return The longest string in the input sequence, in terms of the number of tokens.
+ : @example test/Queries/data-cleaning/consolidation/most-tokens.xq
  :)
 declare function con:most-tokens ( $s as xs:string*, $r as xs:string ) as xs:string? {
  let $aux := for $str in $s order by count(tokenize($str,$r)) descending return $str
@@ -132,6 +137,7 @@ declare function con:most-tokens ( $s as xs:string*, $r as xs:string ) as xs:str
  : @param $s A sequence of strings.
  : @param $r A regular expression forming the delimiter character(s) which mark the boundaries between adjacent tokens.
  : @return The shortest string in the input sequence, in terms of the number of tokens.
+ : @example test/Queries/data-cleaning/consolidation/least-tokens.xq
  :)
 declare function con:least-tokens ( $s as xs:string*, $r as xs:string ) as xs:string? {
  let $aux := for $str in $s order by count(tokenize($str,$r)) return $str
@@ -149,6 +155,7 @@ declare function con:least-tokens ( $s as xs:string*, $r as xs:string ) as xs:st
  : @param $s A sequence of strings.
  : @param $r The regular expression to be used in the matching.
  : @return The strings in the input sequence that match the input regular expression.
+ : @example test/Queries/data-cleaning/consolidation/matching_1.xq
  :)
 declare function con:matching ( $s as xs:string*, $r as xs:string ) as xs:string* {
  for $str in $s where matches($str,$r) return $str
@@ -166,6 +173,7 @@ declare function con:matching ( $s as xs:string*, $r as xs:string ) as xs:string
  :
  : @param $s A sequence of strings.
  : @return The string that appears more frequently as part of the other strings in the sequence.
+ : @example test/Queries/data-cleaning/consolidation/superstring_1.xq
  :)
 declare function con:superstring ( $s as xs:string* ) as xs:string? {
   let $aux :=
@@ -191,6 +199,7 @@ declare function con:superstring ( $s as xs:string* ) as xs:string? {
  : @param $s A sequence of strings.
  : @param $m The string towards which we want to measure the edit distance.
  : @return The most similar string in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/most-similar-edit-distance.xq
  :)
 declare function con:most-similar-edit-distance ( $s as xs:string*, $m as xs:string ) as xs:string? {
  let $aux := for $str in $s order by simc:edit-distance($str,$m) return $str
@@ -210,6 +219,7 @@ declare function con:most-similar-edit-distance ( $s as xs:string*, $m as xs:str
  : @param $s A sequence of strings.
  : @param $m The string towards which we want to measure the edit distance.
  : @return The least similar string in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/least-similar-edit-distance.xq
  :)
 declare function con:least-similar-edit-distance ( $s as xs:string*, $m as xs:string ) as xs:string? {
  let $aux := for $str in $s order by simc:edit-distance($str,$m) descending return $str
@@ -228,6 +238,7 @@ declare function con:least-similar-edit-distance ( $s as xs:string*, $m as xs:st
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of descending elements in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/most-elements.xq
  :)
 declare function con:most-elements ( $s ) {
  (for $str in set:distinct($s) order by count($str/descendant-or-self::element()) descending return $str)[1]
@@ -245,6 +256,7 @@ declare function con:most-elements ( $s ) {
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of descending attributes in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/most-attributes.xq
  :)
 declare function con:most-attributes ( $s ) {
  (for $str in set:distinct($s) order by count($str/descendant-or-self::*/attribute()) descending return $str)[1]
@@ -262,6 +274,7 @@ declare function con:most-attributes ( $s ) {
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of descending nodes in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/most-nodes.xq
  :)
 declare function con:most-nodes ( $s ) {
  (for $str in set:distinct($s) order by count($str/descendant-or-self::node()) descending return $str)[1]
@@ -279,6 +292,7 @@ declare function con:most-nodes ( $s ) {
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of descending elements in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/least-elements.xq
  :)
 declare function con:least-elements ( $s ) {
  (for $str in set:distinct($s) order by count($str/descendant-or-self::element()) return $str)[1]
@@ -296,6 +310,7 @@ declare function con:least-elements ( $s ) {
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of descending attributes in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/least-attributes.xq
  :)
 declare function con:least-attributes ( $s ) {
  (for $str in set:distinct($s) order by count($str/descendant-or-self::*/attribute()) return $str)[1]
@@ -313,6 +328,7 @@ declare function con:least-attributes ( $s ) {
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of descending nodes in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/least-nodes.xq
  :)
 declare function con:least-nodes ( $s ) {
  (for $str in set:distinct($s) order by count($str/descendant-or-self::node()) return $str)[1]
@@ -330,6 +346,7 @@ declare function con:least-nodes ( $s ) {
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of distinct descending elements in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/most-distinct-elements.xq
  :)
 declare function con:most-distinct-elements ( $s ) {
  (for $str in set:distinct($s) order by count(set:distinct($str/descendant-or-self::element())) descending return $str)[1]
@@ -347,6 +364,7 @@ declare function con:most-distinct-elements ( $s ) {
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of distinct descending attributes in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/most-distinct-attributes.xq
  :)
 declare function con:most-distinct-attributes ( $s ) {
  (for $str in set:distinct($s) order by count(set:distinct($str/descendant-or-self::*/attribute())) descending return $str)[1]
@@ -364,6 +382,7 @@ declare function con:most-distinct-attributes ( $s ) {
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of distinct descending nodes in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/most-distinct-nodes.xq
  :)
 declare function con:most-distinct-nodes ( $s ) {
  (for $str in set:distinct($s) order by count(set:distinct($str/descendant-or-self::node())) descending return $str)[1]
@@ -381,6 +400,7 @@ declare function con:most-distinct-nodes ( $s ) {
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of distinct descending elements in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/least-distinct-elements.xq
  :)
 declare function con:least-distinct-elements ( $s ) {
  (for $str in set:distinct($s) order by count(set:distinct($str/descendant-or-self::element())) return $str)[1]
@@ -398,6 +418,7 @@ declare function con:least-distinct-elements ( $s ) {
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of distinct descending attributes in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/least-distinct-attributes.xq
  :)
 declare function con:least-distinct-attributes ( $s ) {
  (for $str in set:distinct($s) order by count(set:distinct($str/descendant-or-self::*/attribute())) return $str)[1]
@@ -415,6 +436,7 @@ declare function con:least-distinct-attributes ( $s ) {
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of distinct descending nodes in the input sequence.
+ : @example test/Queries/data-cleaning/consolidation/least-distinct-nodes.xq
  :)
 declare function con:least-distinct-nodes ( $s ) {
  (for $str in set:distinct($s) order by count(set:distinct($str/descendant-or-self::node())) return $str)[1]

@@ -31,7 +31,7 @@ module namespace normalization = "http://www.zorba-xquery.com/modules/data-clean
 import module namespace http = "http://expath.org/ns/http-client";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
-declare option ver:module-version "3.0";
+declare option ver:module-version "2.0";
 
 (:~
  : Converts a given string representation of a date value into a date representation valid according 
@@ -73,6 +73,7 @@ declare option ver:module-version "3.0";
  :</pre>
  :
  : @return The date value resulting from the conversion.
+ : @example test/Queries/data-cleaning/normalization/to-date.xq
  :)
 declare function normalization:to-date ( $sd as xs:string, $format as xs:string? ) as xs:string{
  let $dictionary := normalization:month-dictionary()
@@ -547,9 +548,9 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
  : valid according to the corresponding XML Schema type.
  :
  : <br/>
- : Example usage : <pre> to-time ( "24OCT2002 - 09:00" , "%d%b%Y - %R" ) </pre>
+ : Example usage : <pre> to-dateTime( "24OCT2002 21:22" , "%d%b%Y %H%M" ) </pre>
  : <br/>
- : The function invocation in the example above returns : <pre> 2002-10-24T09:00:00 </pre>
+ : The function invocation in the example above returns : <pre> 2002-20-24T21:22:00 </pre>
  :
  : @param $sd The string representation for the dateTime.
  : @param $format An optional parameter denoting the format used to represent the dateTime in the string, according to a sequence 
@@ -597,8 +598,6 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
  :</pre>
  :
  : @return The dateTime value resulting from the conversion.
- :
- : <br/><br/><b> Attention : This function is still not implemented. </b> <br/>
  :
  :)
 declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:string? ) as xs:string {
@@ -1042,12 +1041,13 @@ declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:str
  : 
  : @param $addr A sequence of strings encoding an address, where each string in the sequence corresponds to a different component (e.g., street, city, country, etc.) of the address.
  : @return A sequence of strings with the address encoded in a cannonical format, where each string in the sequence corresponds to a different component (e.g., street, city, country, etc.) of the address.
+ : @example test/Queries/data-cleaning/normalization/normalize-address.xq
  :)
 declare function normalization:normalize-address ( $addr as xs:string* ) as xs:string* {
-(:
+
   let $id   := ""
   let $url  := "http://where.yahooapis.com/geocode?q="
-  let $q2   := string-join(for $i in $q return translate($i," ","+"),",")
+  let $q2   := string-join(for $i in $addr return translate($i," ","+"),",")
   let $call := concat($url,$q2,"&amp;appid=",$id)
   let $doc  := http:send-request(<http:request method="GET" href="{$call}"/>, ())[2]
   return distinct-values( (if (string-length($doc//xs:string(*:country)) > 0) then ($doc//xs:string(*:country)) else (),
@@ -1057,8 +1057,6 @@ declare function normalization:normalize-address ( $addr as xs:string* ) as xs:s
 			  if (string-length($doc//xs:string(*:neighborhood)) > 0) then ($doc//xs:string(*:neighborhood)) else (),
                           if (string-length($doc//xs:string(*:street)) > 0) then ($doc//xs:string(*:street)) else (),
                           if (string-length($doc//xs:string(*:house)) > 0) then ($doc//xs:string(*:house)) else () ) )
-:)
-  ""
 };
 
 (:~

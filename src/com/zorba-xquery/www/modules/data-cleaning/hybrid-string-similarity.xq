@@ -38,7 +38,7 @@ import module namespace simc = "http://www.zorba-xquery.com/modules/data-cleanin
 import module namespace simp = "http://www.zorba-xquery.com/modules/data-cleaning/phonetic-string-similarity";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
-declare option ver:module-version "3.0";
+declare option ver:module-version "2.0";
 
 (:~
  : Returns the cosine similarity coefficient between sets of tokens extracted from two strings.
@@ -57,6 +57,7 @@ declare option ver:module-version "3.0";
  : @param $s2 The second string.
  : @param $r A regular expression forming the delimiter character(s) which mark the boundaries between adjacent tokens.
  : @return The cosine similarity coefficient between the sets of Soundex keys extracted from the two strings.
+ : @example test/Queries/data-cleaning/hybrid-string-similarity/soft-cosine-tokens-soundex.xq
  :)
 declare function simh:soft-cosine-tokens-soundex ( $s1 as xs:string, $s2 as xs:string, $r as xs:string ) as xs:double {
  let $keys1 := for $kt1 in tokenize($s1,$r) return simp:soundex-key($kt1)
@@ -80,6 +81,7 @@ declare function simh:soft-cosine-tokens-soundex ( $s1 as xs:string, $s2 as xs:s
  : @param $s2 The second string.
  : @param $r A regular expression forming the delimiter character(s) which mark the boundaries between adjacent tokens.
  : @return The cosine similarity coefficient between the sets Metaphone keys extracted from the two strings.
+ : @example test/Queries/data-cleaning/hybrid-string-similarity/soft-cosine-tokens-metaphone.xq
  :)
 declare function simh:soft-cosine-tokens-metaphone ( $s1 as xs:string, $s2 as xs:string, $r as xs:string ) as xs:double {
  let $keys1 := for $kt1 in tokenize($s1,$r) return simp:metaphone-key($kt1)
@@ -140,6 +142,7 @@ declare function simh:soft-cosine-tokens-edit-distance ( $s1 as xs:string, $s2 a
  : @param $r A regular expression forming the delimiter character(s) which mark the boundaries between adjacent tokens.
  : @param $t A threshold for the similarity function used to discover token identity.
  : @return The cosine similarity coefficient between the sets tokens extracted from the two strings.
+ : @example test/Queries/data-cleaning/hybrid-string-similarity/soft-cosine-tokens-jaro.xq
  :)
 declare function simh:soft-cosine-tokens-jaro ( $s1 as xs:string, $s2 as xs:string, $r as xs:string, $t as xs:double ) as xs:double {
  let $tokens1   := tokenize($s1,$r)
@@ -175,6 +178,7 @@ declare function simh:soft-cosine-tokens-jaro ( $s1 as xs:string, $s2 as xs:stri
  : @param $prefix The number of characters to consider when testing for equal prefixes with the Jaro-Winkler metric.
  : @param $fact The weighting factor to consider when the input strings have equal prefixes with the Jaro-Winkler metric.
  : @return The cosine similarity coefficient between the sets tokens extracted from the two strings.
+ : @example test/Queries/data-cleaning/hybrid-string-similarity/soft-cosine-tokens-jaro-winkler.xq
  :)
 declare function simh:soft-cosine-tokens-jaro-winkler ( $s1 as xs:string, $s2 as xs:string, $r as xs:string, $t as xs:double, $prefix as xs:integer?, $fact as xs:double? ) as xs:double {
  let $tokens1   := tokenize($s1,$r)
@@ -205,6 +209,7 @@ declare function simh:soft-cosine-tokens-jaro-winkler ( $s1 as xs:string, $s2 as
  : @param $prefix The number of characters to consider when testing for equal prefixes with the Jaro-Winkler metric.
  : @param $fact The weighting factor to consider when the input strings have equal prefixes with the Jaro-Winkler metric.
  : @return The Monge-Elkan similarity coefficient between the two strings.
+ : @example test/Queries/data-cleaning/hybrid-string-similarity/monge-elkan-jaro-winkler.xq
  :)
 declare function simh:monge-elkan-jaro-winkler ( $s1 as xs:string, $s2 as xs:string, $prefix as xs:integer, $fact as xs:double  ) as xs:double{
  let $s1tokens := tokenize($s1, " ") 

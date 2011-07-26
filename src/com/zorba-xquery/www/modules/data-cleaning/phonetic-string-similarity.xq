@@ -29,7 +29,7 @@
 module namespace simp = "http://www.zorba-xquery.com/modules/data-cleaning/phonetic-string-similarity";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
-declare option ver:module-version "3.0";
+declare option ver:module-version "2.0";
 
 (:~
  : Returns the Soundex key for a given string.
@@ -41,6 +41,7 @@ declare option ver:module-version "3.0";
  :
  : @param $s1 The string.
  : @return The Soundex key for the given input string.
+ : @example test/Queries/data-cleaning/phonetic-string-similarity/soundex-key.xq
  :)
 declare function simp:soundex-key ( $s1 as xs:string ) as xs:string {
  let $group1 := replace(upper-case(substring($s1,2)),"[BFPV]","1")
@@ -63,6 +64,7 @@ declare function simp:soundex-key ( $s1 as xs:string ) as xs:string {
  : @param $s1 The first string.
  : @param $s2 The second string.
  : @return Returns true if both strings have the same Soundex key and false otherwise.
+ : @example test/Queries/data-cleaning/phonetic-string-similarity/soundex-key.xq
  :)
 declare function simp:soundex ( $s1 as xs:string, $s2 as xs:string ) as xs:boolean {
  simp:soundex-key($s1) = simp:soundex-key($s2)
@@ -79,6 +81,7 @@ declare function simp:soundex ( $s1 as xs:string, $s2 as xs:string ) as xs:boole
  :
  : @param $s1 The string.
  : @return The Metaphone key for the given input string.
+ : @example test/Queries/data-cleaning/phonetic-string-similarity/metaphone-key.xq
  :)
 declare function simp:metaphone-key ( $s1 as xs:string ) as xs:string {
  let $aux1  := replace(upper-case($s1),"([^C])\1","$1")
@@ -105,6 +108,7 @@ declare function simp:metaphone-key ( $s1 as xs:string ) as xs:string {
  : @param $s1 The first string.
  : @param $s2 The second string.
  : @return Returns true if both strings have the same Metaphone key and false otherwise.
+ : @example test/Queries/data-cleaning/phonetic-string-similarity/metaphone.xq
  :)
 declare function simp:metaphone ( $s1 as xs:string, $s2 as xs:string ) as xs:boolean {
  simp:metaphone-key($s1) = simp:metaphone-key($s2)
