@@ -17,13 +17,4 @@
 MESSAGE(STATUS "Add com")
 ADD_SUBDIRECTORY(com)
 
-# QQQ This should probably be part of ZorbaModule.cmake
-INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        DESTINATION include/zorba
-        FILES_MATCHING
-        PATTERN "*.svn" EXCLUDE
-        PATTERN "*.xq.src" EXCLUDE
-        PATTERN "*.xsd"
-        PATTERN "*.xq")
-
 MESSAGE(STATUS "End modules")
