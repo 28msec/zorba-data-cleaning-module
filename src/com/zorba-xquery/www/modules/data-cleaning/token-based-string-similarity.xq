@@ -35,7 +35,7 @@ module namespace simt = "http://www.zorba-xquery.com/modules/data-cleaning/token
 
 (: In the QizX or Saxon XQuery engines, it is possible to call external functions from the Java math library :)
 (: declare namespace math = "java:java.lang.Math"; :)
-declare namespace math="http://www.w3.org/2005/xpath-functions/math";
+declare namespace math = "http://www.w3.org/2005/xpath-functions/math";
 
 import module namespace set  = "http://www.zorba-xquery.com/modules/data-cleaning/set-similarity";
 
