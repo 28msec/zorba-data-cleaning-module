@@ -1,1 +1,1 @@
-Error: http://gibson.tagus.ist.utl.pt/~bmartins/xquery-modules/conversion:notsupported
+Error: http://expath.org/ns/error:HC002

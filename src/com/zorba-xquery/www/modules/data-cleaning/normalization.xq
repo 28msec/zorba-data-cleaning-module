@@ -28,8 +28,9 @@
 
 module namespace normalization = "http://www.zorba-xquery.com/modules/data-cleaning/normalization";
 
-import module namespace http = "http://expath.org/ns/http-client";
+import module namespace http = "http://www.zorba-xquery.com/modules/http-client";
 
+declare namespace ann = "http://www.zorba-xquery.com/annotations";
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
 declare option ver:module-version "2.0";
 
@@ -73,9 +74,10 @@ declare option ver:module-version "2.0";
  :</pre>
  :
  : @return The date value resulting from the conversion.
- : @example test/Queries/data-cleaning/normalization/to-date.xq
+ : <br/><br/><b> Attention : This function is still not implemented. </b> <br/>
  :)
 declare function normalization:to-date ( $sd as xs:string, $format as xs:string? ) as xs:string{
+(:
  let $dictionary := normalization:month-dictionary()
  let $format-tokens := tokenize($format, "%")[position()>1] 
  let $sd-tokens := 
@@ -158,6 +160,7 @@ declare function normalization:to-date ( $sd as xs:string, $format as xs:string?
 	   (error(QName('http://www.zorba-xquery.com/modules/data-cleaning/normalization',
 		'err:notsupported'),data(concat($result, " - ", concat("year: ", $year), concat(" month: ", $month), concat(" day:", $day)))))
 	else()
+	:)""
 };
 
 (:~
@@ -598,9 +601,11 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
  :</pre>
  :
  : @return The dateTime value resulting from the conversion.
+ : <br/><br/><b> Attention : This function is still not implemented. </b> <br/>
  :
  :)
 declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:string? ) as xs:string {
+(:
   let $timezoneDict := normalization:timeZone-dictionary()
   let $monthDict := normalization:month-dictionary()  
   let $format-tokens := tokenize($format, "[ \-%]+")[position()>1]  
@@ -1027,7 +1032,7 @@ declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:str
 		'err:notsupported'),data(concat($result, " - ", concat("hours: ", $hours), concat(" minutes: ", $minutes), concat(" seconds:", $seconds)))))
 
 	else()
-
+:)""
 };
 
 (:~
@@ -1043,13 +1048,13 @@ declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:str
  : @return A sequence of strings with the address encoded in a cannonical format, where each string in the sequence corresponds to a different component (e.g., street, city, country, etc.) of the address.
  : @example test/Queries/data-cleaning/normalization/normalize-address.xq
  :)
-declare function normalization:normalize-address ( $addr as xs:string* ) as xs:string* {
+declare %ann:nondeterministic  function normalization:normalize-address ( $addr as xs:string* ) as xs:string* {
 
   let $id   := ""
   let $url  := "http://where.yahooapis.com/geocode?q="
   let $q2   := string-join(for $i in $addr return translate($i," ","+"),",")
   let $call := concat($url,$q2,"&amp;appid=",$id)
-  let $doc  := http:send-request(<http:request method="GET" href="{$call}"/>, ())[2]
+  let $doc  := http:get-node($call)[2]
   return distinct-values( (if (string-length($doc//xs:string(*:country)) > 0) then ($doc//xs:string(*:country)) else (),
                           if (string-length($doc//xs:string(*:state)) > 0) then ($doc//xs:string(*:state)) else (),
                           if (string-length($doc//xs:string(*:county)) > 0) then ($doc//xs:string(*:county)) else (),

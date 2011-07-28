@@ -27,10 +27,11 @@
 module namespace conversion = "http://www.zorba-xquery.com/modules/data-cleaning/conversion";
 
 declare namespace exref = "http://www.ecb.int/vocabulary/2002-08-01/eurofxref";
+declare namespace ann = "http://www.zorba-xquery.com/annotations";
 
 import schema namespace wp = 'http://api.whitepages.com/schema/';
 
-import module namespace http = "http://expath.org/ns/http-client";
+import module namespace http = "http://www.zorba-xquery.com/modules/http-client";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
 declare option ver:module-version "2.0";
@@ -51,12 +52,12 @@ declare variable $conversion:key := "06ea2f21cc15602b6a3e242e3225a81a";
  : @return A sequence of strings for the phone numbers associated to the name.
  : @example test/Queries/data-cleaning/conversion/phone-from-user.xq
  :)
-declare function conversion:phone-from-user ( $name as xs:string) as xs:string*{
+declare %ann:nondeterministic function conversion:phone-from-user ( $name as xs:string) as xs:string*{
 	let $name-value := replace($name, " ", "%20")
 	let $url := concat("http://api.whitepages.com/find_person/1.0/?name=",$name-value,";api_key=",$conversion:key)
-	let $doc := http:send-request(<http:request method="GET" href="{$url}"/>, ())[2]
-	let $phonenumbers := $doc/wp:wp/wp:listings/wp:listing/wp:phonenumbers/wp:phone/wp:fullphone/text()
-	return $phonenumbers 
+	let $doc := http:get-node($url)[2]
+	return
+    $doc/wp:wp/wp:listings/wp:listing/wp:phonenumbers/wp:phone/wp:fullphone/text()
 };
 
 (:~
@@ -73,10 +74,10 @@ declare function conversion:phone-from-user ( $name as xs:string) as xs:string*{
  : @return A sequence of strings for the addresses associated to the name.
  : @example test/Queries/data-cleaning/conversion/address-from-user.xq
  :)
-declare function conversion:address-from-user ( $name as xs:string) as xs:string*{
+declare %ann:nondeterministic function conversion:address-from-user ( $name as xs:string) as xs:string*{
 	let $name-value := replace($name, " ", "%20")
 	let $url := concat("http://api.whitepages.com/find_person/1.0/?name=",$name-value,";api_key=",$conversion:key)
-	let $doc := http:send-request(<http:request method="GET" href="{$url}"/>, ())[2]
+	let $doc := http:get-node($url)[2]
 	for $a in $doc/wp:wp/wp:listings/wp:listing/wp:address
 		let $fullstreet := $a/wp:fullstreet/text()
 		let $city := $a/wp:city/text()
@@ -100,9 +101,9 @@ declare function conversion:address-from-user ( $name as xs:string) as xs:string
  : @return A sequence of strings for the person or organization's name associated to the phone number.
  : @example test/Queries/data-cleaning/conversion/user-from-phone.xq
  :)
-declare function conversion:user-from-phone ( $phone-number as xs:string) as xs:string*{
+declare %ann:nondeterministic function conversion:user-from-phone ( $phone-number as xs:string) as xs:string*{
 	let $url := concat("http://api.whitepages.com/reverse_phone/1.0/?phone=",$phone-number,";api_key=",$conversion:key)
-	let $doc := http:send-request(<http:request method="GET" href="{$url}"/>, ())[2]
+	let $doc := http:get-node($url)[2]
 	return $doc/wp:wp/wp:listings/wp:listing/wp:displayname/text()	
 };
 
@@ -119,9 +120,9 @@ declare function conversion:user-from-phone ( $phone-number as xs:string) as xs:
  : @return A string for the addresses associated to the phone number.
  : @example test/Queries/data-cleaning/conversion/address-from-phone.xq
  :)
-declare function conversion:address-from-phone ( $phone-number as xs:string) as xs:string*{
+declare %ann:nondeterministic function conversion:address-from-phone ( $phone-number as xs:string) as xs:string*{
 	let $url := concat("http://api.whitepages.com/reverse_phone/1.0/?phone=",$phone-number,";api_key=",$conversion:key)
-	let $doc := http:send-request(<http:request method="GET" href="{$url}"/>, ())[2]
+	let $doc := http:get-node($url)[2]
 	let $addresses :=
 		for $a in $doc/wp:wp/wp:listings/wp:listing/wp:address
 			let $fullstreet := $a/wp:fullstreet/text()
@@ -145,7 +146,7 @@ declare function conversion:address-from-phone ( $phone-number as xs:string) as 
  : @return A sequence of strings for the person or organization's names associated to the address.
  : @example test/Queries/data-cleaning/conversion/user-from-address.xq
  :)
-declare function conversion:user-from-address ( $address as xs:string) as xs:string*{
+declare %ann:nondeterministic function conversion:user-from-address ( $address as xs:string) as xs:string*{
 	let $tokens := tokenize ($address, ",")
 	let $token-full-street := $tokens[position()=1]
 	let $state := 
@@ -158,7 +159,7 @@ declare function conversion:user-from-address ( $address as xs:string) as xs:str
 	let $house := tokenize($token-full-street, " ")[position()=1]
 	let $street := replace(replace($token-full-street, "[0-9]+[ ]", ""), " ", "%20")
 	let $url := concat("http://api.whitepages.com/reverse_address/1.0/?house=",$house, ";street=",$street, ";state=",$state,";api_key=",$conversion:key)
-	let $doc := http:send-request(<http:request method="GET" href="{$url}"/>, ())[2]
+	let $doc := http:get-node($url)[2]
 	return $doc/wp:wp/wp:listings/wp:listing/wp:displayname/text()
 };
 
@@ -175,7 +176,7 @@ declare function conversion:user-from-address ( $address as xs:string) as xs:str
  : @return A sequence of strings for the phone number or organization's names associated to the address.
  : @example test/Queries/data-cleaning/conversion/phone-from-address.xq
  :)
-declare function conversion:phone-from-address ( $address as xs:string) as xs:string*{
+declare %ann:nondeterministic function conversion:phone-from-address ( $address as xs:string) as xs:string*{
 	let $tokens := tokenize ($address, ",")
 	let $token-full-street := $tokens[position()=1]
 	let $state := 
@@ -196,7 +197,7 @@ declare function conversion:phone-from-address ( $address as xs:string) as xs:st
 			else ()
 	let $street-form := replace($street, " ", "%20")
 	let $url := concat("http://api.whitepages.com/reverse_address/1.0/?house=",$house, ";street=",$street-form, ";state=",$state,";api_key=",$conversion:key)
-	let $doc := http:send-request(<http:request method="GET" href="{$url}"/>, ())[2]
+	let $doc := http:get-node($url)[2]
 	return $doc/wp:wp/wp:listings/wp:listing/wp:phonenumbers/wp:phone/wp:fullphone/text()(: if($state = "TN") then "iguais" else "dif":)
 };
 
@@ -219,14 +220,14 @@ declare function conversion:phone-from-address ( $address as xs:string) as xs:st
  : @see http://www.cuppait.com/UnitConversionGateway-war/UnitConversion?format=XML
  : @example test/Queries/data-cleaning/conversion/unit-convert.xq
  :)
-declare function conversion:unit-convert ( $v as xs:double, $t as xs:string, $m1 as xs:string, $m2 as xs:string ) {
+declare %ann:nondeterministic function conversion:unit-convert ( $v as xs:double, $t as xs:string, $m1 as xs:string, $m2 as xs:string ) {
  let $url     := "http://www.cuppait.com/UnitConversionGateway-war/UnitConversion?format=XML"
  let $ctype   := concat("ctype=",$t)
  let $cfrom   := concat("cfrom=",$m1)
  let $cto     := concat("cto=",$m2)
  let $camount := concat("camount=",$v)
  let $par     := string-join(($url,$ctype,$cfrom,$cto,$camount),"&amp;")
- let $result  := trace(data(http:send-request(<http:request method="GET" href="{$par}"/>, ())[1]),"s")
+ let $result  := data(http:get-node($par)[2])
  return if (matches(data($result),"-?[0-9]+(\.[0-9]+)?")) then data($result) 
         else (error(QName('http://gibson.tagus.ist.utl.pt/~bmartins/xquery-modules/conversion', 'err:notsupported'), data($result)))
 };
@@ -243,12 +244,12 @@ declare function conversion:unit-convert ( $v as xs:double, $t as xs:string, $m1
  : @return The pair of latitude and longitude coordinates associated with the input address.
  : @example test/Queries/data-cleaning/conversion/geocode-from-address.xq
  :)
-declare function conversion:geocode-from-address ( $q as xs:string* ) as xs:double* {
+declare %ann:nondeterministic function conversion:geocode-from-address ( $q as xs:string* ) as xs:double* {
  let $id   := ""
  let $url  := "http://where.yahooapis.com/geocode?q="
  let $q2   := string-join(for $i in $q return translate($i," ","+"),",")
  let $call := concat($url,$q2,"&amp;appid=",$id)
- let $doc  := http:send-request(<http:request method="GET" href="{$call}"/>, ())[2]
+ let $doc  := http:get-node($call)[2]
  return    ( xs:double($doc/ResultSet/Result/latitude/text()) , xs:double($doc/ResultSet/Result/longitude/text()) )
 };
 
@@ -265,12 +266,12 @@ declare function conversion:geocode-from-address ( $q as xs:string* ) as xs:doub
  : @param $q The sequence of strings corresponding to the different components (e.g., street, city, country, etc.) of the place name that corresponds to the input geospatial coordinates.
  : @example test/Queries/data-cleaning/conversion/address-from-geocode.xq
  :)
-declare function conversion:address-from-geocode ( $lat as xs:double, $lon as xs:double ) as xs:string* {
+declare %ann:nondeterministic function conversion:address-from-geocode ( $lat as xs:double, $lon as xs:double ) as xs:string* {
  let $id   := ""
  let $url  := "http://where.yahooapis.com/geocode?q="
  let $q    := concat($lat,",+",$lon) 
  let $call := concat($url,$q,"&amp;gflags=R&amp;appid=",$id)
- let $doc  := http:send-request(<http:request method="GET" href="{$call}"/>, ())[2]
+ let $doc  := http:get-node($call)[2]
  return distinct-values( (if (string-length($doc//xs:string(*:country)) > 0) then ($doc//xs:string(*:country)) else (),
                           if (string-length($doc//xs:string(*:state)) > 0) then ($doc//xs:string(*:state)) else (),
                           if (string-length($doc//xs:string(*:county)) > 0) then ($doc//xs:string(*:county)) else (),
@@ -299,11 +300,11 @@ declare function conversion:address-from-geocode ( $lat as xs:double, $lon as xs
  : @see http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
  : @example test/Queries/data-cleaning/conversion/currency-convert.xq
  :)
-declare function conversion:currency-convert ( $v as xs:double, $m1 as xs:string, $m2 as xs:string, $date as xs:string ) {
+declare %ann:nondeterministic function conversion:currency-convert ( $v as xs:double, $m1 as xs:string, $m2 as xs:string, $date as xs:string ) {
  let $daily   := "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
  let $hist    := "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.xml"
- let $doc     := if (string-length($date) = 0) then http:send-request(<http:request method="GET" href="{$daily}"/>, ())[2] else
-                 ((for $a in http:send-request(<http:request method="GET" href="{$hist}"/>, ())[2]//exref:Cube[
+ let $doc     := if (string-length($date) = 0) then http:get-node($daily)[2] else
+                 ((for $a in http:get-node($hist)[2]//exref:Cube[
                    xs:string(@time)<=$date] order by $a/xs:string(@time) descending return $a)[1])
  let $toEUR   := if ( $m1="EUR" ) then (xs:double(1.0)) else ( $doc//exref:Cube[xs:string(@currency)=$m1]/xs:double(@rate) )
  let $fromEUR := if ( $m2="EUR" ) then (xs:double(1.0)) else ( $doc//exref:Cube[xs:string(@currency)=$m2]/xs:double(@rate) )
