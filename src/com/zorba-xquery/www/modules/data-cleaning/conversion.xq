@@ -1,3 +1,5 @@
+xquery version "3.0";
+
 (:
  : Copyright 2006-2009 The FLWOR Foundation.
  :
@@ -36,7 +38,7 @@ import module namespace http = "http://www.zorba-xquery.com/modules/http-client"
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
 declare option ver:module-version "2.0";
 
-(: The key to be used when accessing the White Pages Web service :)
+(:~ The key to be used when accessing the White Pages Web service :)
 declare variable $conversion:key := "06ea2f21cc15602b6a3e242e3225a81a";
 
 (:~
@@ -263,7 +265,7 @@ declare %ann:nondeterministic function conversion:geocode-from-address ( $q as x
  :
  : @param $lat Geospatial latitude.
  : @param $lon Geospatial longitude.
- : @param $q The sequence of strings corresponding to the different components (e.g., street, city, country, etc.) of the place name that corresponds to the input geospatial coordinates.
+ : @return The sequence of strings corresponding to the different components (e.g., street, city, country, etc.) of the place name that corresponds to the input geospatial coordinates.
  : @example test/Queries/data-cleaning/conversion/address-from-geocode.xq
  :)
 declare %ann:nondeterministic function conversion:address-from-geocode ( $lat as xs:double, $lon as xs:double ) as xs:string* {
