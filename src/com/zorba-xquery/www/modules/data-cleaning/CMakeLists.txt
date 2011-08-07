@@ -20,6 +20,7 @@ DECLARE_ZORBA_MODULE (URI "http://www.zorba-xquery.com/modules/data-cleaning/con
 
 DECLARE_ZORBA_SCHEMA( FILE whitepages_schema.xsd
                       URI "http://api.whitepages.com/schema/")
+                      
 DECLARE_ZORBA_MODULE (URI "http://www.zorba-xquery.com/modules/data-cleaning/conversion"
                       VERSION 2.0 FILE "conversion.xq")
 
