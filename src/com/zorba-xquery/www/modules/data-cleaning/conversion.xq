@@ -218,7 +218,7 @@ declare %ann:nondeterministic function conversion:phone-from-address ( $address 
  : @param $m1 The source measurement unit metric (e.g., "meter")
  : @param $m2 The target measurement unit metric (e.g., "mile")
  : @return The value resulting from the conversion
- : @error Returns err:notsupported if the type of metric, the source unit or the target unit are not known to the service.
+ : @error conversion:notsupported if the type of metric, the source unit or the target unit are not known to the service.
  : @see http://www.cuppait.com/UnitConversionGateway-war/UnitConversion?format=XML
  : @example test/Queries/data-cleaning/conversion/unit-convert.xq
  :)
@@ -231,7 +231,7 @@ declare %ann:nondeterministic function conversion:unit-convert ( $v as xs:double
  let $par     := string-join(($url,$ctype,$cfrom,$cto,$camount),"&amp;")
  let $result  := data(http:get-node($par)[2])
  return if (matches(data($result),"-?[0-9]+(\.[0-9]+)?")) then data($result) 
-        else (error(QName('http://gibson.tagus.ist.utl.pt/~bmartins/xquery-modules/conversion', 'err:notsupported'), data($result)))
+        else (error(QName('http://www.zorba-xquery.com/modules/data-cleaning/conversion', 'conversion:notsupported'), data($result)))
 };
 
 (:~
@@ -298,7 +298,7 @@ declare %ann:nondeterministic function conversion:address-from-geocode ( $lat as
  : @param $m2 The target currency (e.g., "USD").
  : @param $date The reference date.
  : @return The value resulting from the conversion.
- : @error Returns err:notsupported if the date, the source currency type or the target currency type are not known to the service.
+ : @error conversion:notsupported if the date, the source currency type or the target currency type are not known to the service.
  : @see http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
  : @example test/Queries/data-cleaning/conversion/currency-convert.xq
  :)
@@ -312,7 +312,7 @@ declare %ann:nondeterministic function conversion:currency-convert ( $v as xs:do
  let $fromEUR := if ( $m2="EUR" ) then (xs:double(1.0)) else ( $doc//exref:Cube[xs:string(@currency)=$m2]/xs:double(@rate) )
  let $result  := ($v div $toEUR) * $fromEUR
  return if (matches(string($result),"-?[0-9]+(\.[0-9]+)?")) then ($result) 
-        else (error(QName('http://gibson.tagus.ist.utl.pt/~bmartins/xquery-modules/conversion', 'err:notsupported'), data($result)))
+        else (error(QName('http://www.zorba-xquery.com/modules/data-cleaning/conversion', 'conversion:notsupported'), data($result)))
 };
 
 (:~
