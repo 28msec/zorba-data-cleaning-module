@@ -24,6 +24,7 @@ FIND_PACKAGE (Zorba REQUIRED HINTS "${ZORBA_BUILD_DIR}")
 INCLUDE ("${Zorba_USE_FILE}")
 ADD_TEST_DIRECTORY("${PROJECT_SOURCE_DIR}/test")
 
+EXPECTED_FAILURE(zorba_data-cleaning_module/data-cleaning/conversion/geocode-from-address.xq 3401729)
 ADD_SUBDIRECTORY("src")
 
 DONE_DECLARING_ZORBA_URIS()
