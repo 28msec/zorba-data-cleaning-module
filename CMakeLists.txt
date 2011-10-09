@@ -22,7 +22,12 @@ LIST (APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_modules")
 
 FIND_PACKAGE (Zorba REQUIRED HINTS "${ZORBA_BUILD_DIR}")
 INCLUDE ("${Zorba_USE_FILE}")
-ADD_TEST_DIRECTORY("${PROJECT_SOURCE_DIR}/test")
+
+ADD_TEST_DIRECTORY("${PROJECT_SOURCE_DIR}/test" "${EXCEPTION_LIST}")
+
+EXPECTED_FAILURE(zorba_data-cleaning_module/data-cleaning/conversion/address-from-user.xq 871051)
+EXPECTED_FAILURE(zorba_data-cleaning_module/data-cleaning/conversion/phone-from-user.xq 871051)
+EXPECTED_FAILURE(zorba_data-cleaning_module/data-cleaning/conversion/user-from-phone.xq 871051)
 
 ADD_SUBDIRECTORY("src")
 
