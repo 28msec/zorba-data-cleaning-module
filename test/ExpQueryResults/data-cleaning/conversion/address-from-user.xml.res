@@ -1,1 +1,1 @@
-3362 Walden Ave, Depew, NY, US 222 E 53rd St, Los Angeles, CA, US
+222 E 53rd St, Los Angeles, CA, US
