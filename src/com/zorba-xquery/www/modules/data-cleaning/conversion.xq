@@ -70,7 +70,6 @@ declare %ann:nondeterministic function conversion:phone-from-user ( $name as xs:
  : Example usage : <pre> address-from-user ('Maria Lurdes') </pre>
  : <br/>
  : The function invocation in the example above returns : <pre> 222 E 53rd St, Los Angeles, CA, US </pre>
- :							  <pre> 3362 Walden Ave, Depew, NY, US </pre>
  :
  : @param $name The name of person or organization.
  : @return A sequence of strings for the addresses associated to the name.
@@ -97,7 +96,6 @@ declare %ann:nondeterministic function conversion:address-from-user ( $name as x
  : Example usage : <pre> user-from-phone ('8654582358') </pre>
  : <br/>
  : The function invocation in the example above returns : <pre> Homer Simpson </pre>
- :							  <pre> Sue M Simpson </pre>
  :
  : @param $phone-number A string with 10 digits corresponding to the phone number.
  : @return A sequence of strings for the person or organization's name associated to the phone number.

@@ -40,6 +40,10 @@ declare option ver:module-version "2.0";
  : Converts a given string representation of a date value into a date representation valid according 
  : to the corresponding XML Schema type.
  :
+ : <br/>
+ : Example usage : <pre> to-date ( "24OCT2002" , "%d%b%Y" ) </pre>
+ : <br/>
+ : The function invocation in the example above returns : <pre> 2002-10-24 </pre>
  :
  : @param $sd The string representation for the date
  : @param $format An optional parameter denoting the format used to represent the date in the string, according to a 
@@ -149,6 +153,10 @@ declare function normalization:to-date ( $sd as xs:string, $format as xs:string?
  : Converts a given string representation of a time value into a time representation valid according to 
  : the corresponding XML Schema type.
  :
+ : <br/>
+ : Example usage : <pre> to-time ( "09 hours 10 minutes" , "%H hours %M minutes" ) </pre>
+ : <br/>
+ : The function invocation in the example above returns : <pre> 09:10:00 </pre>
  :
  : @param $sd The string representation for the time.
  : @param $format An optional parameter denoting the format used to represent the time in the string, according to a sequence of 
@@ -525,6 +533,10 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
  : Converts a given string representation of a dateTime value into a dateTime representation 
  : valid according to the corresponding XML Schema type.
  :
+ : <br/>
+ : Example usage : <pre> to-dateTime( "24OCT2002 21:22" , "%d%b%Y %H%M" ) </pre>
+ : <br/>
+ : The function invocation in the example above returns : <pre> 2002-20-24T21:22:00 </pre>
  :
  : @param $sd The string representation for the dateTime.
  : @param $format An optional parameter denoting the format used to represent the dateTime in the string, according to a sequence 
@@ -1522,6 +1534,12 @@ return $dictionary
 
 (:~
  : Internal auxiliary function that checks if a string is in xs:dateTime format
+ :
+ : <br/>
+ : Example usage : <pre> check-dateTime( "2002-20-24T21:22:00" ) </pre>
+ : <br/>
+ : The function invocation in the example above returns : <pre> 2002-20-24T21:22:00 </pre>
+ :
  : @param $dateTime The string representation for the dateTime.
  : @return The dateTime string if it represents the xs:dateTime format.
  :)
@@ -1531,6 +1549,12 @@ declare %private function normalization:check-dateTime($dateTime as xs:string) a
 
 (:~
  : Internal auxiliary function that checks if a string is in xs:date format
+ :
+ : <br/>
+ : Example usage : <pre> check-date( "2002-20-24" ) </pre>
+ : <br/>
+ : The function invocation in the example above returns : <pre> 2002-20-24 </pre>
+ :
  : @param $dateTime The string representation for the date.
  : @return The date string if it represents the xs:date format.
  :)
@@ -1540,6 +1564,12 @@ declare %private function normalization:check-date($date as xs:string) as xs:str
 
 (:~
  : Internal auxiliary function that checks if a string is in xs:time format
+ :
+ : <br/>
+ : Example usage : <pre> check-time( "21:25:00" ) </pre>
+ : <br/>
+ : The function invocation in the example above returns : <pre> 21:25:00 </pre>
+ :
  : @param $dateTime The string representation for the time.
  : @return The time string if it represents the xs:time format.
  :)
