@@ -35,6 +35,8 @@ import schema namespace wp = 'http://api.whitepages.com/schema/';
 
 import module namespace http = "http://www.zorba-xquery.com/modules/http-client";
 
+import module namespace reflection = "http://www.zorba-xquery.com/modules/reflection";
+
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
 declare option ver:module-version "2.0";
 
@@ -404,4 +406,3 @@ declare function conversion:address-from-domain ( $domain as xs:string ) {
 declare function conversion:name-from-domain ( $domain as xs:string ) {
  ()
 };
-
