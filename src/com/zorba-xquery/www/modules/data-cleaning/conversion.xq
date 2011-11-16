@@ -182,7 +182,6 @@ declare %ann:nondeterministic function conversion:phone-from-address ( $address 
 (:~
  : Conversion function for units of measurement, acting as a wrapper over the CuppaIT WebService.
  : <br/>
- : WebService documentation at http://www.cuppait.com/UnitConversionGateway-war/UnitConversion?format=XML
  :
  :
  : @param $v The amount we wish to convert.
@@ -293,7 +292,7 @@ return
 if   (compare($t, "Temperature") = 0) then reflection:eval(concat($v , $conversion-table//unit[@from=$m1][@to=$m2]/@value))
 else
 	if   ( $from[@to=$m2]) then ( $v * $from[@to=$m2]/@value )
-	else ( for $i in $from return local:unit-convert ( $v * $i/@value , $t , $i/@to , $m2 ) )[1]
+	else ( for $i in $from return conversion:unit-convert ( $v * $i/@value , $t , $i/@to , $m2 ) )[1]
 };
 
 (:~
