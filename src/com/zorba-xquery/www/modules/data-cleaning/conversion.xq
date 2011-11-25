@@ -35,6 +35,8 @@ import schema namespace wp = 'http://api.whitepages.com/schema/';
 
 import module namespace http = "http://www.zorba-xquery.com/modules/http-client";
 
+import module namespace reflection = "http://www.zorba-xquery.com/modules/reflection";
+
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
 declare option ver:module-version "2.0";
 
@@ -45,10 +47,6 @@ declare variable $conversion:key := "06ea2f21cc15602b6a3e242e3225a81a";
  : Uses a White-pages Web service to discover information about a given name, 
  : returning a sequence of strings for the phone numbers associated to the name.
  :
- : <br/>
- : Example usage : <pre> phone-from-user ('Maria Lurdes') </pre>
- : <br/>
- : The function invocation in the example above returns : <pre> (716) 686-4500 </pre>
  :
  : @param $name The name of person or organization.
  : @return A sequence of strings for the phone numbers associated to the name.
@@ -66,11 +64,6 @@ declare %ann:nondeterministic function conversion:phone-from-user ( $name as xs:
  : Uses a White-pages Web service to discover information about a given name, 
  : returning a sequence of strings for the addresses associated to the name.
  :
- : <br/>
- : Example usage : <pre> address-from-user ('Maria Lurdes') </pre>
- : <br/>
- : The function invocation in the example above returns : <pre> 222 E 53rd St, Los Angeles, CA, US </pre>
- :							  <pre> 3362 Walden Ave, Depew, NY, US </pre>
  :
  : @param $name The name of person or organization.
  : @return A sequence of strings for the addresses associated to the name.
@@ -93,11 +86,6 @@ declare %ann:nondeterministic function conversion:address-from-user ( $name as x
  : Uses a White-pages Web service to discover information about a given phone number, 
  : returning a sequence of strings for the name associated to the phone number.
  :
- : <br/>
- : Example usage : <pre> user-from-phone ('8654582358') </pre>
- : <br/>
- : The function invocation in the example above returns : <pre> Homer Simpson </pre>
- :							  <pre> Sue M Simpson </pre>
  :
  : @param $phone-number A string with 10 digits corresponding to the phone number.
  : @return A sequence of strings for the person or organization's name associated to the phone number.
@@ -113,10 +101,6 @@ declare %ann:nondeterministic function conversion:user-from-phone ( $phone-numbe
  : Uses a White-pages Web service to discover information about a given phone number, 
  : returning a string for the address associated to the phone number.
  :
- : <br/>
- : Example usage : <pre> address-from-phone ('8654582358') </pre>
- : <br/>
- : The function invocation in the example above returns : <pre> 4610 Harrison Bend Rd, Loudon, TN, US </pre>
  :
  : @param $phone-number A string with 10 digits corresponding to the phone number.
  : @return A string for the addresses associated to the phone number.
@@ -139,10 +123,6 @@ declare %ann:nondeterministic function conversion:address-from-phone ( $phone-nu
  : Uses a White-pages Web service to discover information about a given address, 
  : returning a sequence of strings for the names associated to the address.
  :
- : <br/>
- : Example usage : <pre> user-from-address('5655 E Gaskill Rd, Willcox, AZ, US') </pre>
- : <br/>
- : The function invocation in the example above returns : <pre> Stan Smith </pre>
  :
  : @param $address A string corresponding to the address (ex: 5655 E Gaskill Rd, Willcox, AZ, US).
  : @return A sequence of strings for the person or organization's names associated to the address.
@@ -169,10 +149,6 @@ declare %ann:nondeterministic function conversion:user-from-address ( $address a
  : Uses a White-pages Web service to discover information about a given address, 
  : returning a sequence of strings for the phone number associated to the address.
  :
- : <br/>
- : Example usage : <pre> phone-from-address('5655 E Gaskill Rd, Willcox, AZ, US') </pre>
- : <br/>
- : The function invocation in the example above returns : <pre> (520) 824-3160 </pre>
  :
  : @param $address A string corresponding to the address (ex: 5655 E Gaskill Rd, Willcox, AZ, US).
  : @return A sequence of strings for the phone number or organization's names associated to the address.
@@ -206,41 +182,122 @@ declare %ann:nondeterministic function conversion:phone-from-address ( $address 
 (:~
  : Conversion function for units of measurement, acting as a wrapper over the CuppaIT WebService.
  : <br/>
- : WebService documentation at http://www.cuppait.com/UnitConversionGateway-war/UnitConversion?format=XML
  :
- : <br/>
- : Example usage : <pre> unit-convert ( 1 , "Distance", "mile", "kilometer" ) </pre>
- : <br/>
- : The function invocation in the example above returns : <pre> 1.609344 </pre>
  :
  : @param $v The amount we wish to convert.
  : @param $t The type of metric (e.g., "Distance")
  : @param $m1 The source measurement unit metric (e.g., "meter")
  : @param $m2 The target measurement unit metric (e.g., "mile")
  : @return The value resulting from the conversion
- : @error conversion:notsupported if the type of metric, the source unit or the target unit are not known to the service.
- : @see http://www.cuppait.com/UnitConversionGateway-war/UnitConversion?format=XML
  : @example test/Queries/data-cleaning/conversion/unit-convert.xq
  :)
 declare %ann:nondeterministic function conversion:unit-convert ( $v as xs:double, $t as xs:string, $m1 as xs:string, $m2 as xs:string ) {
- let $url     := "http://www.cuppait.com/UnitConversionGateway-war/UnitConversion?format=XML"
- let $ctype   := concat("ctype=",$t)
- let $cfrom   := concat("cfrom=",$m1)
- let $cto     := concat("cto=",$m2)
- let $camount := concat("camount=",$v)
- let $par     := string-join(($url,$ctype,$cfrom,$cto,$camount),"&amp;")
- let $result  := data(http:get-node($par)[2])
- return if (matches(data($result),"-?[0-9]+(\.[0-9]+)?")) then data($result) 
-        else (error(QName('http://www.zorba-xquery.com/modules/data-cleaning/conversion', 'conversion:notsupported'), data($result)))
+ if ( $m1 = $m2 ) then $v else
+
+let $conversion-table := 
+ <unit-conversion-rules>
+ <unit type="Distance" from="mile" to="kilometer" value="1.609344" />
+ <unit type="Distance" from="mile" to="angstrom" value="16100000000000" />
+ <unit type="Distance" from="mile" to="picometer" value="1610000000000000" />
+ <unit type="Distance" from="mile" to="nanometer" value="1610000000000" />
+ <unit type="Distance" from="mile" to="microometer" value="1610000000" />
+ <unit type="Distance" from="mile" to="millimeter" value="1610000" />
+ <unit type="Distance" from="mile" to="centimeter" value="161000" />
+ <unit type="Distance" from="mile" to="meter" value="1610" />
+ <unit type="Distance" from="mile" to="inch" value="63400" />
+ <unit type="Distance" from="mile" to="feet" value="5280" />
+ <unit type="Distance" from="kilometer" to="meter" value="1000" />
+ <unit type="Distance" from="kilometer" to="picometer" value="1000000000000000" />
+ <unit type="Distance" from="kilometer" to="angstrom" value="10000000000000" />
+ <unit type="Distance" from="kilometer" to="nanometer" value="1000000000000" />
+ <unit type="Distance" from="kilometer" to="micrometer" value="1000000000" />
+ <unit type="Distance" from="kilometer" to="millimeter" value="1000000" />
+ <unit type="Distance" from="kilometer" to="centimeter" value="100000" />
+ <unit type="Distance" from="kilometer" to="inch" value="39400" />
+ <unit type="Distance" from="kilometer" to="feet" value="3280" />
+ <unit type="Distance" from="meter" to="centimeter" value="100" />
+ <unit type="Distance" from="meter" to="picometer" value="1000000000000" />
+ <unit type="Distance" from="meter" to="angstrom" value="10000000000" />
+ <unit type="Distance" from="meter" to="nanometer" value="1000000000" />
+ <unit type="Distance" from="meter" to="micrometer" value="1000000" />
+ <unit type="Distance" from="meter" to="millimeter" value="1000" />
+ <unit type="Distance" from="meter" to="inch" value="39.4" />
+ <unit type="Distance" from="meter" to="feet" value="3.28" />
+ <unit type="Distance" from="centimeter" to="millimeter" value="10" />
+ <unit type="Distance" from="millimeter" to="micrometer" value="1000" />
+ <unit type="Distance" from="micrometer" to="nanometer" value="1000" />
+ <unit type="Distance" from="nanometer" to="angstrom" value="10" />
+ <unit type="Distance" from="angstrom" to="picometer" value="100" />
+ <unit type="Distance" from="inch" to="feet" value="0.0833" />
+ <unit type="Mass" from="tons" to="kilograms" value="907.18474" />
+ <unit type="Mass" from="tons" to="pounds" value="2000" />
+ <unit type="Mass" from="tons" to="ounces" value="32000" />
+ <unit type="Mass" from="tons" to="grams" value="907184.74" />
+ <unit type="Mass" from="tons" to="milligrams" value="907184740" />
+ <unit type="Mass" from="kilograms" to="pounds" value="2.2046226" />
+ <unit type="Mass" from="kilograms" to="grams" value="1000" />
+ <unit type="Mass" from="kilograms" to="milligrams" value="1000000" />
+ <unit type="Mass" from="grams" to="milligrams" value="1000" />
+ <unit type="Mass" from="pounds" to="ounces" value="16" />
+ <unit type="Mass" from="pounds" to="grams" value="453.59237" />
+ <unit type="Mass" from="pounds" to="milligrams" value="453592.37" />
+ <unit type="Mass" from="ounces" to="kilograms" value="0.028349523" />
+ <unit type="Mass" from="ounces" to="grams" value="28.349523" />
+ <unit type="Mass" from="ounces" to="milligrams" value="28349.523" />
+ <unit type="Volume" from="liters" to="cubic centimeters" value="1000" />
+ <unit type="Energy" from="jouls" to="calories" value="0.239" />
+ <unit type="Pressure" from="pascals" to="kilopascals" value="0.001" />
+ <unit type="Pressure" from="pascals" to="bars" value="0.000001" />
+ <unit type="Pressure" from="pascals" to="mmHg" value="0.00750064" />
+ <unit type="Pressure" from="pascals" to="torrs" value="0.00750064" />
+ <unit type="Pressure" from="atmospheres" to="pascals" value="101325" />
+ <unit type="Pressure" from="atmospheres" to="kilopascals" value="101.325" />
+ <unit type="Pressure" from="atmospheres" to="bars" value="1.01325" />
+ <unit type="Pressure" from="atmospheres" to="mmHg" value="760" />
+ <unit type="Pressure" from="atmospheres" to="torrs" value="760" />
+ <unit type="Pressure" from="atmospheres" to="psi" value="14.7" />
+ <unit type="Pressure" from="psi" to="pascals" value="6890" />
+ <unit type="Pressure" from="psi" to="kilopascals" value="6.89" />
+ <unit type="Pressure" from="psi" to="bars" value="0.0689" />
+ <unit type="Pressure" from="psi" to="mmHg" value="51.7" />
+ <unit type="Pressure" from="psi" to="torrs" value="51.7" />
+ <unit type="Pressure" from="bars" to="kilopascals" value="100" />
+ <unit type="Pressure" from="bars" to="mmHg" value="750.064" />
+ <unit type="Pressure" from="bars" to="torrs" value="750.064" />
+ <unit type="Pressure" from="kilopascals" to="mmHg" value="7.50064" />
+ <unit type="Pressure" from="kilopascals" to="torrs" value="7.50064" />
+ <unit type="Pressure" from="mmHg" to="torrs" value="1" />
+ <unit type="Temperature" from="celsius" to="fahrenheit" value="* 9 div 5 + 32" />
+ <unit type="Temperature" from="celsius" to="kelvin" value="+ 273.15" />
+ <unit type="Temperature" from="kelvin" to="celsius" value="- 273.15" />
+ <unit type="Temperature" from="kelvin" to="fahrenheit" value="* 9 div 5 - 273.15 * 9 div 5 + 32" />
+ <unit type="Temperature" from="fahrenheit" to="celsius" value="* 5 div 9 - 32 * 5 div 9" />
+ <unit type="Temperature" from="fahrenheit" to="kelvin" value="* 5 div 9 - 32 * 5 div 9 + 273.15" />
+</unit-conversion-rules>
+
+let $from := $conversion-table/unit[@type=$t and @from=$m1] | 
+             ( for $it in $conversion-table/unit[@type=$t and @to=$m1] return 
+               if (compare($t, "Temperature") != 0) then
+               copy $aux := $it
+               modify (
+                replace value of node $aux/@value with 1.0 div $aux/@value,
+                replace value of node $aux/@from with $aux/@to,
+                replace value of node $aux/@to with $aux/@from 
+               ) 
+               return $aux
+               else()
+             )
+
+return 
+if   (compare($t, "Temperature") = 0) then reflection:eval(concat($v , $conversion-table//unit[@from=$m1][@to=$m2]/@value))
+else
+	if   ( $from[@to=$m2]) then ( $v * $from[@to=$m2]/@value )
+	else ( for $i in $from return conversion:unit-convert ( $v * $i/@value , $t , $i/@to , $m2 ) )[1]
 };
 
 (:~
  : Placename to geospatial coordinates converter, acting as a wrapper over the Yahoo! geocoder service.
  :
- : <br/>
- : Example usage : <pre> geocode-from-address ( ("Lisboa", "Portugal") ) </pre>
- : <br/>
- : The function invocation in the example above returns : <pre> ( 38.725735 , -9.15021 ) </pre>
  : 
  : @param $q A sequence of strings corresponding to the different components (e.g., street, city, country, etc.) of the place name.
  : @return The pair of latitude and longitude coordinates associated with the input address.
@@ -258,10 +315,6 @@ declare %ann:nondeterministic function conversion:geocode-from-address ( $q as x
 (:~
  : Geospatial coordinates to placename converter, acting as a wrapper over the Yahoo! reverse geocoder service.
  :
- : <br/>
- : Example usage : <pre> address-from-geocode ( 38.725735 , -9.15021 ) </pre>
- : <br/>
- : The function invocation in the example above returns : <pre> ( 'Portugal' , 'Lisbon' , 'praca Marques de Pombal' ) </pre>
  :
  : @param $lat Geospatial latitude.
  : @param $lon Geospatial longitude.
@@ -288,10 +341,6 @@ declare %ann:nondeterministic function conversion:address-from-geocode ( $lat as
  :
  : WebService documentation at http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
  :
- : <br/>
- : Example usage : <pre> currency-convert ( 1, "USD", "EUR", "2011-01-18" ) </pre>
- : <br/>
- : The function invocation in the example above returns : <pre> 0.747887218607434 </pre>
  :
  : @param $v The amount we wish to convert.
  : @param $m1 The source currency (e.g., "EUR").
@@ -356,4 +405,3 @@ declare function conversion:address-from-domain ( $domain as xs:string ) {
 declare function conversion:name-from-domain ( $domain as xs:string ) {
  ()
 };
-

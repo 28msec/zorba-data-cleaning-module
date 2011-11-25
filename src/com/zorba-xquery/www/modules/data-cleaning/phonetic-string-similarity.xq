@@ -91,7 +91,7 @@ declare function simp:metaphone-key ( $s1 as xs:string ) as xs:string {
  let $aux3  := replace(replace($aux2,"MB","M"),"B$","")
  let $aux4  := replace(replace(replace(replace(replace($aux3,"CIA","XIA"),"SCH","SKH"),"CH","XH"),"C([IEY])","S$1"),"C","K")
  let $aux5  := replace(replace($aux4,"DG([EYI])","JG$1"),"D","T")
- let $aux6  := replace(replace($aux5,"GH([^AEIOU])","H$1"),"G(N(ED)?)^","$1")
+ let $aux6  := replace(replace($aux5,"GH([^AEIOU])","H$1"),"G(N(ED)?)$","$1")
  let $aux7  := replace(replace(replace($aux6,"([^G]?)G([IEY])","$1J$2"),"([^G]?)G","$1K"),"GG","G")
  let $aux8  := replace(replace(replace(replace($aux7,"([AEIOU])H([^AEIOU])","$1$2"),"CK","K"),"PH","F"),"Q","K")
  let $aux9  := replace(replace(replace(replace(replace($aux8,"S(H|(IO)|(IA))","X$1"),"T((IO)|(IA))","X$1"),"TH","0"),"TCH","CH"),"V","F")

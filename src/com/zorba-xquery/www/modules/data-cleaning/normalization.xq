@@ -40,10 +40,6 @@ declare option ver:module-version "2.0";
  : Converts a given string representation of a date value into a date representation valid according 
  : to the corresponding XML Schema type.
  :
- : <br/>
- : Example usage : <pre> to-date ( "24OCT2002" , "%d%b%Y" ) </pre>
- : <br/>
- : The function invocation in the example above returns : <pre> 2002-10-24 </pre>
  :
  : @param $sd The string representation for the date
  : @param $format An optional parameter denoting the format used to represent the date in the string, according to a 
@@ -51,16 +47,10 @@ declare option ver:module-version "2.0";
  : by a single letter or 'O' or 'E' and then a single letter. Any character in the format string that is not part of a conversion 
  : specification is interpreted literally, and the string '%%' gives '%'. The supported conversion specifications are as follows:
  : <pre>
- : '%a' Abbreviated weekday name in the current locale.<br/>
- : '%A' Full weekday name in the current locale.<br/>
  : '%b' Abbreviated month name in the current locale.<br/>
  : '%B' Full month name in the current locale.<br/>
  : '%d' Day of the month as decimal number (01-31).<br/>
- : '%j' Day of year as decimal number (001-366).<br/>
  : '%m' Month as decimal number (01-12).<br/>
- : '%U' Week of the year as decimal number (00-53) using Sunday as the first day of the week (and typically with the first Sunday of the year as day 1 of week 1). This is the US convention.<br/>
- : '%w' Weekday as decimal number (0-6, Sunday is 0).<br/>
- : '%W' Week of the year as decimal number (00-53) using Monday as the first day of the week (and typically with the first Monday of the year as day 1 of week 1). This is the UK convention.<br/>
  : '%x' Date, locale-specific.<br/>
  : '%y' Year without century (00-99).<br/>
  : '%Y' Year with century.<br/>
@@ -68,23 +58,20 @@ declare option ver:module-version "2.0";
  : '%D' Locale-specific date format such as '%m/%d/%y'.<br/>
  : '%e' Day of the month as decimal number (1-31), with a leading pace for a single-digit number.<br/>
  : '%F' Equivalent to %Y-%m-%d (the ISO 8601 date format).<br/>
- : '%g' The last two digits of the week-based year (see '%V').<br/>
- : '%G' The week-based year (see '%V') as a decimal number.<br/>
- : '%h' Equivalent to '%b'.<br/>
- : '%u' Weekday as a decimal number (1-7, Monday is 1).<br/>
- : '%V' Week of the year as decimal number (00-53) as defined in ISO 8601.  If the week (starting on Monday) containing 1 January has four or more days in the new year, then it is considered week 1.  Otherwise, it is the last week of the previous year, and the next week is week 1. 
+ : '%h' Equivalent to '%b'.<br/> 
  :</pre>
  :
  : @return The date value resulting from the conversion.
- : <br/><br/><b> Attention : This function is still not implemented. </b> <br/>
+ : @example test/Queries/data-cleaning/normalization/to-date.xq
  :)
 declare function normalization:to-date ( $sd as xs:string, $format as xs:string? ) as xs:string{
-(:
+
+ 
  let $dictionary := normalization:month-dictionary()
- let $format-tokens := tokenize($format, "%")[position()>1] 
+ let $format-tokens := tokenize($format, "[ %\-/:]+")[position()>1] 
  let $sd-tokens := 
  	if (contains($sd, "-") or contains($sd, "/") or contains($sd, " "))
- 	then tokenize ($sd, "[ \-/]")
+ 	then tokenize ($sd, "[ \-/]+")
  	else let $ydtoken := tokenize(replace($sd, "[A-Za-z]", " "), " ")
 	     let $ft := $ydtoken[position()=1]
 	     let $lt := $ydtoken[last()]
@@ -154,25 +141,15 @@ declare function normalization:to-date ( $sd as xs:string, $format as xs:string?
 	
 	let $result := concat($year, "-", $month, "-", $day)
 	
-	return 
-	
-	if (matches(string($result),"[0-9]+-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01]))")) 
-	then $result
-	else 
-	   (error(QName('http://www.zorba-xquery.com/modules/data-cleaning/normalization',
-		'err:notsupported'),data(concat($result, " - ", concat("year: ", $year), concat(" month: ", $month), concat(" day:", $day)))))
+	return normalization:check-date($result)
 	else()
-	:)""
+	
 };
 
 (:~
  : Converts a given string representation of a time value into a time representation valid according to 
  : the corresponding XML Schema type.
  :
- : <br/>
- : Example usage : <pre> to-time ( "09 hours 10 minutes" , "%H hours %M minutes" ) </pre>
- : <br/>
- : The function invocation in the example above returns : <pre> 09:10:00 </pre>
  :
  : @param $sd The string representation for the time.
  : @param $format An optional parameter denoting the format used to represent the time in the string, according to a sequence of 
@@ -197,10 +174,12 @@ declare function normalization:to-date ( $sd as xs:string, $format as xs:string?
  :</pre>
  :
  : @return The time value resulting from the conversion.
+ : @example test/Queries/data-cleaning/normalization/to-time.xq
  :)
-declare function normalization:to-time ( $sd as xs:string, $format as xs:string? ) as xs:string{
+declare function normalization:to-time ( $sd as xs:string, $format as xs:string? ) as xs:string?{
  let $timezoneDict := normalization:timeZone-dictionary()
- let $format-tokens := tokenize($format, "%")[position()>1] 
+ let $format-string := replace(replace ($format, '%R', '%H:%M'), '%T', '%H:%M:%S')
+ let $format-tokens := tokenize($format-string, "( |%|:)+")[position()>1] 
  let $sd-tokens := 
  	if (contains($sd, ":") or contains($sd, ".") or contains($sd, " "))
  	then tokenize ($sd, "[ :\.]")
@@ -313,7 +292,7 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
 
 			if (count(index-of($format-tokens, "e")) != 0)
 			then concat("0", string($sd-tokens[position() = index-of($format-tokens, "e")]))
-			else "SND"
+			else "00"
 	
 	let $result :=
 
@@ -439,7 +418,7 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
 	     else ()
 	else	
 
-	(:z:)
+
 	if (count(index-of($format-tokens, "z")) != 0) 
 	then if (substring(string($sd-tokens[position() = index-of($format-tokens, "z")]),1,1)='+')
 	     then let $complement := 
@@ -539,11 +518,7 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
 	
 	return 
 	
-	if (matches(string($result),"(([01][0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]")) 
-	then $result
-	else 
-	   (error(QName('http://www.zorba-xquery.com/modules/data-cleaning/normalization',
-		'err:notsupported'),data(concat($result, " - ", concat("hours: ", $hours), concat(" minutes: ", $minutes), concat(" seconds:", $seconds)))))
+	normalization:check-time($result)
 	else()
 
 };
@@ -552,10 +527,6 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
  : Converts a given string representation of a dateTime value into a dateTime representation 
  : valid according to the corresponding XML Schema type.
  :
- : <br/>
- : Example usage : <pre> to-dateTime( "24OCT2002 21:22" , "%d%b%Y %H%M" ) </pre>
- : <br/>
- : The function invocation in the example above returns : <pre> 2002-20-24T21:22:00 </pre>
  :
  : @param $sd The string representation for the dateTime.
  : @param $format An optional parameter denoting the format used to represent the dateTime in the string, according to a sequence 
@@ -564,11 +535,10 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
  : is interpreted literally, and the string '%%' gives '%'. The supported conversion specifications are as follows:
  :
  : <pre>
- : '%a' Abbreviated weekday name in the current locale.<br/>
- : '%A' Full weekday name in the current locale.<br/>
  : '%b' Abbreviated month name in the current locale.<br/>
  : '%B' Full month name in the current locale.<br/>
  : '%c' Date and time, locale-specific.<br/>
+ : '%C' Century (00-99): the integer part of the year divided by 100.<br/>
  : '%d' Day of the month as decimal number (01-31).<br/>
  : '%H' Hours as decimal number (00-23).<br/>
  : '%I' Hours as decimal number (01-12).<br/>
@@ -577,16 +547,12 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
  : '%M' Minute as decimal number (00-59).<br/>
  : '%p' AM/PM indicator in the locale. Used in conjunction with '%I' and *not* with '%H'.<br/>
  : '%S' Second as decimal number (00-61), allowing for up to two leap-seconds.<br/>
- : '%U' Week of the year as decimal number (00-53) using Sunday as the first day 1 of the week (and typically with the first Sunday of the year as day 1 of week 1). This is the US convention.<br/>
- : '%w' Weekday as decimal number (0-6, Sunday is 0).<br/>
- : '%W' Week of the year as decimal number (00-53) using Monday as the first day of week (and typically with the first Monday of the year as day 1 of week 1). This is the UK convention.<br/>
  : '%x' Date, locale-specific.<br/>
  : '%X' Time, locale-specific.<br/>
  : '%y' Year without century (00-99).<br/>
  : '%Y' Year with century.<br/>
  : '%z' Offset from Greenwich, so '-0900' is 9 hours west of Greenwich.<br/>
  : '%Z' Time zone as a character string.<br/>
- : '%C' Century (00-99): the integer part of the year divided by 100.<br/>
  : '%D' Locale-specific date format such as '%m/%d/%y': ISO C99 says it should be that exact format.<br/>
  : '%e' Day of the month as decimal number (1-31), with a leading pace for a single-digit number.<br/>
  : '%F' Equivalent to %Y-%m-%d (the ISO 8601 date format).<br/>
@@ -598,19 +564,16 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
  : '%r' The 12-hour clock time (using the locale's AM or PM).<br/>
  : '%R' Equivalent to '%H:%M'.<br/>
  : '%T' Equivalent to '%H:%M:%S'.<br/>
- : '%u' Weekday as a decimal number (1-7, Monday is 1).<br/>
- : '%V' Week of the year as decimal number (00-53) as defined in ISO 8601.  If the week (starting on Monday) containing 1 January has four or more days in the new year, then it is considered week 1.  Otherwise, it is the last week of the previous year, and the next week is week 1. 
  :</pre>
  :
  : @return The dateTime value resulting from the conversion.
- : <br/><br/><b> Attention : This function is still not implemented. </b> <br/>
- :
+ : @example test/Queries/data-cleaning/normalization/to-dateTime.xq
  :)
 declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:string? ) as xs:string {
-(:
   let $timezoneDict := normalization:timeZone-dictionary()
-  let $monthDict := normalization:month-dictionary()  
-  let $format-tokens := tokenize($format, "[ \-%]+")[position()>1]  
+  let $monthDict := normalization:month-dictionary()
+  let $format-string := replace(replace(replace ($format, '%R', '%H:%M'), '%T', '%H:%M:%S'), '%F', '%Y-%m-%d')  
+  let $format-tokens := tokenize($format-string, "[ %\-/:\.]+")[position()>1]  
   let $sdt := 
  	if (contains($sd, ":") or contains($sd, ".") or contains($sd, " ") or contains($sd, "-") 
 		or contains($sd, "/"))
@@ -801,7 +764,7 @@ declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:str
 
 			if (count(index-of($format-tokens, "e")) != 0)
 			then concat("0", string($sd-tokens[position() = index-of($format-tokens, "e")]))
-			else "SND"
+			else "00"
 	
 	let $result :=
 
@@ -813,6 +776,50 @@ declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:str
 			 index-of($format-tokens, "Z")]]),4,2)) > 59) 		  
 		  then 1 
 		  else 0
+
+		let $dayscomplement := 
+		  if (number($complement) + number($hours) + number(substring(string($timezoneDict//timeZone/@value[../@name=$sd-tokens[position() 			=index-of($format-tokens, "Z")]]),2,2)) >= 24)
+		  then 1
+		  else 0
+
+		let $monthscomplement :=
+		  if(($dayscomplement + number($day) > 28) and (compare($month, '02') = 0) and (number($year) mod 4 != 0))
+		  then 1  
+		  else 
+		    if(($dayscomplement + number($day) > 30) and ((compare($month, '04') = 0) or (compare($month, '06') = 0) or (compare($month, '09') = 0) or (compare($month, '11') = 0)))
+		    then 1
+		    else 
+		      if(($dayscomplement + number($day) > 31) and ((compare($month, '04') = 0) or (compare($month, '01') = 0) or (compare($month, '03') = 0) or (compare($month, '05') = 0) or (compare($month, '07') = 0) or (compare($month, '08') = 0) or (compare($month, '10') = 0) or (compare($month, '12') = 0)))
+		      then 1
+		      else 
+		        if(($dayscomplement + number($day) > 29) and (compare($month, '02') = 0) and (number($year) mod 4 = 0))
+		        then 1
+		        else 0
+
+		let $ryear := 
+		  if ($monthscomplement + number($month) > 12)
+		  then string(number($year) + 1)
+		  else $year
+
+		let $daywcompl := 
+		  if ($monthscomplement = 1)
+		  then 1
+		  else number($day) + $dayscomplement
+
+		let $monthwcompl :=
+		  if($monthscomplement + number($month) <= 12)
+		  then number($month) + $monthscomplement		
+		  else 1
+ 
+		let $rday := 
+		  if (string-length(string($daywcompl)) = 1)
+		  then concat ('0', string($daywcompl))
+		  else string($daywcompl)
+
+		let $rmonth :=
+		  if (string-length(string($monthwcompl)) = 1)
+		  then concat ('0', string($monthwcompl))
+		  else string($monthwcompl)
 
 		let $rhours := 
 		  if (string-length(string(
@@ -845,7 +852,7 @@ declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:str
 				 index-of($format-tokens, "Z")]]),4,2))) mod 60))
 
 			
-	          return concat($year, "-", $month, "-", $day, "T", $rhours, ":", $rminutes, ":", $seconds)
+	          return concat($ryear, "-", $rmonth, "-", $rday, "T", $rhours, ":", $rminutes, ":", $seconds)
 	     else 
 	     
 	     if (substring(string($timezoneDict//timeZone/@value[../@name=$sd-tokens[position() = 
@@ -853,10 +860,61 @@ declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:str
 	     then	
 		let $complement := 
 		  if (number($minutes)-number(substring(string($timezoneDict//timeZone/@value[../@name=$sd-tokens[position() =
-				 index-of($format-tokens, "Z")]]),4,2)) < 0) 		  
+				 index-of($format-tokens, "Z")]]),2,2)) < 0) 		  
 		  then -1 
 		  else 0
 	
+		let $dayscomplement := 
+		  if (number($complement) - number($hours) - number(substring(string($timezoneDict//timeZone/@value[../@name=$sd-tokens[position()=
+				 index-of($format-tokens, "Z")]]),2,2)) < 0)
+		  then -1
+		  else 0
+
+		let $monthcomplement :=
+		  if(number($day) + $dayscomplement < 1)
+		  then -1
+		  else 0
+	
+		let $yearcomplement :=
+		  if(number($month) + $monthcomplement< 1)
+		  then -1
+		  else 0
+
+		let $daywcompl := 
+		  if ($monthcomplement = 0)
+		  then number($day) + $dayscomplement 
+		  else 
+		   if ( (number($month) = 5) or (number($month) = 7) or (number($month) = 10) or (number($month) = 12))
+		   then 30
+		   else 
+		    if((number($month) = 4) or (number($month) = 6) or (number($month) = 9) or (number($month) = 11) or (number($month) = 2) or 			(number($month) = 1) or (number($month) = 8))
+		    then 31
+		    else 
+		      if((number($month) = 3) and (number($year) mod 4 != 0))
+		      then 28
+		      else 
+		        if((number($month) = 3) and (number($year) mod 4 = 0))
+		        then 29
+		        else number($day) + $dayscomplement
+	  	      	
+		let $monthwcompl:=
+		  if($yearcomplement = 0)
+		  then number($month) + $monthcomplement
+		  else 12
+
+		let $ryear := 
+		  number($year) + $yearcomplement
+
+		let $rday := 
+		  if (string-length(string($daywcompl)) = 1)
+		  then concat ('0', string($daywcompl))
+		  else string($daywcompl)
+
+		let $rmonth :=
+		  if (string-length(string($monthwcompl)) = 1)
+		  then concat ('0', string($monthwcompl))
+		  else string($monthwcompl)
+
 		let $rhours :=
 		     if( ((number($complement) + number($hours) -
 			number(substring(string($timezoneDict//timeZone/@value[../@name=$sd-tokens[position() =
@@ -923,7 +981,7 @@ declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:str
 			      number(substring(string($timezoneDict//timeZone/@value[../@name=$sd-tokens[position() =
 				 index-of($format-tokens, "Z")]]),2,2)))) mod 60))
 
-		return concat($year, "-", $month, "-", $day, "T", $rhours, ":", $rminutes, ":", $seconds)
+		return concat($ryear, "-", $rmonth, "-", $rday, "T", $rhours, ":", $rminutes, ":", $seconds)
 	     else ()
 	else	
 
@@ -931,8 +989,52 @@ declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:str
 	if (count(index-of($format-tokens, "z")) != 0) 
 	then if (substring(string($sd-tokens[position() = index-of($format-tokens, "z")]),1,1)='+')
 	     then let $complement := 
-		  if (number($minutes)+number(substring(string($sd-tokens[position() = index-of($format-tokens, "z")]),4,2)) > 59) 		  then 1 
+		  if (number($minutes)+number(substring(string($sd-tokens[position() = index-of($format-tokens, "z")]),4,2)) > 59) 		  	  then 1 
 		  else 0
+
+		let $dayscomplement := 
+		  if (number($complement) + number($hours) + number(substring(string($sd-tokens[position() = 					index-of($format-tokens, "z")]),2,2)) >= 24)
+		  then 1
+		  else 0
+
+		let $monthscomplement :=
+		  if(($dayscomplement + number($day) > 28) and (compare($month, '02') = 0) and (number($year) mod 4 != 0))
+		  then 1  
+		  else 
+		    if(($dayscomplement + number($day) > 30) and ((compare($month, '04') = 0) or (compare($month, '06') = 0) or (compare($month, '09') = 0) or (compare($month, '11') = 0)))
+		    then 1
+		    else 
+		      if(($dayscomplement + number($day) > 31) and ((compare($month, '04') = 0) or (compare($month, '01') = 0) or (compare($month, '03') = 0) or (compare($month, '05') = 0) or (compare($month, '07') = 0) or (compare($month, '08') = 0) or (compare($month, '10') = 0) or (compare($month, '12') = 0)))
+		      then 1
+		      else 
+		        if(($dayscomplement + number($day) > 29) and (compare($month, '02') = 0) and (number($year) mod 4 = 0))
+		        then 1
+		        else 0
+
+		let $ryear := 
+		  if ($monthscomplement + number($month) > 12)
+		  then string(number($year) + 1)
+		  else $year
+
+		let $daywcompl := 
+		  if ($monthscomplement = 1)
+		  then 1
+		  else number($day) + $dayscomplement
+
+		let $monthwcompl :=
+		  if($monthscomplement + number($month) <= 12)
+		  then number($month) + $monthscomplement		
+		  else 1
+ 
+		let $rday := 
+		  if (string-length(string($daywcompl)) = 1)
+		  then concat ('0', string($daywcompl))
+		  else string($daywcompl)
+
+		let $rmonth :=
+		  if (string-length(string($monthwcompl)) = 1)
+		  then concat ('0', string($monthwcompl))
+		  else string($monthwcompl)
 
 		let $rhours := 
 		  if (string-length(string(
@@ -959,15 +1061,65 @@ declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:str
 			    number(substring(string($sd-tokens[position() = index-of($format-tokens, "z")]),4,2))) mod 60))
 
 			
-	          return concat($year, "-", $month, "-", $day, "T", $rhours, ":", $rminutes, ":", $seconds)
+	          return concat($ryear, "-", $rmonth, "-", $rday, "T", $rhours, ":", $rminutes, ":", $seconds)
 	     else 
 	     
 	     if (substring(string($sd-tokens[position() = index-of($format-tokens, "z")]),1,1)='-')
 	     then	
 		let $complement := 
-		  if (number($minutes)-number(substring(string($sd-tokens[position() = index-of($format-tokens, "z")]),4,2)) < 0) 		  then -1 
+		  if (number($minutes)-number(substring(string($sd-tokens[position() = index-of($format-tokens, "z")]),4,2)) < 0) 		  	  then -1 
 		  else 0
 	
+		let $dayscomplement := 
+		  if (number($complement) - number($hours) - number(substring(string($sd-tokens[position() = 					index-of($format-tokens, "z")]),2,2)) < 0)
+		  then -1
+		  else 0
+
+		let $monthcomplement :=
+		  if(number($day) + $dayscomplement< 1)
+		  then -1
+		  else 0
+	
+		let $yearcomplement :=
+		  if(number($month) + $monthcomplement< 1)
+		  then -1
+		  else 0
+
+		let $daywcompl := 
+		  if ($monthcomplement = 0)
+		  then number($day) + $dayscomplement 
+		  else 
+		   if ( (number($month) = 5) or (number($month) = 7) or (number($month) = 10) or (number($month) = 12))
+		   then 30
+		   else 
+		    if((number($month) = 4) or (number($month) = 6) or (number($month) = 9) or (number($month) = 11) or (number($month) = 2) or 			(number($month) = 1) or (number($month) = 8))
+		    then 31
+		    else 
+		      if((number($month) = 3) and (number($year) mod 4 != 0))
+		      then 28
+		      else 
+		        if((number($month) = 3) and (number($year) mod 4 = 0))
+		        then 29
+		        else number($day) + $dayscomplement
+	  	      	
+		let $monthwcompl:=
+		  if($yearcomplement = 0)
+		  then number($month) + $monthcomplement
+		  else 12
+
+		let $ryear := 
+		  number($year) + $yearcomplement
+
+		let $rday := 
+		  if (string-length(string($daywcompl)) = 1)
+		  then concat ('0', string($daywcompl))
+		  else string($daywcompl)
+
+		let $rmonth :=
+		  if (string-length(string($monthwcompl)) = 1)
+		  then concat ('0', string($monthwcompl))
+		  else string($monthwcompl)
+
 		let $rhours :=
 		     if( ((number($complement) + number($hours) -
 			number(substring(string($sd-tokens[position() = index-of($format-tokens, "z")]),2,2))) mod 24) >= 0 )
@@ -1020,31 +1172,20 @@ declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:str
 			    (60 - -(number($minutes) -
 			      number(substring(string($sd-tokens[position() = index-of($format-tokens, "z")]),2,2)))) mod 60))
 
-		return concat($year, "-", $month, "-", $day, "T", $rhours, ":", $rminutes, ":", $seconds)
+		return concat($ryear, "-", $rmonth, "-", $rday, "T", $rhours, ":", $rminutes, ":", $seconds)
 	     else ()
 	else
 	 concat($year, "-", $month, "-", $day, "T", $hours, ":", $minutes, ":", $seconds)
 
-	return
-
-	if (matches(string($result),"[0-9]+-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01]))T(([01][0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]")) 
-	then $result
-	else
-	   (error(QName('http://www.zorba-xquery.com/modules/data-cleaning/normalization',
-		'err:notsupported'),data(concat($result, " - ", concat("hours: ", $hours), concat(" minutes: ", $minutes), concat(" seconds:", $seconds)))))
-
+	return 
+	normalization:check-dateTime($result)
 	else()
-:)""
 };
 
 (:~
  : Uses an address normalization Web service to convert a postal address given as input into a 
  : cannonical representation format.
  :
- : <br/>
- : Example usage : <pre> normalize-address ( ( 'Marques de Pombal' , 'Lisboa' ) ) </pre>
- : <br/>
- : The function invocation in the example above returns : <pre> ( 'Portugal' , 'Lisbon' , 'praca Marques de Pombal' ) </pre>
  : 
  : @param $addr A sequence of strings encoding an address, where each string in the sequence corresponds to a different component (e.g., street, city, country, etc.) of the address.
  : @return A sequence of strings with the address encoded in a cannonical format, where each string in the sequence corresponds to a different component (e.g., street, city, country, etc.) of the address.
@@ -1315,7 +1456,7 @@ return $result
  : Internal auxiliary function that returns an XML representation for a dictionary that contains a 
  : numeric value associated to different month name abbreviations.
  :)
-declare %private function normalization:month-dictionary() as node(){
+declare %private function normalization:month-dictionary() as element(){
 let $dictionary :=
 <dictionary>
 	<month name="January" value="01">
@@ -1380,3 +1521,40 @@ let $dictionary :=
 </dictionary>
 return $dictionary
 };
+
+(:~
+ : Internal auxiliary function that checks if a string is in xs:dateTime format
+ :
+ :
+ : @param $dateTime The string representation for the dateTime.
+ : @return The dateTime string if it represents the xs:dateTime format.
+ :)
+declare %private function normalization:check-dateTime($dateTime as xs:string) as xs:string{
+ concat(string(year-from-dateTime(xs:dateTime($dateTime))), substring($dateTime,5))
+};
+
+(:~
+ : Internal auxiliary function that checks if a string is in xs:date format
+ :
+ :
+ : @param $dateTime The string representation for the date.
+ : @return The date string if it represents the xs:date format.
+ :)
+declare %private function normalization:check-date($date as xs:string) as xs:string{
+ concat(string(year-from-date(xs:date($date))), substring($date,5))
+};
+
+(:~
+ : Internal auxiliary function that checks if a string is in xs:time format
+ :
+ :
+ : @param $dateTime The string representation for the time.
+ : @return The time string if it represents the xs:time format.
+ :)
+declare %private function normalization:check-time($Time as xs:string) as xs:string{
+ if(string(hours-from-time(xs:time($Time))))
+ then $Time
+ else()
+};
+
+
