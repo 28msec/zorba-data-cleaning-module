@@ -165,7 +165,6 @@ declare function simc:needleman-wunsch ( $s1 as xs:string, $s2 as xs:string, $sc
  : @param $penalty The penalty value.
  : @return The Smith-Waterman distance between the two strings.
  :)
-(:
 declare function simc:smith-waterman ( $s1 as xs:string, $s2 as xs:string, $score as xs:integer, $penalty as xs:integer ) as xs:double{ 
  if(string-length($s1) = 0) then 0 else
  if(string-length($s2) = 0) then 0 else
@@ -176,4 +175,3 @@ declare function simc:smith-waterman ( $s1 as xs:string, $s2 as xs:string, $scor
   simc:smith-waterman(substring($s1, 2), substring($s2, 2), $score, $penalty) + ( if(substring($s1, 1, 1) = substring($s2, 1, 1)) then $score else -$penalty )
  ))
 };
-:)
