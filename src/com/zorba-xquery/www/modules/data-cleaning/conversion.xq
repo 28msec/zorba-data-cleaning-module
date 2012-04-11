@@ -29,7 +29,7 @@ xquery version "3.0";
 module namespace conversion = "http://www.zorba-xquery.com/modules/data-cleaning/conversion";
 
 declare namespace exref = "http://www.ecb.int/vocabulary/2002-08-01/eurofxref";
-declare namespace ann = "http://www.zorba-xquery.com/annotations";
+declare namespace an = "http://www.zorba-xquery.com/annotations";
 
 import schema namespace wp = 'http://api.whitepages.com/schema/';
 
@@ -52,7 +52,7 @@ declare variable $conversion:key := "06ea2f21cc15602b6a3e242e3225a81a";
  : @return A sequence of strings for the phone numbers associated to the name.
  : @example test/Queries/data-cleaning/conversion/phone-from-user.xq
  :)
-declare %ann:nondeterministic function conversion:phone-from-user ( $name as xs:string) as xs:string*{
+declare %an:nondeterministic function conversion:phone-from-user ( $name as xs:string) as xs:string*{
 	let $name-value := replace($name, " ", "%20")
 	let $url := concat("http://api.whitepages.com/find_person/1.0/?name=",$name-value,";api_key=",$conversion:key)
 	let $doc := http:get-node($url)[2]
@@ -69,7 +69,7 @@ declare %ann:nondeterministic function conversion:phone-from-user ( $name as xs:
  : @return A sequence of strings for the addresses associated to the name.
  : @example test/Queries/data-cleaning/conversion/address-from-user.xq
  :)
-declare %ann:nondeterministic function conversion:address-from-user ( $name as xs:string) as xs:string*{
+declare %an:nondeterministic function conversion:address-from-user ( $name as xs:string) as xs:string*{
 	let $name-value := replace($name, " ", "%20")
 	let $url := concat("http://api.whitepages.com/find_person/1.0/?name=",$name-value,";api_key=",$conversion:key)
 	let $doc := http:get-node($url)[2]
@@ -91,7 +91,7 @@ declare %ann:nondeterministic function conversion:address-from-user ( $name as x
  : @return A sequence of strings for the person or organization's name associated to the phone number.
  : @example test/Queries/data-cleaning/conversion/user-from-phone.xq
  :)
-declare %ann:nondeterministic function conversion:user-from-phone ( $phone-number as xs:string) as xs:string*{
+declare %an:nondeterministic function conversion:user-from-phone ( $phone-number as xs:string) as xs:string*{
 	let $url := concat("http://api.whitepages.com/reverse_phone/1.0/?phone=",$phone-number,";api_key=",$conversion:key)
 	let $doc := http:get-node($url)[2]
 	return $doc/wp:wp/wp:listings/wp:listing/wp:displayname/text()	
@@ -106,7 +106,7 @@ declare %ann:nondeterministic function conversion:user-from-phone ( $phone-numbe
  : @return A string for the addresses associated to the phone number.
  : @example test/Queries/data-cleaning/conversion/address-from-phone.xq
  :)
-declare %ann:nondeterministic function conversion:address-from-phone ( $phone-number as xs:string) as xs:string*{
+declare %an:nondeterministic function conversion:address-from-phone ( $phone-number as xs:string) as xs:string*{
 	let $url := concat("http://api.whitepages.com/reverse_phone/1.0/?phone=",$phone-number,";api_key=",$conversion:key)
 	let $doc := http:get-node($url)[2]
 	let $addresses :=
@@ -128,7 +128,7 @@ declare %ann:nondeterministic function conversion:address-from-phone ( $phone-nu
  : @return A sequence of strings for the person or organization's names associated to the address.
  : @example test/Queries/data-cleaning/conversion/user-from-address.xq
  :)
-declare %ann:nondeterministic function conversion:user-from-address ( $address as xs:string) as xs:string*{
+declare %an:nondeterministic function conversion:user-from-address ( $address as xs:string) as xs:string*{
 	let $tokens := tokenize ($address, ",")
 	let $token-full-street := $tokens[position()=1]
 	let $state := 
@@ -154,7 +154,7 @@ declare %ann:nondeterministic function conversion:user-from-address ( $address a
  : @return A sequence of strings for the phone number or organization's names associated to the address.
  : @example test/Queries/data-cleaning/conversion/phone-from-address.xq
  :)
-declare %ann:nondeterministic function conversion:phone-from-address ( $address as xs:string) as xs:string*{
+declare %an:nondeterministic function conversion:phone-from-address ( $address as xs:string) as xs:string*{
 	let $tokens := tokenize ($address, ",")
 	let $token-full-street := $tokens[position()=1]
 	let $state := 
@@ -191,7 +191,7 @@ declare %ann:nondeterministic function conversion:phone-from-address ( $address 
  : @return The value resulting from the conversion
  : @example test/Queries/data-cleaning/conversion/unit-convert.xq
  :)
-declare %ann:nondeterministic function conversion:unit-convert ( $v as xs:double, $t as xs:string, $m1 as xs:string, $m2 as xs:string ) {
+declare %an:nondeterministic function conversion:unit-convert ( $v as xs:double, $t as xs:string, $m1 as xs:string, $m2 as xs:string ) {
  if ( $m1 = $m2 ) then $v else
 
 let $conversion-table := 
@@ -303,7 +303,7 @@ else
  : @return The pair of latitude and longitude coordinates associated with the input address.
  : @example test/Queries/data-cleaning/conversion/geocode-from-address.xq
  :)
-declare %ann:nondeterministic function conversion:geocode-from-address ( $q as xs:string* ) as xs:double* {
+declare %an:nondeterministic function conversion:geocode-from-address ( $q as xs:string* ) as xs:double* {
  let $id   := ""
  let $url  := "http://where.yahooapis.com/geocode?q="
  let $q2   := string-join(for $i in $q return translate($i," ","+"),",")
@@ -321,7 +321,7 @@ declare %ann:nondeterministic function conversion:geocode-from-address ( $q as x
  : @return The sequence of strings corresponding to the different components (e.g., street, city, country, etc.) of the place name that corresponds to the input geospatial coordinates.
  : @example test/Queries/data-cleaning/conversion/address-from-geocode.xq
  :)
-declare %ann:nondeterministic function conversion:address-from-geocode ( $lat as xs:double, $lon as xs:double ) as xs:string* {
+declare %an:nondeterministic function conversion:address-from-geocode ( $lat as xs:double, $lon as xs:double ) as xs:string* {
  let $id   := ""
  let $url  := "http://where.yahooapis.com/geocode?q="
  let $q    := concat($lat,",+",$lon) 
@@ -351,7 +351,7 @@ declare %ann:nondeterministic function conversion:address-from-geocode ( $lat as
  : @see http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
  : @example test/Queries/data-cleaning/conversion/currency-convert.xq
  :)
-declare %ann:nondeterministic function conversion:currency-convert ( $v as xs:double, $m1 as xs:string, $m2 as xs:string, $date as xs:string ) {
+declare %an:nondeterministic function conversion:currency-convert ( $v as xs:double, $m1 as xs:string, $m2 as xs:string, $date as xs:string ) {
  let $daily   := "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
  let $hist    := "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.xml"
  let $doc     := if (string-length($date) = 0) then http:get-node($daily)[2] else

@@ -32,7 +32,7 @@ module namespace normalization = "http://www.zorba-xquery.com/modules/data-clean
 
 import module namespace http = "http://www.zorba-xquery.com/modules/http-client";
 
-declare namespace ann = "http://www.zorba-xquery.com/annotations";
+declare namespace an = "http://www.zorba-xquery.com/annotations";
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
 declare option ver:module-version "2.0";
 
@@ -1191,7 +1191,7 @@ declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:str
  : @return A sequence of strings with the address encoded in a cannonical format, where each string in the sequence corresponds to a different component (e.g., street, city, country, etc.) of the address.
  : @example test/Queries/data-cleaning/normalization/normalize-address.xq
  :)
-declare %ann:nondeterministic  function normalization:normalize-address ( $addr as xs:string* ) as xs:string* {
+declare %an:nondeterministic  function normalization:normalize-address ( $addr as xs:string* ) as xs:string* {
 
   let $id   := ""
   let $url  := "http://where.yahooapis.com/geocode?q="
