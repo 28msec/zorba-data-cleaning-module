@@ -191,7 +191,7 @@ declare %an:nondeterministic function conversion:phone-from-address ( $address a
  : @return The value resulting from the conversion
  : @example test/Queries/data-cleaning/conversion/unit-convert.xq
  :)
-declare %an:nondeterministic function conversion:unit-convert ( $v as xs:double, $t as xs:string, $m1 as xs:string, $m2 as xs:string ) {
+declare %an:nondeterministic function conversion:unit-convert ( $v as xs:double, $t as xs:string, $m1 as xs:string, $m2 as xs:string ) as xs:double {
  if ( $m1 = $m2 ) then $v else
 
 let $conversion-table := 
@@ -351,7 +351,7 @@ declare %an:nondeterministic function conversion:address-from-geocode ( $lat as 
  : @see http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
  : @example test/Queries/data-cleaning/conversion/currency-convert.xq
  :)
-declare %an:nondeterministic function conversion:currency-convert ( $v as xs:double, $m1 as xs:string, $m2 as xs:string, $date as xs:string ) {
+declare %an:nondeterministic function conversion:currency-convert ( $v as xs:double, $m1 as xs:string, $m2 as xs:string, $date as xs:string ) as xs:double{
  let $daily   := "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
  let $hist    := "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.xml"
  let $doc     := if (string-length($date) = 0) then http:get-node($daily)[2] else
@@ -374,7 +374,7 @@ declare %an:nondeterministic function conversion:currency-convert ( $v as xs:dou
  : <br/><br/><b> Attention : This function is still not implemented. </b> <br/>
  :
  :)
-declare function conversion:phone-from-domain ( $domain as xs:string ) {
+declare function conversion:phone-from-domain ( $domain as xs:string ) as xs:string*{
  ()
 };
 
@@ -388,7 +388,7 @@ declare function conversion:phone-from-domain ( $domain as xs:string ) {
  : <br/><br/><b> Attention : This function is still not implemented. </b> <br/>
  :
  :)
-declare function conversion:address-from-domain ( $domain as xs:string ) {
+declare function conversion:address-from-domain ( $domain as xs:string ) as xs:string*{
  ()
 };
 
@@ -402,6 +402,6 @@ declare function conversion:address-from-domain ( $domain as xs:string ) {
  : <br/><br/><b> Attention : This function is still not implemented. </b> <br/>
  :
  :)
-declare function conversion:name-from-domain ( $domain as xs:string ) {
+declare function conversion:name-from-domain ( $domain as xs:string ) as xs:string*{
  ()
 };
