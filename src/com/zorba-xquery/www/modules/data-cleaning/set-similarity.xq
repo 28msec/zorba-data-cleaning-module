@@ -66,7 +66,7 @@ declare function set:deep-union ( $s1 , $s2 ) {
  : @return The intersection of both sets.
  : @example test/Queries/data-cleaning/set-similarity/deep-intersect.xq
  :)
-declare function set:deep-intersect ( $s1 , $s2 ) as xs:anyType*{
+declare function set:deep-intersect ( $s1 , $s2 ) {
  for $a at $apos in $s1
  let $t1 := every $ba in subsequence($s1, 1, $apos - 1) satisfies not(deep-equal($ba,$a))
  let $t2 := some $bb in $s2 satisfies deep-equal($bb,$a)
