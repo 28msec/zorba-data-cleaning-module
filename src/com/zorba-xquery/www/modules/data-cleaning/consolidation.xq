@@ -50,7 +50,7 @@ declare option ver:module-version "2.0";
  : @return The most frequent node in the input sequence.
  : @example test/Queries/data-cleaning/consolidation/most-frequent.xq
  :)
-declare function con:most-frequent ( $s ) {
+declare function con:most-frequent ( $s ) as item(){
  (for $str in set:distinct($s) order by count($s[deep-equal(.,$str)]) descending return $str)[1]
 };
 
@@ -67,7 +67,7 @@ declare function con:most-frequent ( $s ) {
  : @return The least frequent node in the input sequence.
  : @example test/Queries/data-cleaning/consolidation/leastfrequent_1.xq
  :)
-declare function con:least-frequent ( $s ) {
+declare function con:least-frequent ( $s ) as item(){
  let $aux := for $str in set:distinct($s) order by count($s[deep-equal(.,$str)]) return $str
  return if (count($aux) = 0) then () else ($aux[1])
 };
@@ -242,7 +242,7 @@ declare function con:least-similar-edit-distance ( $s as xs:string*, $m as xs:st
  : @return The node having the largest number of descending elements in the input sequence.
  : @example test/Queries/data-cleaning/consolidation/most-elements.xq
  :)
-declare function con:most-elements ( $s ) {
+declare function con:most-elements ( $s ) as element(){
  (for $str in set:distinct($s) order by count($str/descendant-or-self::element()) descending return $str)[1]
 };
 
@@ -260,7 +260,7 @@ declare function con:most-elements ( $s ) {
  : @return The node having the largest number of descending attributes in the input sequence.
  : @example test/Queries/data-cleaning/consolidation/most-attributes.xq
  :)
-declare function con:most-attributes ( $s ) {
+declare function con:most-attributes ( $s ) as element(){
  (for $str in set:distinct($s) order by count($str/descendant-or-self::*/attribute()) descending return $str)[1]
 };
 
@@ -278,7 +278,7 @@ declare function con:most-attributes ( $s ) {
  : @return The node having the largest number of descending nodes in the input sequence.
  : @example test/Queries/data-cleaning/consolidation/most-nodes.xq
  :)
-declare function con:most-nodes ( $s ) {
+declare function con:most-nodes ( $s ) as element(){
  (for $str in set:distinct($s) order by count($str/descendant-or-self::node()) descending return $str)[1]
 };
 
@@ -296,7 +296,7 @@ declare function con:most-nodes ( $s ) {
  : @return The node having the smallest number of descending elements in the input sequence.
  : @example test/Queries/data-cleaning/consolidation/least-elements.xq
  :)
-declare function con:least-elements ( $s ) {
+declare function con:least-elements ( $s ) as element(){
  (for $str in set:distinct($s) order by count($str/descendant-or-self::element()) return $str)[1]
 };
 
@@ -314,7 +314,7 @@ declare function con:least-elements ( $s ) {
  : @return The node having the smallest number of descending attributes in the input sequence.
  : @example test/Queries/data-cleaning/consolidation/least-attributes.xq
  :)
-declare function con:least-attributes ( $s ) {
+declare function con:least-attributes ( $s ) as element(){
  (for $str in set:distinct($s) order by count($str/descendant-or-self::*/attribute()) return $str)[1]
 };
 
@@ -332,7 +332,7 @@ declare function con:least-attributes ( $s ) {
  : @return The node having the smallest number of descending nodes in the input sequence.
  : @example test/Queries/data-cleaning/consolidation/least-nodes.xq
  :)
-declare function con:least-nodes ( $s ) {
+declare function con:least-nodes ( $s ) as element(){
  (for $str in set:distinct($s) order by count($str/descendant-or-self::node()) return $str)[1]
 };
 
@@ -350,7 +350,7 @@ declare function con:least-nodes ( $s ) {
  : @return The node having the largest number of distinct descending elements in the input sequence.
  : @example test/Queries/data-cleaning/consolidation/most-distinct-elements.xq
  :)
-declare function con:most-distinct-elements ( $s ) {
+declare function con:most-distinct-elements ( $s ) as element(){
  (for $str in set:distinct($s) order by count(set:distinct($str/descendant-or-self::element())) descending return $str)[1]
 };
 
@@ -368,7 +368,7 @@ declare function con:most-distinct-elements ( $s ) {
  : @return The node having the largest number of distinct descending attributes in the input sequence.
  : @example test/Queries/data-cleaning/consolidation/most-distinct-attributes.xq
  :)
-declare function con:most-distinct-attributes ( $s ) {
+declare function con:most-distinct-attributes ( $s ) as element(){
  (for $str in set:distinct($s) order by count(set:distinct($str/descendant-or-self::*/attribute())) descending return $str)[1]
 };
 
@@ -386,7 +386,7 @@ declare function con:most-distinct-attributes ( $s ) {
  : @return The node having the largest number of distinct descending nodes in the input sequence.
  : @example test/Queries/data-cleaning/consolidation/most-distinct-nodes.xq
  :)
-declare function con:most-distinct-nodes ( $s ) {
+declare function con:most-distinct-nodes ( $s ) as element(){
  (for $str in set:distinct($s) order by count(set:distinct($str/descendant-or-self::node())) descending return $str)[1]
 };
 
@@ -404,7 +404,7 @@ declare function con:most-distinct-nodes ( $s ) {
  : @return The node having the smallest number of distinct descending elements in the input sequence.
  : @example test/Queries/data-cleaning/consolidation/least-distinct-elements.xq
  :)
-declare function con:least-distinct-elements ( $s ) {
+declare function con:least-distinct-elements ( $s ) as element(){
  (for $str in set:distinct($s) order by count(set:distinct($str/descendant-or-self::element())) return $str)[1]
 };
 
@@ -422,7 +422,7 @@ declare function con:least-distinct-elements ( $s ) {
  : @return The node having the smallest number of distinct descending attributes in the input sequence.
  : @example test/Queries/data-cleaning/consolidation/least-distinct-attributes.xq
  :)
-declare function con:least-distinct-attributes ( $s ) {
+declare function con:least-distinct-attributes ( $s ) as element(){
  (for $str in set:distinct($s) order by count(set:distinct($str/descendant-or-self::*/attribute())) return $str)[1]
 };
 
@@ -440,7 +440,7 @@ declare function con:least-distinct-attributes ( $s ) {
  : @return The node having the smallest number of distinct descending nodes in the input sequence.
  : @example test/Queries/data-cleaning/consolidation/least-distinct-nodes.xq
  :)
-declare function con:least-distinct-nodes ( $s ) {
+declare function con:least-distinct-nodes ( $s ) as element(){
  (for $str in set:distinct($s) order by count(set:distinct($str/descendant-or-self::node())) return $str)[1]
 };
 
@@ -457,7 +457,7 @@ declare function con:least-distinct-nodes ( $s ) {
  : @param $paths A sequence of strings denoting XPath expressions.
  : @return The elements that, when matched to the given set of XPath expressions, always return a non-empty set of nodes.
  :)
-declare function con:all-xpaths ( $s as element()* , $paths as xs:string* ) {
+declare function con:all-xpaths ( $s as element()* , $paths as xs:string* ) as element()*{
 (:
  for $str in set:distinct($s)
  where every $path in $paths satisfies count( 
@@ -484,7 +484,7 @@ declare function con:all-xpaths ( $s as element()* , $paths as xs:string* ) {
  : @return The elements that, when matched to the given set of XPath expressions, return a non-empty set of nodes 
  : for at least one of the cases.
  :)
-declare function con:some-xpaths ( $s as element()* , $paths as xs:string* ) {
+declare function con:some-xpaths ( $s as element()* , $paths as xs:string* ) as element()*{
 (:
  for $str in set:distinct($s)
  where some $path in $paths satisfies count( 
@@ -512,7 +512,7 @@ declare function con:some-xpaths ( $s as element()* , $paths as xs:string* ) {
  : @return The element that matches the largest number of XPath expressions producing a non-empty set of nodes.
  :)
 
-declare function con:most-xpaths ( $s as element()* , $paths as xs:string* ) {
+declare function con:most-xpaths ( $s as element()* , $paths as xs:string* ) as element()*{
  (:
  (
   for $str in set:distinct($s) 
@@ -543,7 +543,7 @@ declare function con:most-xpaths ( $s as element()* , $paths as xs:string* ) {
  : @return The element that matches the smallest number of XPath expressions producing a non-empty set of nodes.
  :)
 
-declare function con:least-xpaths ( $s as element()* , $paths as xs:string* ) {
+declare function con:least-xpaths ( $s as element()* , $paths as xs:string* ) as element()*{
 (:
  (
   for $str in set:distinct($s) 
@@ -574,6 +574,6 @@ declare function con:least-xpaths ( $s as element()* , $paths as xs:string* ) {
  : <br/><br/><b> Attention : This function is still not implemented. </b> <br/>
  :
  :)
-declare function con:validating-schema ( $s as element()*, $schema as element() ) {
+declare function con:validating-schema ( $s as element()*, $schema as element() ) as element()*{
  false()
 };

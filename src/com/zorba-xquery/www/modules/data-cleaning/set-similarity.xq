@@ -46,7 +46,7 @@ declare option ver:module-version "2.0";
  : @return The union of both sets.
  : @example test/Queries/data-cleaning/set-similarity/deep-union.xq
  :)
-declare function set:deep-union ( $s1 , $s2 ) {
+declare function set:deep-union ( $s1 , $s2 ) as item()*{
  let $s := ( $s1 , $s2 )
  for $a at $apos in $s
  where every $ba in subsequence($s, 1, $apos - 1) satisfies not(deep-equal($ba,$a))
@@ -66,7 +66,7 @@ declare function set:deep-union ( $s1 , $s2 ) {
  : @return The intersection of both sets.
  : @example test/Queries/data-cleaning/set-similarity/deep-intersect.xq
  :)
-declare function set:deep-intersect ( $s1 , $s2 ) {
+declare function set:deep-intersect ( $s1 , $s2 ) as item()*{
  for $a at $apos in $s1
  let $t1 := every $ba in subsequence($s1, 1, $apos - 1) satisfies not(deep-equal($ba,$a))
  let $t2 := some $bb in $s2 satisfies deep-equal($bb,$a)
@@ -86,7 +86,7 @@ declare function set:deep-intersect ( $s1 , $s2 ) {
  : @return The set provided as input without the exact duplicates (i.e., returns the distinct nodes from the set provided as input).
  : @example test/Queries/data-cleaning/set-similarity/distinct.xq
  :)
-declare function set:distinct ( $s ) {
+declare function set:distinct ( $s ) as item()*{
  for $a at $apos in $s
  where every $ba in subsequence($s, 1, $apos - 1) satisfies not(deep-equal($ba,$a))
  return $a
