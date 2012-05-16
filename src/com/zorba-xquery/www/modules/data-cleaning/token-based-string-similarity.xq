@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version "3.0";
 
 (:
  : Copyright 2006-2009 The FLWOR Foundation.
@@ -26,7 +26,7 @@ xquery version "1.0";
  : typographical conventions often lead to rearrangement of words (e.g., "John Smith" versus "Smith, John").
  :
  : The logic contained in this module is not specific to any particular XQuery implementation,
- : although the module requires the trigonometic functions of XQuery 1.1 or a math extension 
+ : although the module requires the trigonometic functions of XQuery 3.0 or a math extension 
  : function such as sqrt($x as numeric) for computing the square root.
  :
  : @author Bruno Martins
