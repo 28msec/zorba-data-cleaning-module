@@ -21,7 +21,7 @@ xquery version "3.0";
  : character-based string similarity functions and token-based string similarity functions.
  : 
  : The logic contained in this module is not specific to any particular XQuery implementation,
- : although the module requires the trigonometic functions of XQuery 1.1 or a math extension 
+ : although the module requires the trigonometic functions of XQuery 3.0 or a math extension 
  : function such as sqrt($x as numeric) for computing the square root.
  :
  : @author Bruno Martins and Diogo Simões
