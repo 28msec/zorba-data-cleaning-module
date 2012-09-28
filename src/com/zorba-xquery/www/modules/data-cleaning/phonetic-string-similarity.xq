@@ -25,7 +25,7 @@ xquery version "1.0";
  : The logic contained in this module is not specific to any particular XQuery implementation.
  :
  : @author Bruno Martins
- : @project data processing/data cleaning
+ : @project Zorba/Data Cleaning/Phonectic String Similarity
  :)
 
 module namespace simp = "http://www.zorba-xquery.com/modules/data-cleaning/phonetic-string-similarity";
@@ -37,9 +37,9 @@ declare option ver:module-version "2.0";
  : Returns the Soundex key for a given string.
  :
  : <br/>
- : Example usage : <pre> soundex-key("Robert") </pre>
+ : Example usage : <code>soundex-key("Robert")</code>
  : <br/>
- : The function invocation in the example above returns : <pre> "R163" </pre>
+ : The function invocation in the example above returns : <code>"R163"</code>
  :
  : @param $s1 The string.
  : @return The Soundex key for the given input string.
@@ -59,9 +59,9 @@ declare function simp:soundex-key ( $s1 as xs:string ) as xs:string {
  : Checks if two strings have the same Soundex key.
  :
  : <br/>
- : Example usage : <pre> soundex( "Robert" , "Rupert" ) </pre>
+ : Example usage : <code>soundex( "Robert" , "Rupert" )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> true </pre>
+ : The function invocation in the example above returns : <code>true</code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -77,9 +77,9 @@ declare function simp:soundex ( $s1 as xs:string, $s2 as xs:string ) as xs:boole
  : The Metaphone algorithm produces variable length keys as its output, as opposed to Soundex's fixed-length keys.
  :
  : <br/>
- : Example usage : <pre> metaphone-key("ALEKSANDER") </pre>
+ : Example usage : <code>metaphone-key("ALEKSANDER")</code>
  : <br/>
- : The function invocation in the example above returns : <pre> "ALKSNTR" </pre>
+ : The function invocation in the example above returns : <code>"ALKSNTR"</code>
  :
  : @param $s1 The string.
  : @return The Metaphone key for the given input string.
@@ -103,9 +103,9 @@ declare function simp:metaphone-key ( $s1 as xs:string ) as xs:string {
  : Checks if two strings have the same Metaphone key.
  :
  : <br/>
- : Example usage : <pre> metaphone("ALEKSANDER", "ALEXANDRE") </pre>
+ : Example usage : <code>metaphone("ALEKSANDER", "ALEXANDRE")</code>
  : <br/>
- : The function invocation in the example above returns : <pre> true </pre>
+ : The function invocation in the example above returns : <code>true</code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.

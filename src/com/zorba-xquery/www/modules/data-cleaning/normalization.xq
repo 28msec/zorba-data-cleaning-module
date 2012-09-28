@@ -25,7 +25,7 @@ xquery version "3.0";
  : The logic contained in this module is not specific to any particular XQuery implementation.
  :
  : @author Bruno Martins and Diogo Simões
- : @project data processing/data cleaning
+ : @project Zorba/Data Cleaning/Normalization
  :)
 
 module namespace normalization = "http://www.zorba-xquery.com/modules/data-cleaning/normalization";
@@ -157,20 +157,20 @@ declare function normalization:to-date ( $sd as xs:string, $format as xs:string?
  : letter or 'O' or 'E' and then a single letter. Any character in the format string that is not part of a conversion specification 
  : is interpreted literally, and the string '%%' gives '%'. The supported conversion specifications are as follows:
  :
- : <pre>
- : '%H' Hours as decimal number (00-23).<br/>
- : '%I' Hours as decimal number (01-12).<br/>
- : '%M' Minute as decimal number (00-59).<br/>
- : '%p' AM/PM indicator in the locale. Used in conjunction with '%I' and *not* with '%H'.<br/>
+ : <pre class="ace-static">
+ : '%H' Hours as decimal number (00-23).
+ : '%I' Hours as decimal number (01-12).
+ : '%M' Minute as decimal number (00-59).
+ : '%p' AM/PM indicator in the locale. Used in conjunction with '%I' and *not* with '%H'.
  : '%S' Second as decimal number (00-61), allowing for up to two leap-seconds.<br/>
- : '%X' Time, locale-specific.<br/>
- : '%z' Offset from Greenwich, so '-0900' is 9 hours west of Greenwich.<br/>
- : '%Z' Time zone as a character string.<br/>
- : '%k' The 24-hour clock time with single digits preceded by a blank.<br/>
- : '%l' The 12-hour clock time with single digits preceded by a blank.<br/>
- : '%r' The 12-hour clock time (using the locale's AM or PM).<br/>
- : '%R' Equivalent to '%H:%M'.<br/>
- : '%T' Equivalent to '%H:%M:%S'.<br/>
+ : '%X' Time, locale-specific.
+ : '%z' Offset from Greenwich, so '-0900' is 9 hours west of Greenwich.
+ : '%Z' Time zone as a character string.
+ : '%k' The 24-hour clock time with single digits preceded by a blank.
+ : '%l' The 12-hour clock time with single digits preceded by a blank.
+ : '%r' The 12-hour clock time (using the locale's AM or PM).
+ : '%R' Equivalent to '%H:%M'.
+ : '%T' Equivalent to '%H:%M:%S'.
  :</pre>
  :
  : @return The time value resulting from the conversion.
@@ -534,36 +534,36 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
  : letter or 'O' or 'E' and then a single letter. Any character in the format string that is not part of a conversion specification 
  : is interpreted literally, and the string '%%' gives '%'. The supported conversion specifications are as follows:
  :
- : <pre>
- : '%b' Abbreviated month name in the current locale.<br/>
- : '%B' Full month name in the current locale.<br/>
- : '%c' Date and time, locale-specific.<br/>
- : '%C' Century (00-99): the integer part of the year divided by 100.<br/>
- : '%d' Day of the month as decimal number (01-31).<br/>
- : '%H' Hours as decimal number (00-23).<br/>
- : '%I' Hours as decimal number (01-12).<br/>
- : '%j' Day of year as decimal number (001-366).<br/>
- : '%m' Month as decimal number (01-12).<br/>
- : '%M' Minute as decimal number (00-59).<br/>
- : '%p' AM/PM indicator in the locale. Used in conjunction with '%I' and *not* with '%H'.<br/>
- : '%S' Second as decimal number (00-61), allowing for up to two leap-seconds.<br/>
- : '%x' Date, locale-specific.<br/>
- : '%X' Time, locale-specific.<br/>
- : '%y' Year without century (00-99).<br/>
- : '%Y' Year with century.<br/>
- : '%z' Offset from Greenwich, so '-0900' is 9 hours west of Greenwich.<br/>
- : '%Z' Time zone as a character string.<br/>
- : '%D' Locale-specific date format such as '%m/%d/%y': ISO C99 says it should be that exact format.<br/>
- : '%e' Day of the month as decimal number (1-31), with a leading pace for a single-digit number.<br/>
- : '%F' Equivalent to %Y-%m-%d (the ISO 8601 date format).<br/>
- : '%g' The last two digits of the week-based year (see '%V').<br/>
- : '%G' The week-based year (see '%V') as a decimal number.<br/>
- : '%h' Equivalent to '%b'.<br/>
- : '%k' The 24-hour clock time with single digits preceded by a blank.<br/>
- : '%l' The 12-hour clock time with single digits preceded by a blank.<br/>
- : '%r' The 12-hour clock time (using the locale's AM or PM).<br/>
- : '%R' Equivalent to '%H:%M'.<br/>
- : '%T' Equivalent to '%H:%M:%S'.<br/>
+ : <pre class="ace-static">
+ : '%b' Abbreviated month name in the current locale.
+ : '%B' Full month name in the current locale.
+ : '%c' Date and time, locale-specific.
+ : '%C' Century (00-99): the integer part of the year divided by 100.
+ : '%d' Day of the month as decimal number (01-31).
+ : '%H' Hours as decimal number (00-23).
+ : '%I' Hours as decimal number (01-12).
+ : '%j' Day of year as decimal number (001-366).
+ : '%m' Month as decimal number (01-12).
+ : '%M' Minute as decimal number (00-59).
+ : '%p' AM/PM indicator in the locale. Used in conjunction with '%I' and *not* with '%H'.
+ : '%S' Second as decimal number (00-61), allowing for up to two leap-seconds.
+ : '%x' Date, locale-specific.
+ : '%X' Time, locale-specific.
+ : '%y' Year without century (00-99).
+ : '%Y' Year with century.
+ : '%z' Offset from Greenwich, so '-0900' is 9 hours west of Greenwich.
+ : '%Z' Time zone as a character string.
+ : '%D' Locale-specific date format such as '%m/%d/%y': ISO C99 says it should be that exact format.
+ : '%e' Day of the month as decimal number (1-31), with a leading pace for a single-digit number.
+ : '%F' Equivalent to %Y-%m-%d (the ISO 8601 date format).
+ : '%g' The last two digits of the week-based year (see '%V').
+ : '%G' The week-based year (see '%V') as a decimal number.
+ : '%h' Equivalent to '%b'.
+ : '%k' The 24-hour clock time with single digits preceded by a blank.
+ : '%l' The 12-hour clock time with single digits preceded by a blank.
+ : '%r' The 12-hour clock time (using the locale's AM or PM).
+ : '%R' Equivalent to '%H:%M'.
+ : '%T' Equivalent to '%H:%M:%S'.
  :</pre>
  :
  : @return The dateTime value resulting from the conversion.

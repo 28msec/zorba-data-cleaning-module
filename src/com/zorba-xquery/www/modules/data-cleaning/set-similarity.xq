@@ -25,7 +25,7 @@ xquery version "1.0";
  : The logic contained in this module is not specific to any particular XQuery implementation.
  :
  : @author Bruno Martins
- : @project data processing/data cleaning
+ : @project Zorba/Data Cleaning/Set Similarity
  :)
 
 module namespace set = "http://www.zorba-xquery.com/modules/data-cleaning/set-similarity";
@@ -37,9 +37,9 @@ declare option ver:module-version "2.0";
  : Returns the union between two sets, using the deep-equal() function to compare the XML nodes from the sets.
  :
  : <br/>
- : Example usage : <pre> deep-union ( ( "a", "b", "c") , ( "a", "a", <d/> ) ) </pre>
+ : Example usage : <code> deep-union ( ( "a", "b", "c") , ( "a", "a", <d/> ) ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> ("a", "b", "c", <d/> ) </pre>
+ : The function invocation in the example above returns : <code> ("a", "b", "c", <d/> ) </code>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
@@ -57,9 +57,9 @@ declare function set:deep-union ( $s1 , $s2 ) as item()*{
  : Returns the intersection between two sets, using the deep-equal() function to compare the XML nodes from the sets.
  :
  : <br/>
- : Example usage : <pre> deep-intersect ( ( "a", "b", "c") , ( "a", "a", <d/> ) ) </pre>
+ : Example usage : <code> deep-intersect ( ( "a", "b", "c") , ( "a", "a", <d/> ) ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> ("a") </pre>
+ : The function invocation in the example above returns : <code> ("a") </code>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
@@ -78,9 +78,9 @@ declare function set:deep-intersect ( $s1 , $s2 ) as item()*{
  : Removes exact duplicates from a set, using the deep-equal() function to compare the XML nodes from the sets.
  :
  : <br/>
- : Example usage : <pre> distinct ( ( "a", "a", <b/> ) ) </pre>
+ : Example usage : <code> distinct ( ( "a", "a", <b/> ) ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> ("a", <b/> ) </pre>
+ : The function invocation in the example above returns : <code> ("a", <b/> ) </code>
  :
  : @param $s A set.
  : @return The set provided as input without the exact duplicates (i.e., returns the distinct nodes from the set provided as input).
@@ -98,9 +98,9 @@ declare function set:distinct ( $s ) as item()*{
  : (i.e., the size of the intersection) over the size of the smallest input set.
  :
  : <br/>
- : Example usage : <pre> overlap ( ( "a", "b", <c/> ) , ( "a", "a", "b" ) ) </pre>
+ : Example usage : <code> overlap ( ( "a", "b", <c/> ) , ( "a", "a", "b" ) ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 1.0 </pre>
+ : The function invocation in the example above returns : <code> 1.0 </code>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
@@ -117,9 +117,9 @@ declare function set:overlap ( $s1 , $s2 ) as xs:double {
  : (i.e., the size of the intersection) over the sum of the cardinalities for the input sets.
  :
  : <br/>
- : Example usage : <pre> dice ( ( "a", "b", <c/> ) , ( "a", "a", "d") ) </pre>
+ : Example usage : <code> dice ( ( "a", "b", <c/> ) , ( "a", "a", "d") ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.4 </pre>
+ : The function invocation in the example above returns : <code> 0.4 </code>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
@@ -136,9 +136,9 @@ declare function set:dice ( $s1 , $s2 ) as xs:double {
  : union of the input sets.
  :
  : <br/>
- : Example usage : <pre> jaccard ( ( "a", "b", <c/> ) , ( "a", "a", "d") ) </pre>
+ : Example usage : <code> jaccard ( ( "a", "b", <c/> ) , ( "a", "a", "d") ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.25 </pre>
+ : The function invocation in the example above returns : <code> 0.25 </code>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
