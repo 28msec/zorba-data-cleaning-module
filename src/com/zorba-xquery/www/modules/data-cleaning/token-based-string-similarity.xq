@@ -30,7 +30,7 @@ xquery version "3.0";
  : function such as sqrt($x as numeric) for computing the square root.
  :
  : @author Bruno Martins
- : @project data processing/data cleaning
+ : @project Zorba/Data Cleaning/Token Based String Similarity
  :)
 
 module namespace simt = "http://www.zorba-xquery.com/modules/data-cleaning/token-based-string-similarity";
@@ -48,9 +48,9 @@ declare option ver:module-version "2.0";
  : Returns the individual character n-grams forming a string.
  :
  : <br/>
- : Example usage : <pre> ngrams("FLWOR", 2 ) </pre>
+ : Example usage : <code> ngrams("FLWOR", 2 ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> ("_F" , "FL" , "LW" , "WO" , "LW" , "WO" , "OR" , "R_") </pre>
+ : The function invocation in the example above returns : <code> ("_F" , "FL" , "LW" , "WO" , "LW" , "WO" , "OR" , "R_") </code>
  :
  : @param $s The input string.
  : @param $n The number of characters to consider when extracting n-grams.
@@ -77,9 +77,9 @@ declare function simt:ngrams ( $s as xs:string, $n as xs:integer ) as xs:string*
  : using stringdescriptors based on sets of character n-grams or sets of tokens extracted from two strings.
  :
  : <br/>
- : Example usage : <pre> cosine( ("aa","bb") , ("bb","aa")) </pre>
+ : Example usage : <code> cosine( ("aa","bb") , ("bb","aa")) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 1.0 </pre>
+ : The function invocation in the example above returns : <code> 1.0 </code>
  :
  : @param $desc1 The descriptor for the first string.
  : @param $desc2 The descriptor for the second string.
@@ -100,9 +100,9 @@ declare function simt:cosine ( $desc1 as xs:string*, $desc2 as xs:string* ) as x
  : Returns the Dice similarity coefficient between sets of character n-grams extracted from two strings.
  :
  : <br/>
- : Example usage : <pre> dice-ngrams("DWAYNE", "DUANE", 2 ) </pre>
+ : Example usage : <code> dice-ngrams("DWAYNE", "DUANE", 2 ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.4615384615384616 </pre>
+ : The function invocation in the example above returns : <code> 0.4615384615384616 </code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -118,9 +118,9 @@ declare function simt:dice-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as xs
  : Returns the overlap similarity coefficient between sets of character n-grams extracted from two strings.
  :
  : <br/>
- : Example usage : <pre> overlap-ngrams("DWAYNE", "DUANE", 2 ) </pre>
+ : Example usage : <code> overlap-ngrams("DWAYNE", "DUANE", 2 ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.5 </pre>
+ : The function invocation in the example above returns : <code> 0.5 </code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -136,9 +136,9 @@ declare function simt:overlap-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as
  : Returns the Jaccard similarity coefficient between sets of character n-grams extracted from two strings.
  :
  : <br/>
- : Example usage : <pre> jaccard-ngrams("DWAYNE", "DUANE", 2 ) </pre>
+ : Example usage : <code> jaccard-ngrams("DWAYNE", "DUANE", 2 ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.3 </pre>
+ : The function invocation in the example above returns : <code> 0.3 </code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -156,9 +156,9 @@ declare function simt:jaccard-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as
  : the term-frequency heuristic from Information Retrieval).
  :
  : <br/>
- : Example usage : <pre> cosine-ngrams("DWAYNE", "DUANE", 2 ) </pre>
+ : Example usage : <code> cosine-ngrams("DWAYNE", "DUANE", 2 ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.2401922307076307 </pre>
+ : The function invocation in the example above returns : <code> 0.2401922307076307 </code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -176,9 +176,9 @@ declare function simt:cosine-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as 
  : Returns the Dice similarity coefficient between sets of tokens extracted from two strings.
  :
  : <br/>
- : Example usage : <pre> dice-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </pre>
+ : Example usage : <code> dice-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.4 </pre>
+ : The function invocation in the example above returns : <code> 0.4 </code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -194,9 +194,9 @@ declare function simt:dice-tokens ( $s1 as xs:string, $s2 as xs:string, $r as xs
  : Returns the overlap similarity coefficient between sets of tokens extracted from two strings.
  :
  : <br/>
- : Example usage : <pre> overlap-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </pre>
+ : Example usage : <code> overlap-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.5 </pre>
+ : The function invocation in the example above returns : <code> 0.5 </code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -212,9 +212,9 @@ declare function simt:overlap-tokens ( $s1 as xs:string, $s2 as xs:string, $r as
  : Returns the Jaccard similarity coefficient between sets of tokens extracted from two strings.
  :
  : <br/>
- : Example usage : <pre> jaccard-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </pre>
+ : Example usage : <code> jaccard-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.25 </pre>
+ : The function invocation in the example above returns : <code> 0.25 </code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -232,9 +232,9 @@ declare function simt:jaccard-tokens ( $s1 as xs:string, $s2 as xs:string, $r as
  : term-frequency heuristic from Information Retrieval).
  :
  : <br/>
- : Example usage : <pre> cosine-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </pre>
+ : Example usage : <code> cosine-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.408248290463863 </pre>
+ : The function invocation in the example above returns : <code> 0.408248290463863 </code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.

@@ -22,11 +22,10 @@ xquery version "1.0";
  :
  : The logic contained in this module is not specific to any particular XQuery implementation, 
  : although the consolidation functions based on matching sequences against XPath expressions require 
- : some form of dynamic evaluation for XPath expressions,
- : such as the x:eval() function provided in the Qizx XQuery Engine.
+ : some form of dynamic evaluation for XPath expressions.
  :
  : @author Bruno Martins
- : @project data processing/data cleaning
+ : @project Zorba/Data Cleaning/Consolidation
  :)
 
 module namespace con = "http://www.zorba-xquery.com/modules/data-cleaning/consolidation";
@@ -42,9 +41,9 @@ declare option ver:module-version "2.0";
  : If more then one answer is possible, returns the first node according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> most-frequent( ( "a", "a", "b") ) </pre>
+ : Example usage : <code>most-frequent( ( "a", "a", "b") )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> ("a") </pre>
+ : The function invocation in the example above returns : <code>("a")</code>
  :
  : @param $s A sequence of nodes.
  : @return The most frequent node in the input sequence.
@@ -59,9 +58,9 @@ declare function con:most-frequent ( $s ) as item(){
  : If more then one answer is possible, return the first node according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> least-frequent( ( "a", "a", "b") ) </pre>
+ : Example usage : <code>least-frequent( ( "a", "a", "b") )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> ("b") </pre>
+ : The function invocation in the example above returns : <code>("b")</code>
  :
  : @param $s A sequence of nodes.
  : @return The least frequent node in the input sequence.
@@ -77,9 +76,9 @@ declare function con:least-frequent ( $s ) as item(){
  : If more then one answer is possible, return the first string according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> con:longest( ( "a", "aa", "aaa") ) </pre>
+ : Example usage : <code>con:longest( ( "a", "aa", "aaa") )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> ("aaa") </pre>
+ : The function invocation in the example above returns : <code>("aaa")</code>
  :
  : @param $s A sequence of strings.
  : @return The longest string in the input sequence.
@@ -95,9 +94,9 @@ declare function con:longest ( $s as xs:string* ) as xs:string? {
  : If more then one answer is possible, return the first string according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> shortest( ( "a", "aa", "aaa") ) </pre>
+ : Example usage : <code>shortest( ( "a", "aa", "aaa") )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> ("a") </pre>
+ : The function invocation in the example above returns : <code>("a")</code>
  :
  : @param $s A sequence of strings.
  : @return The shortest string in the input sequence.
@@ -113,9 +112,9 @@ declare function con:shortest( $s as xs:string* ) as xs:string? {
  : If more then one answer is possible, return the first string according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> most-tokens( ( "a b c", "a b", "a"), " +" ) </pre>
+ : Example usage : <code>most-tokens( ( "a b c", "a b", "a"), " +" )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> ("a b c") </pre>
+ : The function invocation in the example above returns : <code>("a b c")</code>
  :
  : @param $s A sequence of strings.
  : @param $r A regular expression forming the delimiter character(s) which mark the boundaries between adjacent tokens.
@@ -132,9 +131,9 @@ declare function con:most-tokens ( $s as xs:string*, $r as xs:string ) as xs:str
  : If more then one answer is possible, return the first string according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> least-tokens( ( "a b c", "a b", "a"), " +" ) </pre>
+ : Example usage : <code>least-tokens( ( "a b c", "a b", "a"), " +" )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> ("a") </pre>
+ : The function invocation in the example above returns : <code>("a")</code>
  :
  : @param $s A sequence of strings.
  : @param $r A regular expression forming the delimiter character(s) which mark the boundaries between adjacent tokens.
@@ -150,9 +149,9 @@ declare function con:least-tokens ( $s as xs:string*, $r as xs:string ) as xs:st
  : Returns the strings from an input sequence of strings that match a particular regular expression.
  :
  : <br/>
- : Example usage : <pre> matching( ( "a A b", "c AAA d", "e BB f"), "A+" ) </pre>
+ : Example usage : <code>matching( ( "a A b", "c AAA d", "e BB f"), "A+" )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> ( "a A b", "c AAA d") </pre>
+ : The function invocation in the example above returns : <code>( "a A b", "c AAA d")</code>
  :
  : @param $s A sequence of strings.
  : @param $r The regular expression to be used in the matching.
@@ -169,9 +168,9 @@ declare function con:matching ( $s as xs:string*, $r as xs:string ) as xs:string
  : If more then one answer is possible, the function returns the first string according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> super-string( ( "aaa bbb ccc", "aaa bbb", "aaa ddd", "eee fff" ) ) </pre>
+ : Example usage : <code>super-string( ( "aaa bbb ccc", "aaa bbb", "aaa ddd", "eee fff" ) )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> ( "aaa bbb" ) </pre>
+ : The function invocation in the example above returns : <code>( "aaa bbb" )</code>
  :
  : @param $s A sequence of strings.
  : @return The string that appears more frequently as part of the other strings in the sequence.
@@ -194,9 +193,9 @@ declare function con:superstring ( $s as xs:string* ) as xs:string? {
  : input sequence.
  :
  : <br/>
- : Example usage : <pre> most-similar-edit-distance( ( "aaabbbccc", "aaabbb", "eeefff" ), "aaab" ) </pre>
+ : Example usage : <code>most-similar-edit-distance( ( "aaabbbccc", "aaabbb", "eeefff" ), "aaab" )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> ( "aaabbb" ) </pre>
+ : The function invocation in the example above returns : <code>( "aaabbb" )</code>
  :
  : @param $s A sequence of strings.
  : @param $m The string towards which we want to measure the edit distance.
@@ -214,9 +213,9 @@ declare function con:most-similar-edit-distance ( $s as xs:string*, $m as xs:str
  : value for the edit distance metric), return the first string according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> least-similar-edit-distance( ( "aaabbbccc", "aaabbb", "eeefff" ), "aaab" ) </pre>
+ : Example usage : <code>least-similar-edit-distance( ( "aaabbbccc", "aaabbb", "eeefff" ), "aaab" )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> ( "eeefff" ) </pre>
+ : The function invocation in the example above returns : <code>( "eeefff" )</code>
  :
  : @param $s A sequence of strings.
  : @param $m The string towards which we want to measure the edit distance.
@@ -234,9 +233,9 @@ declare function con:least-similar-edit-distance ( $s as xs:string*, $m as xs:st
  : If more then one answer is possible, return the first node according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> most-elements( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;a/&gt;, &lt;b/&gt;) ) </pre>
+ : Example usage : <code>most-elements( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;a/&gt;, &lt;b/&gt;) )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> (&lt;a&gt;&lt;b/&gt;&lt;/a&gt;) </pre>
+ : The function invocation in the example above returns : <code>(&lt;a&gt;&lt;b/&gt;&lt;/a&gt;)</code>
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of descending elements in the input sequence.
@@ -252,9 +251,9 @@ declare function con:most-elements ( $s ) as element(){
  : If more then one answer is possible, return the first node according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> most-attributes( ( &lt;a att1="a1" att2="a2"/&gt;, &lt;b att1="a1" /&gt;, &lt;c/&gt; ) ) </pre>
+ : Example usage : <code>most-attributes( ( &lt;a att1="a1" att2="a2"/&gt;, &lt;b att1="a1" /&gt;, &lt;c/&gt; ) )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> (&lt;a att1="a1" att2="a2"/&gt;) </pre>
+ : The function invocation in the example above returns : <code>(&lt;a att1="a1" att2="a2"/&gt;)</code>
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of descending attributes in the input sequence.
@@ -270,9 +269,9 @@ declare function con:most-attributes ( $s ) as element(){
  : If more then one answer is possible, return the first node according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> most-nodes( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;a/&gt;, &lt;b/&gt;) ) </pre>
+ : Example usage : <code>most-nodes( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;a/&gt;, &lt;b/&gt;) )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> (&lt;a&gt;&lt;b/&gt;&lt;/a&gt;) </pre>
+ : The function invocation in the example above returns : <code>(&lt;a&gt;&lt;b/&gt;&lt;/a&gt;)</code>
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of descending nodes in the input sequence.
@@ -288,9 +287,9 @@ declare function con:most-nodes ( $s ) as element(){
  : If more then one answer is possible, return the first node according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> least-elements( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) ) </pre>
+ : Example usage : <code>least-elements( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> (&lt;d/&gt;) </pre>
+ : The function invocation in the example above returns : <code>(&lt;d/&gt;)</code>
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of descending elements in the input sequence.
@@ -306,9 +305,9 @@ declare function con:least-elements ( $s ) as element(){
  : If more then one answer is possible, return the first node according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> least-attributes( ( &lt;a att1="a1" att2="a2"/&gt;, &lt;b att1="a1" /&gt;, &lt;c/&gt; ) ) </pre>
+ : Example usage : <code>least-attributes( ( &lt;a att1="a1" att2="a2"/&gt;, &lt;b att1="a1" /&gt;, &lt;c/&gt; ) )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> (&lt;c/&gt;) </pre>
+ : The function invocation in the example above returns : <code>(&lt;c/&gt;)</code>
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of descending attributes in the input sequence.
@@ -324,9 +323,9 @@ declare function con:least-attributes ( $s ) as element(){
  : If more then one answer is possible, return the first node according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> least-nodes( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) ) </pre>
+ : Example usage : <code>least-nodes( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> (&lt;d/&gt;) </pre>
+ : The function invocation in the example above returns : <code>(&lt;d/&gt;)</code>
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of descending nodes in the input sequence.
@@ -342,9 +341,9 @@ declare function con:least-nodes ( $s ) as element(){
  : If more then one answer is possible, return the first node according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> most-distinct-elements( ( &lt;a&gt;&lt;b/&gt;&lt;c/&gt;&lt;d/&gt;&lt;/a&gt;, &lt;a&gt;&lt;b/&gt;&lt;b/&gt;&lt;c/&gt;&lt;/a&gt;, &lt;a/&gt; ) ) </pre>
+ : Example usage : <code>most-distinct-elements( ( &lt;a&gt;&lt;b/&gt;&lt;c/&gt;&lt;d/&gt;&lt;/a&gt;, &lt;a&gt;&lt;b/&gt;&lt;b/&gt;&lt;c/&gt;&lt;/a&gt;, &lt;a/&gt; ) )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> (&lt;a&gt;&lt;b/&gt;&lt;c/&gt;&lt;d/&gt;&lt;/a&gt;) </pre>
+ : The function invocation in the example above returns : <code>(&lt;a&gt;&lt;b/&gt;&lt;c/&gt;&lt;d/&gt;&lt;/a&gt;)</code>
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of distinct descending elements in the input sequence.
@@ -360,9 +359,9 @@ declare function con:most-distinct-elements ( $s ) as element(){
  : If more then one answer is possible, return the first node according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> most-distinct-attributes( ( &lt;a att1="a1" att2="a2" att3="a3"/&gt;, &lt;a att1="a1" att2="a2"&gt;&lt;b att2="a2" /&gt;&lt;/a&gt;, &lt;c/&gt; ) ) </pre>
+ : Example usage : <code>most-distinct-attributes( ( &lt;a att1="a1" att2="a2" att3="a3"/&gt;, &lt;a att1="a1" att2="a2"&gt;&lt;b att2="a2" /&gt;&lt;/a&gt;, &lt;c/&gt; ) )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> (&lt;a att1="a1" att2="a2" att3="a3"/&gt;) </pre>
+ : The function invocation in the example above returns : <code>(&lt;a att1="a1" att2="a2" att3="a3"/&gt;)</code>
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of distinct descending attributes in the input sequence.
@@ -378,9 +377,9 @@ declare function con:most-distinct-attributes ( $s ) as element(){
  : If more then one answer is possible, return the first node according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> most-distinct-nodes( ( &lt;a>&lt;b/>&lt;/a&gt;, &lt;a>&lt;a/&gt;&lt;/a&gt;, &lt;b/&gt;) ) </pre>
+ : Example usage : <code>most-distinct-nodes( ( &lt;a>&lt;b/>&lt;/a&gt;, &lt;a>&lt;a/&gt;&lt;/a&gt;, &lt;b/&gt;) )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> (&lt;a&gt;&lt;b/&gt;&lt;/a&gt;) </pre>
+ : The function invocation in the example above returns : <code>(&lt;a&gt;&lt;b/&gt;&lt;/a&gt;)</code>
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of distinct descending nodes in the input sequence.
@@ -396,9 +395,9 @@ declare function con:most-distinct-nodes ( $s ) as element(){
  : If more then one answer is possible, return the first node according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> least-distinct-elements( ( &lt;a>&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) ) </pre>
+ : Example usage : <code> least-distinct-elements( ( &lt;a>&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> (&lt;d/&gt;) </pre>
+ : The function invocation in the example above returns : <code> (&lt;d/&gt;) </code>
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of distinct descending elements in the input sequence.
@@ -414,9 +413,9 @@ declare function con:least-distinct-elements ( $s ) as element(){
  : If more then one answer is possible, return the first node according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> least-distinct-attributes( ( &lt;a att1="a1" att2="a2"/&gt;, &lt;b att1="a1" /&gt;, &lt;c/&gt; ) ) </pre>
+ : Example usage : <code> least-distinct-attributes( ( &lt;a att1="a1" att2="a2"/&gt;, &lt;b att1="a1" /&gt;, &lt;c/&gt; ) ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> (&lt;c/&gt;) </pre>
+ : The function invocation in the example above returns : <code> (&lt;c/&gt;) </code>
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of distinct descending attributes in the input sequence.
@@ -432,9 +431,9 @@ declare function con:least-distinct-attributes ( $s ) as element(){
  : If more then one answer is possible, return the first node according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> least-distinct-nodes( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) ) </pre>
+ : Example usage : <code> least-distinct-nodes( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> (&lt;d/&gt;) </pre>
+ : The function invocation in the example above returns : <code> (&lt;d/&gt;) </code>
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of distinct descending nodes in the input sequence.
@@ -449,9 +448,9 @@ declare function con:least-distinct-nodes ( $s ) as element(){
  : produce a non-empty set of nodes in all the cases.
  :
  : <br/>
- : Example usage : <pre> all-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;c&gt;&lt;d/&gt;&lt;/c&gt;, &lt;d/&gt;), (".//b") ) </pre>
+ : Example usage : <code> all-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;c&gt;&lt;d/&gt;&lt;/c&gt;, &lt;d/&gt;), (".//b") ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> (&lt;a&gt;&lt;b/&gt;&lt;/a&gt;) </pre>
+ : The function invocation in the example above returns : <code> (&lt;a&gt;&lt;b/&gt;&lt;/a&gt;) </code>
  :
  : @param $s A sequence of elements.
  : @param $paths A sequence of strings denoting XPath expressions.
@@ -475,9 +474,9 @@ declare function con:all-xpaths ( $s as element()* , $paths as xs:string* ) as e
  : produce a non-empty set of nodes for some of the cases.
  :
  : <br/>
- : Example usage : <pre> some-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;d&gt;&lt;c/&gt;&lt;/d&gt;, &lt;d/&gt;), (".//b", ".//c") ) </pre>
+ : Example usage : <code> some-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;d&gt;&lt;c/&gt;&lt;/d&gt;, &lt;d/&gt;), (".//b", ".//c") ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt; , &lt;d&gt;&lt;c/&gt;&lt;/d&gt; ) </pre>
+ : The function invocation in the example above returns : <code> ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt; , &lt;d&gt;&lt;c/&gt;&lt;/d&gt; ) </code>
  :
  : @param $s A sequence of elements.
  : @param $paths A sequence of strings denoting XPath expressions.
@@ -503,9 +502,9 @@ declare function con:some-xpaths ( $s as element()* , $paths as xs:string* ) as 
  : If more then one answer is possible, return the first element according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> most-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;d&gt;&lt;c/&gt;&lt;b/&gt;&lt;/d&gt;, &lt;d/&gt;) , (".//b", ".//c") ) </pre>
+ : Example usage : <code> most-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;d&gt;&lt;c/&gt;&lt;b/&gt;&lt;/d&gt;, &lt;d/&gt;) , (".//b", ".//c") ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> ( &lt;d&gt;&lt;c/&gt;&lt;b/&gt;&lt;/d&gt; ) </pre>
+ : The function invocation in the example above returns : <code> ( &lt;d&gt;&lt;c/&gt;&lt;b/&gt;&lt;/d&gt; ) </code>
  :
  : @param $s A sequence of elements.
  : @param $paths A sequence of strings denoting XPath expressions.
@@ -534,9 +533,9 @@ declare function con:most-xpaths ( $s as element()* , $paths as xs:string* ) as 
  : If more then one answer is possible, return the first element according to the order of the input sequence.
  :
  : <br/>
- : Example usage : <pre> least-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;d&gt;&lt;c/&gt;&lt;b/&gt;&lt;/d&gt;, &lt;d/&gt;) , (".//b", ".//c") ) </pre>
+ : Example usage : <code> least-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;d&gt;&lt;c/&gt;&lt;b/&gt;&lt;/d&gt;, &lt;d/&gt;) , (".//b", ".//c") ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> ( $lt;d/&gt; ) </pre>
+ : The function invocation in the example above returns : <code> ( $lt;d/&gt; ) </code>
  :
  : @param $s A sequence of elements.
  : @param $paths A sequence of strings denoting XPath expressions.
@@ -563,9 +562,9 @@ declare function con:least-xpaths ( $s as element()* , $paths as xs:string* ) as
  : Returns the nodes from an input sequence of nodes that validate against a given XML Schema.
  :
  : <br/>
- : Example usage : <pre> validating-schema ( ( &lt;a/&gt; , &lt;b/&gt; ), &lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;&lt;xs:element name="a" /&gt;&lt;/xs:schema&gt; ) </pre>
+ : Example usage : <code> validating-schema ( ( &lt;a/&gt; , &lt;b/&gt; ), &lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;&lt;xs:element name="a" /&gt;&lt;/xs:schema&gt; ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> ( &lt;a/&gt; ) </pre>
+ : The function invocation in the example above returns : <code> ( &lt;a/&gt; ) </pre>
  :
  : @param $s A sequence of elements.
  : @param $schema An element encoding an XML Schema.

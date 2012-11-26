@@ -23,7 +23,7 @@ xquery version "3.0";
  : The logic contained in this module is not specific to any particular XQuery implementation.
  :
  : @author Bruno Martins and Diogo Simões
- : @project data processing/data cleaning
+ : @project Zorba/Data Cleaning/Conversion
  :)
 
 module namespace conversion = "http://www.zorba-xquery.com/modules/data-cleaning/conversion";

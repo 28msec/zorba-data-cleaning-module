@@ -25,7 +25,7 @@ xquery version "3.0";
  : function such as sqrt($x as numeric) for computing the square root.
  :
  : @author Bruno Martins and Diogo Simões
- : @project data processing/data cleaning
+ : @project Zorba/Data Cleaning/Hybrid String Similarity
  :)
 
 module namespace simh = "http://www.zorba-xquery.com/modules/data-cleaning/hybrid-string-similarity";
@@ -51,9 +51,9 @@ declare option ver:module-version "2.0";
  : this function returns the cosine similarity coefficient between sets of Soundex keys.
  :
  : <br/>
- : Example usage : <pre> soft-cosine-tokens-soundex("ALEKSANDER SMITH", "ALEXANDER SMYTH", " +") </pre>
+ : Example usage : <code> soft-cosine-tokens-soundex("ALEKSANDER SMITH", "ALEXANDER SMYTH", " +") </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 1.0 </pre>
+ : The function invocation in the example above returns : <code> 1.0 </code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -75,9 +75,9 @@ declare function simh:soft-cosine-tokens-soundex ( $s1 as xs:string, $s2 as xs:s
  : this function returns the cosine similarity coefficient between sets of Metaphone keys.
  :
  : <br/>
- : Example usage : <pre> soft-cosine-tokens-metaphone("ALEKSANDER SMITH", "ALEXANDER SMYTH", " +" ) </pre>
+ : Example usage : <code> soft-cosine-tokens-metaphone("ALEKSANDER SMITH", "ALEXANDER SMYTH", " +" ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 1.0 </pre>
+ : The function invocation in the example above returns : <code> 1.0 </code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -99,9 +99,9 @@ declare function simh:soft-cosine-tokens-metaphone ( $s1 as xs:string, $s2 as xs
  : bellow a given threshold are considered as matching tokens.
  :
  : <br/>
- : Example usage : <pre> soft-cosine-tokens-edit-distance("The FLWOR Foundation", "FLWOR Found.", " +", 0 ) </pre>
+ : Example usage : <code> soft-cosine-tokens-edit-distance("The FLWOR Foundation", "FLWOR Found.", " +", 0 ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.408248290463863 </pre>
+ : The function invocation in the example above returns : <code> 0.408248290463863 </code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -135,9 +135,9 @@ declare function simh:soft-cosine-tokens-edit-distance ( $s1 as xs:string, $s2 a
  : a given threshold are considered as matching tokens.
  :
  : <br/>
- : Example usage : <pre> soft-cosine-tokens-jaro("The FLWOR Foundation", "FLWOR Found.", " +", 1 ) </pre>
+ : Example usage : <code> soft-cosine-tokens-jaro("The FLWOR Foundation", "FLWOR Found.", " +", 1 ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.5 </pre>
+ : The function invocation in the example above returns : <code> 0.5 </code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -169,9 +169,9 @@ declare function simh:soft-cosine-tokens-jaro ( $s1 as xs:string, $s2 as xs:stri
  : similarity above a given threshold are considered as matching tokens.
  :
  : <br/>
- : Example usage : <pre> soft-cosine-tokens-jaro-winkler("The FLWOR Foundation", "FLWOR Found.", " +", 1, 4, 0.1 ) </pre>
+ : Example usage : <code> soft-cosine-tokens-jaro-winkler("The FLWOR Foundation", "FLWOR Found.", " +", 1, 4, 0.1 ) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.45 </pre>
+ : The function invocation in the example above returns : <code> 0.45 </code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -202,9 +202,9 @@ declare function simh:soft-cosine-tokens-jaro-winkler ( $s1 as xs:string, $s2 as
  : similarity function to discover token identity.
  :
  : <br/>
- : Example usage : <pre> monge-elkan-jaro-winkler("Comput. Sci. and Eng. Dept., University of California, San Diego", "Department of Computer Scinece, Univ. Calif., San Diego", 4, 0.1) </pre>
+ : Example usage : <code> monge-elkan-jaro-winkler("Comput. Sci. and Eng. Dept., University of California, San Diego", "Department of Computer Scinece, Univ. Calif., San Diego", 4, 0.1) </code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.992 </pre>
+ : The function invocation in the example above returns : <code> 0.992 </code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.

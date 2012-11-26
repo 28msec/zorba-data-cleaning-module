@@ -27,7 +27,7 @@ xquery version "1.0";
  : The logic contained in this module is not specific to any particular XQuery implementation.
  :
  : @author Bruno Martins and Diogo Simões
- : @project data processing/data cleaning
+ : @project Zorba/Data Cleaning/Character-Based String Similarity
  :)
 
 module namespace simc = "http://www.zorba-xquery.com/modules/data-cleaning/character-based-string-similarity";
@@ -43,9 +43,9 @@ declare option ver:module-version "2.0";
  : being insertion, deletion, or substitution of a single character.
  :
  : <br/>
- : Example usage : <pre> edit-distance("FLWOR", "FLOWER") </pre>
+ : Example usage : <code>edit-distance("FLWOR", "FLOWER")</code>
  : <br/>
- : The function invocation in the example above returns : <pre> 2 </pre>
+ : The function invocation in the example above returns : <code>2</code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -71,9 +71,9 @@ declare function simc:edit-distance ( $s1 as xs:string, $s2 as xs:string ) as xs
  : normalized such that 0 equates to no similarity and 1 is an exact match.
  :
  : <br/>
- : Example usage : <pre> jaro("FLWOR Found.", "FLWOR Foundation") </pre>
+ : Example usage : <code>jaro("FLWOR Found.", "FLWOR Foundation")</code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.5853174603174603 </pre>
+ : The function invocation in the example above returns : <code>0.5853174603174603</code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -103,9 +103,9 @@ declare function simc:jaro ( $s1 as xs:string, $s2 as xs:string ) as xs:double {
  : penalizes strings based on their similarity at the beginning of the string, up to a given prefix size.
  :
  : <br/>
- : Example usage : <pre> jaro-winkler("DWAYNE", "DUANE", 4, 0.1 ) </pre>
+ : Example usage : <code>jaro-winkler("DWAYNE", "DUANE", 4, 0.1 )</code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0.8577777777777778 </pre>
+ : The function invocation in the example above returns : <code>0.8577777777777778</code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -129,9 +129,9 @@ declare function simc:jaro-winkler ( $s1 as xs:string, $s2 as xs:string, $prefix
  : distance metric.
  :
  : <br/>
- : Example usage : <pre> needleman-wunsch("KAK", "KQRK", 1, 1) </pre>
+ : Example usage : <code>needleman-wunsch("KAK", "KQRK", 1, 1)</code>
  : <br/>
- : The function invocation in the example above returns : <pre> 0 </pre>
+ : The function invocation in the example above returns : <code>0</code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -155,9 +155,9 @@ declare function simc:needleman-wunsch ( $s1 as xs:string, $s2 as xs:string, $sc
  : Returns the Smith-Waterman distance between two strings.
  :
  : <br/>
- : Example usage : <pre> smith-waterman("ACACACTA", "AGCACACA", 2, 1) </pre>
+ : Example usage : <code>smith-waterman("ACACACTA", "AGCACACA", 2, 1)</code>
  : <br/>
- : The function invocation in the example above returns : <pre> 12 </pre>
+ : The function invocation in the example above returns : <code>12</code>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
