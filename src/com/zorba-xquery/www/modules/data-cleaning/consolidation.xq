@@ -564,7 +564,7 @@ declare function con:least-xpaths ( $s as element()* , $paths as xs:string* ) as
  : <br/>
  : Example usage : <code> validating-schema ( ( &lt;a/&gt; , &lt;b/&gt; ), &lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;&lt;xs:element name="a" /&gt;&lt;/xs:schema&gt; ) </code>
  : <br/>
- : The function invocation in the example above returns : <code> ( &lt;a/&gt; ) </pre>
+ : The function invocation in the example above returns : <code> ( &lt;a/&gt; ) </code>
  :
  : @param $s A sequence of elements.
  : @param $schema An element encoding an XML Schema.
