@@ -126,4 +126,5 @@ simpl:soundex-key("Smythe") eq "S530" and
 "R163" eq simpl:soundex-key("Robert") and
 "L600" eq simpl:soundex-key("Laura") and
 "A500" eq simpl:soundex-key("Anne") and
-"W452" eq simpl:soundex-key("Williams")
+"W452" eq simpl:soundex-key("Williams") and
+"3331" eq simpl:soundex-key("3-D ADVENTURE")
