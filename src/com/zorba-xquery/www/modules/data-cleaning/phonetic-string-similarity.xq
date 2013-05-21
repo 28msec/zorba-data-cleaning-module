@@ -45,14 +45,13 @@ declare option ver:module-version "2.0";
  : @return The Soundex key for the given input string.
  : @example test/Queries/data-cleaning/phonetic-string-similarity/soundex-key.xq
  :)
-declare function simp:soundex-key ( $s1 as xs:string ) as xs:string {
- let $group1 := replace(upper-case(substring($s1,2)),"[BFPV]","1")
- let $groups := replace(replace(replace(replace(replace(replace($group1,"[CGJKQSXZ]","2"),"[DT]","3"),"L","4"),"[MN]","5"),"R","6"),"[^1-6]","")
- let $merge := replace($groups,"([1-6])\1","$1")
- let $result := concat(upper-case(substring($s1,1,1)), $merge)
- return if (string-length($result) > 4 and matches($result,"([1-6])\1")) 
-        then (simp:soundex-key($result)) 
-        else (substring(concat($result,"0000"),1,4))
+declare function simp:soundex-key ( $s1 as xs:string ) as xs:string { 
+ let $clean := replace(replace(replace(replace(replace(replace(replace(upper-case($s1),"[^1-9A-Z]",""),"([BFPV])[HW]*[BFPV]","$1"),"([CGJKQSXZ])[HW]*[CGJKQSXZ]","$1"),"([DT])[HW]*[DT]","$1"),"([L])[HW]*[L]","$1"),"([MN])[HW]*[MN]","$1"),"([R])[HW]*[R]","$1")
+ let $first := substring($clean,1,1)
+ let $suffix := replace(replace(replace(replace(replace(replace(substring($clean,2),"[BFPV]","1"),"[CGJKQSXZ]","2"),"[DT]","3"),"L","4"),"[MN]","5"),"[R]","6") 
+ let $merge := replace(replace($suffix, "([1-6])\1","$1"),"[^1-6]", "")
+ let $result := concat($first, $merge)
+ return substring(concat($result,"0000"),1,4)
 };
 
 (:~
