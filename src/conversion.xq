@@ -347,7 +347,7 @@ declare %an:nondeterministic function conversion:address-from-geocode ( $lat as 
  : @param $m2 The target currency (e.g., "USD").
  : @param $date The reference date.
  : @return The value resulting from the conversion.
- : @error conversion:notsupported if the date, the source currency type or the target currency type are not known to the service.
+ : @error conversion:NOTSUPPORTED if the date, the source currency type or the target currency type are not known to the service.
  : @see http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
  : @example test/Queries/data-cleaning/conversion/currency-convert.xq
  :)
@@ -361,7 +361,7 @@ declare %an:nondeterministic function conversion:currency-convert ( $v as xs:dou
  let $fromEUR := if ( $m2="EUR" ) then (xs:double(1.0)) else ( $doc//exref:Cube[xs:string(@currency)=$m2]/xs:double(@rate) )
  let $result  := ($v div $toEUR) * $fromEUR
  return if (matches(string($result),"-?[0-9]+(\.[0-9]+)?")) then ($result) 
-        else (error(QName('http://zorba.io/modules/data-cleaning/conversion', 'conversion:notsupported'), data($result)))
+        else (error(QName('http://zorba.io/modules/data-cleaning/conversion', 'conversion:NOTSUPPORTED'), data($result)))
 };
 
 (:~

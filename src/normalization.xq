@@ -173,7 +173,7 @@ declare function normalization:to-date ( $sd as xs:string, $format as xs:string?
  : '%T' Equivalent to '%H:%M:%S'.
  :</pre>
  :
- : @error normalization:notsupported if the date type is not known to the service. 
+ : @error normalization:NOTSUPPORTED if the date type is not known to the service. 
  : @return The time value resulting from the conversion.
  : @example test/Queries/data-cleaning/normalization/to-time.xq
  :)
@@ -567,7 +567,7 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
  : '%T' Equivalent to '%H:%M:%S'.
  :</pre>
  :
- : @error normalization:notsupported if the dateTime type is not known to the service. 
+ : @error normalization:NOTSUPPORTED if the dateTime type is not known to the service. 
  : @return The dateTime value resulting from the conversion.
  : @example test/Queries/data-cleaning/normalization/to-dateTime.xq
  :)
