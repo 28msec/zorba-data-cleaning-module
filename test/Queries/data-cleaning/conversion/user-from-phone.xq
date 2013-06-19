@@ -1,4 +1,4 @@
-import module namespace conversion = "http://zorba.io/modules/data-cleaning/conversion";
+import module namespace conversion = "http://www.zorba-xquery.com/modules/data-cleaning/conversion";
 
 let $arg := conversion:user-from-phone ('8654582358')[1]
 let $result :=

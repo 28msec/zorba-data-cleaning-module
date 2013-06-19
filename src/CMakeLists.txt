@@ -12,29 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/data-cleaning/character-based-string-similarity"
-                      VERSION 2.0 FILE "character-based-string-similarity.xq")
+# all external module libraries are generated in the directory
+# of the corresponding .xq file
+MESSAGE(STATUS "Add com")
+ADD_SUBDIRECTORY(com)
 
-DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/data-cleaning/consolidation"
-                      VERSION 2.0 FILE "consolidation.xq")
-
-DECLARE_ZORBA_SCHEMA( FILE whitepages_schema.xsd
-                      URI "http://api.whitepages.com/schema/")
-                      
-DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/data-cleaning/conversion"
-                      VERSION 2.0 FILE "conversion.xq")
-
-DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/data-cleaning/hybrid-string-similarity"
-                      VERSION 2.0 FILE "hybrid-string-similarity.xq")
-
-DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/data-cleaning/normalization"
-                      VERSION 2.0 FILE "normalization.xq")
-
-DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/data-cleaning/phonetic-string-similarity"
-                      VERSION 2.0 FILE "phonetic-string-similarity.xq")
-
-DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/data-cleaning/set-similarity"
-                      VERSION 2.0 FILE "set-similarity.xq")
-
-DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/data-cleaning/token-based-string-similarity"
-                      VERSION 2.0 FILE "token-based-string-similarity.xq")
+MESSAGE(STATUS "End modules")
