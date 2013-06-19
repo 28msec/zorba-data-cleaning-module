@@ -1,4 +1,4 @@
-import module namespace simpl = "http://www.zorba-xquery.com/modules/data-cleaning/phonetic-string-similarity";
+import module namespace simpl = "http://zorba.io/modules/data-cleaning/phonetic-string-similarity";
 
 simpl:soundex-key("Robert"),
 simpl:soundex-key("BARHAM") eq "B650" and

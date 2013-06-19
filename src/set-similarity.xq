@@ -17,29 +17,29 @@ xquery version "1.0";
  :)
 
 (:~
- : This library module provides similarity functions for comparing sets of XML 
- : nodes (e.g., sets of XML elements, attributes or atomic values).
- :
- : These functions are particularly useful for matching near duplicate sets of XML nodes.
- :
- : The logic contained in this module is not specific to any particular XQuery implementation.
+ : <p>This library module provides similarity functions for comparing sets of XML 
+ : nodes (e.g., sets of XML elements, attributes or atomic values).</p>
+ : <p/>
+ : <p>These functions are particularly useful for matching near duplicate sets of XML nodes.</p>
+ : <p/>
+ : <p>The logic contained in this module is not specific to any particular XQuery implementation.</p>
  :
  : @author Bruno Martins
  : @project Zorba/Data Cleaning/Set Similarity
  :)
 
-module namespace set = "http://www.zorba-xquery.com/modules/data-cleaning/set-similarity";
+module namespace set = "http://zorba.io/modules/data-cleaning/set-similarity";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
 declare option ver:module-version "2.0";
 
 (:~
- : Returns the union between two sets, using the deep-equal() function to compare the XML nodes from the sets.
- :
- : <br/>
- : Example usage : <code> deep-union ( ( "a", "b", "c") , ( "a", "a", <d/> ) ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> ("a", "b", "c", <d/> ) </code>
+ : <p>Returns the union between two sets, using the deep-equal() function to compare the XML nodes from the sets.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> deep-union ( ( "a", "b", "c") , ( "a", "a", <d/> ) ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> ("a", "b", "c", <d/> ) </code></p>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
@@ -54,12 +54,12 @@ declare function set:deep-union ( $s1 , $s2 ) as item()*{
 };
 
 (:~
- : Returns the intersection between two sets, using the deep-equal() function to compare the XML nodes from the sets.
- :
- : <br/>
- : Example usage : <code> deep-intersect ( ( "a", "b", "c") , ( "a", "a", <d/> ) ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> ("a") </code>
+ : <p>Returns the intersection between two sets, using the deep-equal() function to compare the XML nodes from the sets.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> deep-intersect ( ( "a", "b", "c") , ( "a", "a", <d/> ) ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> ("a") </code></p>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
@@ -75,12 +75,12 @@ declare function set:deep-intersect ( $s1 , $s2 ) as item()*{
 };
 
 (:~
- : Removes exact duplicates from a set, using the deep-equal() function to compare the XML nodes from the sets.
- :
- : <br/>
- : Example usage : <code> distinct ( ( "a", "a", <b/> ) ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> ("a", <b/> ) </code>
+ : <p>Removes exact duplicates from a set, using the deep-equal() function to compare the XML nodes from the sets.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> distinct ( ( "a", "a", <b/> ) ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> ("a", <b/> ) </code></p>
  :
  : @param $s A set.
  : @return The set provided as input without the exact duplicates (i.e., returns the distinct nodes from the set provided as input).
@@ -93,14 +93,14 @@ declare function set:distinct ( $s ) as item()*{
 };
 
 (:~
- : Returns the overlap coefficient between two sets of XML nodes.
- : The overlap coefficient is defined as the shared information between the input sets 
- : (i.e., the size of the intersection) over the size of the smallest input set.
- :
- : <br/>
- : Example usage : <code> overlap ( ( "a", "b", <c/> ) , ( "a", "a", "b" ) ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 1.0 </code>
+ : <p>Returns the overlap coefficient between two sets of XML nodes.</p>
+ : <p>The overlap coefficient is defined as the shared information between the input sets 
+ : (i.e., the size of the intersection) over the size of the smallest input set.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> overlap ( ( "a", "b", <c/> ) , ( "a", "a", "b" ) ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 1.0 </code></p>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
@@ -112,14 +112,14 @@ declare function set:overlap ( $s1 , $s2 ) as xs:double {
 };
 
 (:~
- : Returns the Dice similarity coefficient between two sets of XML nodes.
- : The Dice coefficient is defined as defined as twice the shared information between the input sets 
- : (i.e., the size of the intersection) over the sum of the cardinalities for the input sets.
- :
- : <br/>
- : Example usage : <code> dice ( ( "a", "b", <c/> ) , ( "a", "a", "d") ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 0.4 </code>
+ : <p>Returns the Dice similarity coefficient between two sets of XML nodes.</p>
+ : <p>The Dice coefficient is defined as defined as twice the shared information between the input sets 
+ : (i.e., the size of the intersection) over the sum of the cardinalities for the input sets.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> dice ( ( "a", "b", <c/> ) , ( "a", "a", "d") ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 0.4 </code></p>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
@@ -131,14 +131,14 @@ declare function set:dice ( $s1 , $s2 ) as xs:double {
 };
 
 (:~
- : Returns the Jaccard similarity coefficient between two sets of XML nodes.
- : The Jaccard coefficient is defined as the size of the intersection divided by the size of the 
- : union of the input sets.
- :
- : <br/>
- : Example usage : <code> jaccard ( ( "a", "b", <c/> ) , ( "a", "a", "d") ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 0.25 </code>
+ : <p>Returns the Jaccard similarity coefficient between two sets of XML nodes.</p>
+ : <p>The Jaccard coefficient is defined as the size of the intersection divided by the size of the 
+ : union of the input sets.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> jaccard ( ( "a", "b", <c/> ) , ( "a", "a", "d") ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 0.25 </code></p>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.

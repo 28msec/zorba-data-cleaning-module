@@ -17,40 +17,40 @@ xquery version "3.0";
  :)
 
 (:~
- : This library module provides token-based string similarity functions that view strings 
- : as sets or multi-sets of tokens and use set-related properties to compute similarity scores. 
- : The tokens correspond to groups of characters extracted from the strings being compared, such as 
- : individual words or character n-grams.
- :
- : These functions are particularly useful for matching near duplicate strings in cases where
- : typographical conventions often lead to rearrangement of words (e.g., "John Smith" versus "Smith, John").
- :
- : The logic contained in this module is not specific to any particular XQuery implementation,
+ : <p>This library module provides token-based string similarity functions that view strings 
+ : as sets or multi-sets of tokens and use set-related properties to compute similarity scores.</p> 
+ : <p>The tokens correspond to groups of characters extracted from the strings being compared, such as 
+ : individual words or character n-grams.</p>
+ : <p/>
+ : <p>These functions are particularly useful for matching near duplicate strings in cases where
+ : typographical conventions often lead to rearrangement of words (e.g., "John Smith" versus "Smith, John").</p>
+ : <p/>
+ : <p>The logic contained in this module is not specific to any particular XQuery implementation,
  : although the module requires the trigonometic functions of XQuery 3.0 or a math extension 
- : function such as sqrt($x as numeric) for computing the square root.
+ : function such as sqrt($x as numeric) for computing the square root.</p>
  :
  : @author Bruno Martins
  : @project Zorba/Data Cleaning/Token Based String Similarity
  :)
 
-module namespace simt = "http://www.zorba-xquery.com/modules/data-cleaning/token-based-string-similarity";
+module namespace simt = "http://zorba.io/modules/data-cleaning/token-based-string-similarity";
 
-(: In the QizX or Saxon XQuery engines, it is possible to call external functions from the Java math library :)
-(: declare namespace math = "java:java.lang.Math"; :)
+(: <p>In the QizX or Saxon XQuery engines, it is possible to call external functions from the Java math library :)
+(: declare namespace math = "java:java.lang.Math";</p> :)
 declare namespace math = "http://www.w3.org/2005/xpath-functions/math";
 
-import module namespace set  = "http://www.zorba-xquery.com/modules/data-cleaning/set-similarity";
+import module namespace set  = "http://zorba.io/modules/data-cleaning/set-similarity";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
 declare option ver:module-version "2.0";
 
 (:~
- : Returns the individual character n-grams forming a string.
- :
- : <br/>
- : Example usage : <code> ngrams("FLWOR", 2 ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> ("_F" , "FL" , "LW" , "WO" , "LW" , "WO" , "OR" , "R_") </code>
+ : <p>Returns the individual character n-grams forming a string.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> ngrams("FLWOR", 2 ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> ("_F" , "FL" , "LW" , "WO" , "LW" , "WO" , "OR" , "R_") </code></p>
  :
  : @param $s The input string.
  : @param $n The number of characters to consider when extracting n-grams.
@@ -73,13 +73,13 @@ declare function simt:ngrams ( $s as xs:string, $n as xs:integer ) as xs:string*
 };
 
 (:~
- : Auxiliary function for computing the cosine similarity coefficient between strings, 
- : using stringdescriptors based on sets of character n-grams or sets of tokens extracted from two strings.
- :
- : <br/>
- : Example usage : <code> cosine( ("aa","bb") , ("bb","aa")) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 1.0 </code>
+ : <p>Auxiliary function for computing the cosine similarity coefficient between strings, 
+ : using stringdescriptors based on sets of character n-grams or sets of tokens extracted from two strings.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> cosine( ("aa","bb") , ("bb","aa")) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 1.0 </code></p>
  :
  : @param $desc1 The descriptor for the first string.
  : @param $desc2 The descriptor for the second string.
@@ -97,12 +97,12 @@ declare function simt:cosine ( $desc1 as xs:string*, $desc2 as xs:string* ) as x
 };
 
 (:~
- : Returns the Dice similarity coefficient between sets of character n-grams extracted from two strings.
- :
- : <br/>
- : Example usage : <code> dice-ngrams("DWAYNE", "DUANE", 2 ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 0.4615384615384616 </code>
+ : <p>Returns the Dice similarity coefficient between sets of character n-grams extracted from two strings.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> dice-ngrams("DWAYNE", "DUANE", 2 ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 0.4615384615384616 </code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -115,12 +115,12 @@ declare function simt:dice-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as xs
 };
 
 (:~
- : Returns the overlap similarity coefficient between sets of character n-grams extracted from two strings.
- :
- : <br/>
- : Example usage : <code> overlap-ngrams("DWAYNE", "DUANE", 2 ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 0.5 </code>
+ : <p>Returns the overlap similarity coefficient between sets of character n-grams extracted from two strings.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> overlap-ngrams("DWAYNE", "DUANE", 2 ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 0.5 </code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -133,12 +133,12 @@ declare function simt:overlap-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as
 };
 
 (:~
- : Returns the Jaccard similarity coefficient between sets of character n-grams extracted from two strings.
- :
- : <br/>
- : Example usage : <code> jaccard-ngrams("DWAYNE", "DUANE", 2 ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 0.3 </code>
+ : <p>Returns the Jaccard similarity coefficient between sets of character n-grams extracted from two strings.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> jaccard-ngrams("DWAYNE", "DUANE", 2 ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 0.3 </code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -151,14 +151,14 @@ declare function simt:jaccard-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as
 };
 
 (:~
- : Returns the cosine similarity coefficient between sets of character n-grams extracted from two strings. 
- : The n-grams from each string are weighted according to their occurence frequency (i.e., weighted according to
- : the term-frequency heuristic from Information Retrieval).
- :
- : <br/>
- : Example usage : <code> cosine-ngrams("DWAYNE", "DUANE", 2 ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 0.2401922307076307 </code>
+ : <p>Returns the cosine similarity coefficient between sets of character n-grams extracted from two strings.</p> 
+ : <p>The n-grams from each string are weighted according to their occurence frequency (i.e., weighted according to
+ : the term-frequency heuristic from Information Retrieval).</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> cosine-ngrams("DWAYNE", "DUANE", 2 ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 0.2401922307076307 </code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -173,12 +173,12 @@ declare function simt:cosine-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as 
 };
 
 (:~
- : Returns the Dice similarity coefficient between sets of tokens extracted from two strings.
- :
- : <br/>
- : Example usage : <code> dice-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 0.4 </code>
+ : <p>Returns the Dice similarity coefficient between sets of tokens extracted from two strings.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> dice-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 0.4 </code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -191,12 +191,12 @@ declare function simt:dice-tokens ( $s1 as xs:string, $s2 as xs:string, $r as xs
 };
 
 (:~
- : Returns the overlap similarity coefficient between sets of tokens extracted from two strings.
- :
- : <br/>
- : Example usage : <code> overlap-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 0.5 </code>
+ : <p>Returns the overlap similarity coefficient between sets of tokens extracted from two strings.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> overlap-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 0.5 </code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -209,12 +209,12 @@ declare function simt:overlap-tokens ( $s1 as xs:string, $s2 as xs:string, $r as
 };
 
 (:~
- : Returns the Jaccard similarity coefficient between sets of tokens extracted from two strings.
- :
- : <br/>
- : Example usage : <code> jaccard-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 0.25 </code>
+ : <p>Returns the Jaccard similarity coefficient between sets of tokens extracted from two strings.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> jaccard-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 0.25 </code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -227,14 +227,14 @@ declare function simt:jaccard-tokens ( $s1 as xs:string, $s2 as xs:string, $r as
 };
 
 (:~
- : Returns the cosine similarity coefficient between sets of tokens extracted from two strings. The tokens 
+ : <p>Returns the cosine similarity coefficient between sets of tokens extracted from two strings. The tokens 
  : from each string are weighted according to their occurence frequency (i.e., weighted according to the 
- : term-frequency heuristic from Information Retrieval).
- :
- : <br/>
- : Example usage : <code> cosine-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 0.408248290463863 </code>
+ : term-frequency heuristic from Information Retrieval).</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> cosine-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 0.408248290463863 </code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
