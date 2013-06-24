@@ -25,6 +25,10 @@ INCLUDE ("${Zorba_USE_FILE}")
 
 ADD_TEST_DIRECTORY("${PROJECT_SOURCE_DIR}/test")
 
+EXPECTED_FAILURE (zorba_data-cleaning_module/data-cleaning/conversion/address-from-geocode.xq 1194053)
+EXPECTED_FAILURE (zorba_data-cleaning_module/data-cleaning/conversion/geocode-from-address.xq 1194053)
+EXPECTED_FAILURE (zorba_data-cleaning_module/data-cleaning/normalization/normalize-address.xq 1194053)
+
 ADD_SUBDIRECTORY("src")
 
 DONE_DECLARING_ZORBA_URIS()
