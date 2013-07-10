@@ -2,7 +2,7 @@ xquery version "1.0";
 
 (:
  : Copyright 2006-2009 The FLWOR Foundation.
- :
+ :                      
  : Licensed under the Apache License, Version 2.0 (the "License");
  : you may not use this file except in compliance with the License.
  : You may obtain a copy of the License at
@@ -17,35 +17,32 @@ xquery version "1.0";
  :)
 
 (:~
- : This library module provides character-based string similarity functions 
+ : <p>This library module provides character-based string similarity functions 
  : that view strings as sequences of characters, generally computing a similarity score
  : that corresponds to the cost of transforming one string into another.
- :
  : These functions are particularly useful for matching near duplicate strings  
- : in the presence of typographical errors. 
- :
- : The logic contained in this module is not specific to any particular XQuery implementation.
+ : in the presence of typographical errors. </p>
+ : <p>The logic contained in this module is not specific to any particular XQuery implementation.</p>
  :
  : @author Bruno Martins and Diogo Simões
  : @project Zorba/Data Cleaning/Character-Based String Similarity
  :)
 
-module namespace simc = "http://www.zorba-xquery.com/modules/data-cleaning/character-based-string-similarity";
+module namespace simc = "http://zorba.io/modules/data-cleaning/character-based-string-similarity";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
 declare option ver:module-version "2.0";
 
 (:~
- : Returns the edit distance between two strings.
- :
- : This distance, also refered to as the Levenshtein distance, is defined as the minimum number 
+ : <p>Returns the edit distance between two strings.</p>
+ : <p/>
+ : <p>This distance, also refered to as the Levenshtein distance, is defined as the minimum number 
  : of edits needed to transform one string into the other, with the allowable edit operations 
- : being insertion, deletion, or substitution of a single character.
- :
- : <br/>
- : Example usage : <code>edit-distance("FLWOR", "FLOWER")</code>
- : <br/>
- : The function invocation in the example above returns : <code>2</code>
+ : being insertion, deletion, or substitution of a single character.</p>
+ : <p/>
+ : <p>Example usage : <code>edit-distance("FLWOR", "FLOWER")</code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code>2</code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -63,17 +60,16 @@ declare function simc:edit-distance ( $s1 as xs:string, $s2 as xs:string ) as xs
 };
 
 (:~
- : Returns the Jaro similarity coefficient between two strings.
- :
- : This similarity coefficient is based on the number of transposed characters and on a 
+ : <p>Returns the Jaro similarity coefficient between two strings.</p>
+ : <p/>
+ : <p>This similarity coefficient is based on the number of transposed characters and on a 
  : weighted sum of the percentage of matched characters held within the strings. The higher 
  : the Jaro-Winkler value is, the more similar the strings are. The coefficient is 
- : normalized such that 0 equates to no similarity and 1 is an exact match.
- :
- : <br/>
- : Example usage : <code>jaro("FLWOR Found.", "FLWOR Foundation")</code>
- : <br/>
- : The function invocation in the example above returns : <code>0.5853174603174603</code>
+ : normalized such that 0 equates to no similarity and 1 is an exact match.</p>
+ : <p/>
+ : <p>Example usage : <code>jaro("FLWOR Found.", "FLWOR Foundation")</code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code>0.5853174603174603</code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -97,15 +93,14 @@ declare function simc:jaro ( $s1 as xs:string, $s2 as xs:string ) as xs:double {
 };
 
 (:~
- : Returns the Jaro-Winkler similarity coefficient between two strings.
- :
- : This similarity coefficient corresponds to an extension of the Jaro similarity coefficient that weights or
- : penalizes strings based on their similarity at the beginning of the string, up to a given prefix size.
- :
- : <br/>
- : Example usage : <code>jaro-winkler("DWAYNE", "DUANE", 4, 0.1 )</code>
- : <br/>
- : The function invocation in the example above returns : <code>0.8577777777777778</code>
+ : <p>Returns the Jaro-Winkler similarity coefficient between two strings.</p>
+ : <p/>
+ : <p>This similarity coefficient corresponds to an extension of the Jaro similarity coefficient that weights or
+ : penalizes strings based on their similarity at the beginning of the string, up to a given prefix size.</p>
+ : <p/>
+ : <p>Example usage : <code>jaro-winkler("DWAYNE", "DUANE", 4, 0.1 )</code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code>0.8577777777777778</code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -122,16 +117,15 @@ declare function simc:jaro-winkler ( $s1 as xs:string, $s2 as xs:string, $prefix
 };
 
 (:~
- : Returns the Needleman-Wunsch distance between two strings.
- :
- : The Needleman-Wunsch distance is similar to the basic edit distance metric, adding a 
+ : <p>Returns the Needleman-Wunsch distance between two strings.</p>
+ : <p/>
+ : <p>The Needleman-Wunsch distance is similar to the basic edit distance metric, adding a 
  : variable cost adjustment to the cost of a gap (i.e., an insertion or deletion) in the 
- : distance metric.
- :
- : <br/>
- : Example usage : <code>needleman-wunsch("KAK", "KQRK", 1, 1)</code>
- : <br/>
- : The function invocation in the example above returns : <code>0</code>
+ : distance metric.</p>
+ : <p/>
+ : <p>Example usage : <code>needleman-wunsch("KAK", "KQRK", 1, 1)</code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code>0</code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -152,12 +146,11 @@ declare function simc:needleman-wunsch ( $s1 as xs:string, $s2 as xs:string, $sc
 };
 
 (:~
- : Returns the Smith-Waterman distance between two strings.
- :
- : <br/>
- : Example usage : <code>smith-waterman("ACACACTA", "AGCACACA", 2, 1)</code>
- : <br/>
- : The function invocation in the example above returns : <code>12</code>
+ : <p>Returns the Smith-Waterman distance between two strings.</p>
+ : <p/>
+ : <p>Example usage : <code>smith-waterman("ACACACTA", "AGCACACA", 2, 1)</code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code>12</code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.

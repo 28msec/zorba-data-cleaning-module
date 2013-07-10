@@ -17,43 +17,43 @@ xquery version "3.0";
  :)
 
 (:~
- : This library module provides hybrid string similarity functions, combining the properties of 
- : character-based string similarity functions and token-based string similarity functions.
- : 
- : The logic contained in this module is not specific to any particular XQuery implementation,
+ : <p>This library module provides hybrid string similarity functions, combining the properties of 
+ : character-based string similarity functions and token-based string similarity functions.</p>
+ : <p/>
+ : <p>The logic contained in this module is not specific to any particular XQuery implementation,
  : although the module requires the trigonometic functions of XQuery 3.0 or a math extension 
- : function such as sqrt($x as numeric) for computing the square root.
+ : function such as sqrt($x as numeric) for computing the square root.</p>
  :
  : @author Bruno Martins and Diogo Simões
  : @project Zorba/Data Cleaning/Hybrid String Similarity
  :)
 
-module namespace simh = "http://www.zorba-xquery.com/modules/data-cleaning/hybrid-string-similarity";
+module namespace simh = "http://zorba.io/modules/data-cleaning/hybrid-string-similarity";
 
-(: In the QizX os Saxon XQuery engines, it is possible to call external functions from the Java math library :)
-(: declare namespace math = "java:java.lang.Math"; :)
+(: <p>In the QizX os Saxon XQuery engines, it is possible to call external functions from the Java math library :)
+(: declare namespace math = "java:java.lang.Math";</p> :)
 declare namespace math = "http://www.w3.org/2005/xpath-functions/math";
 
-import module namespace set  = "http://www.zorba-xquery.com/modules/data-cleaning/set-similarity";
-import module namespace simt = "http://www.zorba-xquery.com/modules/data-cleaning/token-based-string-similarity";
-import module namespace simc = "http://www.zorba-xquery.com/modules/data-cleaning/character-based-string-similarity";
-import module namespace simp = "http://www.zorba-xquery.com/modules/data-cleaning/phonetic-string-similarity";
+import module namespace set  = "http://zorba.io/modules/data-cleaning/set-similarity";
+import module namespace simt = "http://zorba.io/modules/data-cleaning/token-based-string-similarity";
+import module namespace simc = "http://zorba.io/modules/data-cleaning/character-based-string-similarity";
+import module namespace simp = "http://zorba.io/modules/data-cleaning/phonetic-string-similarity";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
 declare option ver:module-version "2.0";
 
 (:~
- : Returns the cosine similarity coefficient between sets of tokens extracted from two strings.
- :
- : The tokens from each string are weighted according to their occurence frequency (i.e., weighted according to the
- : term-frequency heuristic from Information Retrieval).
- : The Soundex phonetic similarity function is used to discover token identity, which is equivalent to saying that
- : this function returns the cosine similarity coefficient between sets of Soundex keys.
- :
- : <br/>
- : Example usage : <code> soft-cosine-tokens-soundex("ALEKSANDER SMITH", "ALEXANDER SMYTH", " +") </code>
- : <br/>
- : The function invocation in the example above returns : <code> 1.0 </code>
+ : <p>Returns the cosine similarity coefficient between sets of tokens extracted from two strings.</p>
+ : <p/>
+ : <p>The tokens from each string are weighted according to their occurence frequency (i.e., weighted according to the
+ : term-frequency heuristic from Information Retrieval).</p>
+ : <p>The Soundex phonetic similarity function is used to discover token identity, which is equivalent to saying that
+ : this function returns the cosine similarity coefficient between sets of Soundex keys.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> soft-cosine-tokens-soundex("ALEKSANDER SMITH", "ALEXANDER SMYTH", " +") </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 1.0 </code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -68,16 +68,16 @@ declare function simh:soft-cosine-tokens-soundex ( $s1 as xs:string, $s2 as xs:s
 };
 
 (:~
- : Returns the cosine similarity coefficient between sets of tokens extracted from two strings. 
- : The tokens from each string are weighted according to their occurence frequency (i.e., weighted according to the
- : term-frequency heuristic from Information Retrieval).
- : The Metaphone phonetic similarity function is used to discover token identity, which is equivalent to saying that
- : this function returns the cosine similarity coefficient between sets of Metaphone keys.
- :
- : <br/>
- : Example usage : <code> soft-cosine-tokens-metaphone("ALEKSANDER SMITH", "ALEXANDER SMYTH", " +" ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 1.0 </code>
+ : <p>Returns the cosine similarity coefficient between sets of tokens extracted from two strings.</p> 
+ : <p>The tokens from each string are weighted according to their occurence frequency (i.e., weighted according to the
+ : term-frequency heuristic from Information Retrieval).</p>
+ : <p>The Metaphone phonetic similarity function is used to discover token identity, which is equivalent to saying that
+ : this function returns the cosine similarity coefficient between sets of Metaphone keys.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> soft-cosine-tokens-metaphone("ALEKSANDER SMITH", "ALEXANDER SMYTH", " +" ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 1.0 </code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -92,16 +92,16 @@ declare function simh:soft-cosine-tokens-metaphone ( $s1 as xs:string, $s2 as xs
 };
 
 (:~
- : Returns the cosine similarity coefficient between sets of tokens extracted from two strings. 
- : The tokens from each string are weighted according to their occurence frequency (i.e., weighted according to the
- : term-frequency heuristic from Information Retrieval).
- : The Edit Distance similarity function is used to discover token identity, and tokens having an edit distance 
- : bellow a given threshold are considered as matching tokens.
- :
- : <br/>
- : Example usage : <code> soft-cosine-tokens-edit-distance("The FLWOR Foundation", "FLWOR Found.", " +", 0 ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 0.408248290463863 </code>
+ : <p>Returns the cosine similarity coefficient between sets of tokens extracted from two strings.</p> 
+ : <p>The tokens from each string are weighted according to their occurence frequency (i.e., weighted according to the
+ : term-frequency heuristic from Information Retrieval).</p>
+ : <p>The Edit Distance similarity function is used to discover token identity, and tokens having an edit distance 
+ : bellow a given threshold are considered as matching tokens.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> soft-cosine-tokens-edit-distance("The FLWOR Foundation", "FLWOR Found.", " +", 0 ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 0.408248290463863 </code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -128,16 +128,16 @@ declare function simh:soft-cosine-tokens-edit-distance ( $s1 as xs:string, $s2 a
 };
 
 (:~
- : Returns the cosine similarity coefficient between sets of tokens extracted from two strings. 
- : The tokens from each string are weighted according to their occurence frequency (i.e., weighted according to the
- : term-frequency heuristic from Information Retrieval).
- : The Jaro similarity function is used to discover token identity, and tokens having a Jaro similarity above
- : a given threshold are considered as matching tokens.
- :
- : <br/>
- : Example usage : <code> soft-cosine-tokens-jaro("The FLWOR Foundation", "FLWOR Found.", " +", 1 ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 0.5 </code>
+ : <p>Returns the cosine similarity coefficient between sets of tokens extracted from two strings.</p> 
+ : <p>The tokens from each string are weighted according to their occurence frequency (i.e., weighted according to the
+ : term-frequency heuristic from Information Retrieval).</p>
+ : <p>The Jaro similarity function is used to discover token identity, and tokens having a Jaro similarity above
+ : a given threshold are considered as matching tokens.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> soft-cosine-tokens-jaro("The FLWOR Foundation", "FLWOR Found.", " +", 1 ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 0.5 </code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -162,16 +162,16 @@ declare function simh:soft-cosine-tokens-jaro ( $s1 as xs:string, $s2 as xs:stri
 };
 
 (:~
- : Returns the cosine similarity coefficient between sets of tokens extracted from two strings. 
- : The tokens from each string are weighted according to their occurence frequency (i.e., weighted according to the
- : term-frequency heuristic from Information Retrieval).
- : The Jaro-Winkler similarity function is used to discover token identity, and tokens having a Jaro-Winkler
- : similarity above a given threshold are considered as matching tokens.
- :
- : <br/>
- : Example usage : <code> soft-cosine-tokens-jaro-winkler("The FLWOR Foundation", "FLWOR Found.", " +", 1, 4, 0.1 ) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 0.45 </code>
+ : <p>Returns the cosine similarity coefficient between sets of tokens extracted from two strings.</p> 
+ : <p>The tokens from each string are weighted according to their occurence frequency (i.e., weighted according to the
+ : term-frequency heuristic from Information Retrieval).</p>
+ : <p>The Jaro-Winkler similarity function is used to discover token identity, and tokens having a Jaro-Winkler
+ : similarity above a given threshold are considered as matching tokens.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> soft-cosine-tokens-jaro-winkler("The FLWOR Foundation", "FLWOR Found.", " +", 1, 4, 0.1 ) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 0.45 </code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -198,13 +198,13 @@ declare function simh:soft-cosine-tokens-jaro-winkler ( $s1 as xs:string, $s2 as
 };
 
 (:~
- : Returns the Monge-Elkan similarity coefficient between two strings, using the Jaro-Winkler 
- : similarity function to discover token identity.
- :
- : <br/>
- : Example usage : <code> monge-elkan-jaro-winkler("Comput. Sci. and Eng. Dept., University of California, San Diego", "Department of Computer Scinece, Univ. Calif., San Diego", 4, 0.1) </code>
- : <br/>
- : The function invocation in the example above returns : <code> 0.992 </code>
+ : <p>Returns the Monge-Elkan similarity coefficient between two strings, using the Jaro-Winkler</p> 
+ : <p>similarity function to discover token identity.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code> monge-elkan-jaro-winkler("Comput. Sci. and Eng. Dept., University of California, San Diego", "Department of Computer Scinece, Univ. Calif., San Diego", 4, 0.1) </code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code> 0.992 </code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.

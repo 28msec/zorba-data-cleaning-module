@@ -1,4 +1,4 @@
-import module namespace conversion = "http://www.zorba-xquery.com/modules/data-cleaning/conversion";
+import module namespace conversion = "http://zorba.io/modules/data-cleaning/conversion";
 
 let $geocode := conversion:geocode-from-address ( ("Lisboa", "Portugal") )
 for $result in $geocode

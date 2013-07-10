@@ -17,18 +17,17 @@ xquery version "3.0";
  :)
 
 (:~
- : This library module provides data normalization functions for processing calendar dates, 
+ : <p>This library module provides data normalization functions for processing calendar dates, 
  : temporal values, currency values, units of measurement, location names and postal addresses.
+ : These functions are particularly useful for converting different data representations into cannonical formats.</p>
  :
- : These functions are particularly useful for converting different data representations into cannonical formats.
- :
- : The logic contained in this module is not specific to any particular XQuery implementation.
+ : <p>The logic contained in this module is not specific to any particular XQuery implementation.</p>
  :
  : @author Bruno Martins and Diogo Simões
  : @project Zorba/Data Cleaning/Normalization
  :)
 
-module namespace normalization = "http://www.zorba-xquery.com/modules/data-cleaning/normalization";
+module namespace normalization = "http://zorba.io/modules/data-cleaning/normalization";
 
 import module namespace http = "http://www.zorba-xquery.com/modules/http-client";
 
@@ -37,8 +36,8 @@ declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
 declare option ver:module-version "2.0";
 
 (:~
- : Converts a given string representation of a date value into a date representation valid according 
- : to the corresponding XML Schema type.
+ : <p>Converts a given string representation of a date value into a date representation valid according 
+ : to the corresponding XML Schema type.</p>
  :
  :
  : @param $sd The string representation for the date
@@ -47,18 +46,18 @@ declare option ver:module-version "2.0";
  : by a single letter or 'O' or 'E' and then a single letter. Any character in the format string that is not part of a conversion 
  : specification is interpreted literally, and the string '%%' gives '%'. The supported conversion specifications are as follows:
  : <pre>
- : '%b' Abbreviated month name in the current locale.<br/>
- : '%B' Full month name in the current locale.<br/>
- : '%d' Day of the month as decimal number (01-31).<br/>
- : '%m' Month as decimal number (01-12).<br/>
- : '%x' Date, locale-specific.<br/>
- : '%y' Year without century (00-99).<br/>
- : '%Y' Year with century.<br/>
- : '%C' Century (00-99): the integer part of the year divided by 100.<br/>
- : '%D' Locale-specific date format such as '%m/%d/%y'.<br/>
- : '%e' Day of the month as decimal number (1-31), with a leading pace for a single-digit number.<br/>
- : '%F' Equivalent to %Y-%m-%d (the ISO 8601 date format).<br/>
- : '%h' Equivalent to '%b'.<br/> 
+ : '%b' Abbreviated month name in the current locale.
+ : '%B' Full month name in the current locale.
+ : '%d' Day of the month as decimal number (01-31).
+ : '%m' Month as decimal number (01-12).
+ : '%x' Date, locale-specific.
+ : '%y' Year without century (00-99).
+ : '%Y' Year with century.
+ : '%C' Century (00-99): the integer part of the year divided by 100.
+ : '%D' Locale-specific date format such as '%m/%d/%y'.
+ : '%e' Day of the month as decimal number (1-31), with a leading pace for a single-digit number.
+ : '%F' Equivalent to %Y-%m-%d (the ISO 8601 date format).
+ : '%h' Equivalent to '%b'. 
  :</pre>
  :
  : @return The date value resulting from the conversion.
@@ -147,8 +146,8 @@ declare function normalization:to-date ( $sd as xs:string, $format as xs:string?
 };
 
 (:~
- : Converts a given string representation of a time value into a time representation valid according to 
- : the corresponding XML Schema type.
+ : <p>Converts a given string representation of a time value into a time representation valid according to 
+ : the corresponding XML Schema type.</p>
  :
  :
  : @param $sd The string representation for the time.
@@ -156,13 +155,13 @@ declare function normalization:to-date ( $sd as xs:string, $format as xs:string?
  : conversion specifications. In the format string, a conversion specification is introduced by '%', usually followed by a single 
  : letter or 'O' or 'E' and then a single letter. Any character in the format string that is not part of a conversion specification 
  : is interpreted literally, and the string '%%' gives '%'. The supported conversion specifications are as follows:
- :
+ : <p/>
  : <pre class="ace-static">
  : '%H' Hours as decimal number (00-23).
  : '%I' Hours as decimal number (01-12).
  : '%M' Minute as decimal number (00-59).
  : '%p' AM/PM indicator in the locale. Used in conjunction with '%I' and *not* with '%H'.
- : '%S' Second as decimal number (00-61), allowing for up to two leap-seconds.<br/>
+ : '%S' Second as decimal number (00-61), allowing for up to two leap-seconds.
  : '%X' Time, locale-specific.
  : '%z' Offset from Greenwich, so '-0900' is 9 hours west of Greenwich.
  : '%Z' Time zone as a character string.
@@ -173,6 +172,7 @@ declare function normalization:to-date ( $sd as xs:string, $format as xs:string?
  : '%T' Equivalent to '%H:%M:%S'.
  :</pre>
  :
+ : @error normalization:NOTSUPPORTED if the date type is not known to the service. 
  : @return The time value resulting from the conversion.
  : @example test/Queries/data-cleaning/normalization/to-time.xq
  :)
@@ -524,8 +524,8 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
 };
 
 (:~
- : Converts a given string representation of a dateTime value into a dateTime representation 
- : valid according to the corresponding XML Schema type.
+ : <p>Converts a given string representation of a dateTime value into a dateTime representation 
+ : valid according to the corresponding XML Schema type.</p>
  :
  :
  : @param $sd The string representation for the dateTime.
@@ -533,7 +533,7 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
  : of conversion specifications. In the format string, a conversion specification is introduced by '%', usually followed by a single 
  : letter or 'O' or 'E' and then a single letter. Any character in the format string that is not part of a conversion specification 
  : is interpreted literally, and the string '%%' gives '%'. The supported conversion specifications are as follows:
- :
+ : <p/>
  : <pre class="ace-static">
  : '%b' Abbreviated month name in the current locale.
  : '%B' Full month name in the current locale.
@@ -566,6 +566,7 @@ declare function normalization:to-time ( $sd as xs:string, $format as xs:string?
  : '%T' Equivalent to '%H:%M:%S'.
  :</pre>
  :
+ : @error normalization:NOTSUPPORTED if the dateTime type is not known to the service. 
  : @return The dateTime value resulting from the conversion.
  : @example test/Queries/data-cleaning/normalization/to-dateTime.xq
  :)
@@ -1183,8 +1184,8 @@ declare function normalization:to-dateTime ( $sd as xs:string, $format as xs:str
 };
 
 (:~
- : Uses an address normalization Web service to convert a postal address given as input into a 
- : cannonical representation format.
+ : <p>Uses an address normalization Web service to convert a postal address given as input into a 
+ : cannonical representation format.</p>
  :
  : 
  : @param $addr A sequence of strings encoding an address, where each string in the sequence corresponds to a different component (e.g., street, city, country, etc.) of the address.
@@ -1208,13 +1209,13 @@ declare %an:nondeterministic  function normalization:normalize-address ( $addr a
 };
 
 (:~
- : Uses an phone number normalization Web service to convert a phone number given as input into a 
- : cannonical representation.
+ : <p>Uses an phone number normalization Web service to convert a phone number given as input into a 
+ : cannonical representation.</p>
  : 
  : @param $phone A strings encoding a phone number.
  : @return A strings with the phone number encoded in a cannonical format.
- :
- : <br/><br/><b> Attention : This function is still not implemented. </b> <br/>
+ : <p/>
+ : <p><b> Attention : This function is still not implemented. </b></p> 
  :
  :)
 declare function normalization:normalize-phone ( $addr as xs:string* ) as xs:string* {
@@ -1222,8 +1223,8 @@ declare function normalization:normalize-phone ( $addr as xs:string* ) as xs:str
 };
 
 (:~
- : Internal auxiliary function that returns an XML representation for a dictionary that contains the 
- : time-shift value associated to different time-zone abbreviations.
+ : <p>Internal auxiliary function that returns an XML representation for a dictionary that contains the 
+ : time-shift value associated to different time-zone abbreviations.</p>
  :)
 declare %private function normalization:timeZone-dictionary() as element(){
 	let $result :=
@@ -1453,8 +1454,8 @@ return $result
 };
 
 (:~
- : Internal auxiliary function that returns an XML representation for a dictionary that contains a 
- : numeric value associated to different month name abbreviations.
+ : <p>Internal auxiliary function that returns an XML representation for a dictionary that contains a 
+ : numeric value associated to different month name abbreviations.</p>
  :)
 declare %private function normalization:month-dictionary() as element(){
 let $dictionary :=
@@ -1523,7 +1524,7 @@ return $dictionary
 };
 
 (:~
- : Internal auxiliary function that checks if a string is in xs:dateTime format
+ : <p>Internal auxiliary function that checks if a string is in xs:dateTime format</p>
  :
  :
  : @param $dateTime The string representation for the dateTime.
@@ -1534,7 +1535,7 @@ declare %private function normalization:check-dateTime($dateTime as xs:string) a
 };
 
 (:~
- : Internal auxiliary function that checks if a string is in xs:date format
+ : <p>Internal auxiliary function that checks if a string is in xs:date format</p>
  :
  :
  : @param $dateTime The string representation for the date.
@@ -1545,7 +1546,7 @@ declare %private function normalization:check-date($date as xs:string) as xs:str
 };
 
 (:~
- : Internal auxiliary function that checks if a string is in xs:time format
+ : <p>Internal auxiliary function that checks if a string is in xs:time format</p>
  :
  :
  : @param $dateTime The string representation for the time.

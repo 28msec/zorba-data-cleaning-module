@@ -17,16 +17,16 @@ xquery version "3.0";
  :)
 
 (:~
- : This library module provides data conversion functions for processing calendar dates, 
- : temporal values, currency values, units of measurement, location names and postal addresses.
- :
- : The logic contained in this module is not specific to any particular XQuery implementation.
+ : <p>This library module provides data conversion functions for processing calendar dates, 
+ : temporal values, currency values, units of measurement, location names and postal addresses.</p>
+ : <p/>
+ : <p>The logic contained in this module is not specific to any particular XQuery implementation.</p>
  :
  : @author Bruno Martins and Diogo Simões
  : @project Zorba/Data Cleaning/Conversion
  :)
 
-module namespace conversion = "http://www.zorba-xquery.com/modules/data-cleaning/conversion";
+module namespace conversion = "http://zorba.io/modules/data-cleaning/conversion";
 
 declare namespace exref = "http://www.ecb.int/vocabulary/2002-08-01/eurofxref";
 declare namespace an = "http://www.zorba-xquery.com/annotations";
@@ -40,12 +40,12 @@ import module namespace reflection = "http://www.zorba-xquery.com/modules/reflec
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
 declare option ver:module-version "2.0";
 
-(:~ The key to be used when accessing the White Pages Web service :)
+(:~ <p>The key to be used when accessing the White Pages Web service</p> :)
 declare variable $conversion:key := "06ea2f21cc15602b6a3e242e3225a81a";
 
 (:~
- : Uses a White-pages Web service to discover information about a given name, 
- : returning a sequence of strings for the phone numbers associated to the name.
+ : <p>Uses a White-pages Web service to discover information about a given name, 
+ : returning a sequence of strings for the phone numbers associated to the name.</p>
  :
  :
  : @param $name The name of person or organization.
@@ -61,8 +61,8 @@ declare %an:nondeterministic function conversion:phone-from-user ( $name as xs:s
 };
 
 (:~
- : Uses a White-pages Web service to discover information about a given name, 
- : returning a sequence of strings for the addresses associated to the name.
+ : <p>Uses a White-pages Web service to discover information about a given name, 
+ : returning a sequence of strings for the addresses associated to the name.</p>
  :
  :
  : @param $name The name of person or organization.
@@ -83,8 +83,8 @@ declare %an:nondeterministic function conversion:address-from-user ( $name as xs
 
 
 (:~
- : Uses a White-pages Web service to discover information about a given phone number, 
- : returning a sequence of strings for the name associated to the phone number.
+ : <p>Uses a White-pages Web service to discover information about a given phone number, 
+ : returning a sequence of strings for the name associated to the phone number.</p>
  :
  :
  : @param $phone-number A string with 10 digits corresponding to the phone number.
@@ -98,8 +98,8 @@ declare %an:nondeterministic function conversion:user-from-phone ( $phone-number
 };
 
 (:~
- : Uses a White-pages Web service to discover information about a given phone number, 
- : returning a string for the address associated to the phone number.
+ : <p>Uses a White-pages Web service to discover information about a given phone number, 
+ : returning a string for the address associated to the phone number.</p>
  :
  :
  : @param $phone-number A string with 10 digits corresponding to the phone number.
@@ -120,8 +120,8 @@ declare %an:nondeterministic function conversion:address-from-phone ( $phone-num
 };
 
 (:~
- : Uses a White-pages Web service to discover information about a given address, 
- : returning a sequence of strings for the names associated to the address.
+ : <p>Uses a White-pages Web service to discover information about a given address, 
+ : returning a sequence of strings for the names associated to the address.</p>
  :
  :
  : @param $address A string corresponding to the address (ex: 5655 E Gaskill Rd, Willcox, AZ, US).
@@ -146,8 +146,8 @@ declare %an:nondeterministic function conversion:user-from-address ( $address as
 };
 
 (:~
- : Uses a White-pages Web service to discover information about a given address, 
- : returning a sequence of strings for the phone number associated to the address.
+ : <p>Uses a White-pages Web service to discover information about a given address, 
+ : returning a sequence of strings for the phone number associated to the address.</p>
  :
  :
  : @param $address A string corresponding to the address (ex: 5655 E Gaskill Rd, Willcox, AZ, US).
@@ -180,8 +180,8 @@ declare %an:nondeterministic function conversion:phone-from-address ( $address a
 };
 
 (:~
- : Conversion function for units of measurement, acting as a wrapper over the CuppaIT WebService.
- : <br/>
+ : <p>Conversion function for units of measurement, acting as a wrapper over the CuppaIT WebService.</p>
+ : 
  :
  :
  : @param $v The amount we wish to convert.
@@ -296,7 +296,7 @@ else
 };
 
 (:~
- : Placename to geospatial coordinates converter, acting as a wrapper over the Yahoo! geocoder service.
+ : <p>Placename to geospatial coordinates converter, acting as a wrapper over the Yahoo! geocoder service.</p>
  :
  : 
  : @param $q A sequence of strings corresponding to the different components (e.g., street, city, country, etc.) of the place name.
@@ -313,7 +313,7 @@ declare %an:nondeterministic function conversion:geocode-from-address ( $q as xs
 };
 
 (:~
- : Geospatial coordinates to placename converter, acting as a wrapper over the Yahoo! reverse geocoder service.
+ : <p>Geospatial coordinates to placename converter, acting as a wrapper over the Yahoo! reverse geocoder service.</p>
  :
  :
  : @param $lat Geospatial latitude.
@@ -337,9 +337,9 @@ declare %an:nondeterministic function conversion:address-from-geocode ( $lat as 
 };
 
 (:~
- : Currency conversion function, acting as a wrapper over the WebService from the European Central Bank.
- :
- : WebService documentation at http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
+ : <p>Currency conversion function, acting as a wrapper over the WebService from the European Central Bank.</p>
+ : <p/>
+ : <p>WebService documentation at <a src="http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html">http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html</a></p>
  :
  :
  : @param $v The amount we wish to convert.
@@ -347,7 +347,7 @@ declare %an:nondeterministic function conversion:address-from-geocode ( $lat as 
  : @param $m2 The target currency (e.g., "USD").
  : @param $date The reference date.
  : @return The value resulting from the conversion.
- : @error conversion:notsupported if the date, the source currency type or the target currency type are not known to the service.
+ : @error conversion:NOTSUPPORTED if the date, the source currency type or the target currency type are not known to the service.
  : @see http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
  : @example test/Queries/data-cleaning/conversion/currency-convert.xq
  :)
@@ -361,17 +361,17 @@ declare %an:nondeterministic function conversion:currency-convert ( $v as xs:dou
  let $fromEUR := if ( $m2="EUR" ) then (xs:double(1.0)) else ( $doc//exref:Cube[xs:string(@currency)=$m2]/xs:double(@rate) )
  let $result  := ($v div $toEUR) * $fromEUR
  return if (matches(string($result),"-?[0-9]+(\.[0-9]+)?")) then ($result) 
-        else (error(QName('http://www.zorba-xquery.com/modules/data-cleaning/conversion', 'conversion:notsupported'), data($result)))
+        else (error(QName('http://zorba.io/modules/data-cleaning/conversion', 'conversion:NOTSUPPORTED'), data($result)))
 };
 
 (:~
- : Uses a whois service to discover information about a given domain name, returning a sequence of strings 
- : for the phone numbers associated to the name.
+ : <p>Uses a whois service to discover information about a given domain name, returning a sequence of strings 
+ : for the phone numbers associated to the name.</p>
  :
  : @param $addr A string with the domain.
  : @return A sequence of strings for the phone numbers associated to the domain name.
  :
- : <br/><br/><b> Attention : This function is still not implemented. </b> <br/>
+ : <p><b> Attention : This function is still not implemented. </b></p> 
  :
  :)
 declare function conversion:phone-from-domain ( $domain as xs:string ) as xs:string*{
@@ -379,13 +379,13 @@ declare function conversion:phone-from-domain ( $domain as xs:string ) as xs:str
 };
 
 (:~
- : Uses a whois service to discover information about a given domain name, returning a sequence of strings 
- : for the addresses associated to the name.
+ : <p>Uses a whois service to discover information about a given domain name, returning a sequence of strings 
+ : for the addresses associated to the name.</p>
  :
  : @param $addr A string with the domain.
  : @return A sequence of strings for the addresses associated to the domain name.
  :
- : <br/><br/><b> Attention : This function is still not implemented. </b> <br/>
+ : <p><b> Attention : This function is still not implemented. </b></p> 
  :
  :)
 declare function conversion:address-from-domain ( $domain as xs:string ) as xs:string*{
@@ -393,13 +393,13 @@ declare function conversion:address-from-domain ( $domain as xs:string ) as xs:s
 };
 
 (:~
- : Uses a whois service to discover information about a given domain name, returning a sequence of strings 
- : for the person or organization names associated to the name.
+ : <p>Uses a whois service to discover information about a given domain name, returning a sequence of strings 
+ : for the person or organization names associated to the name.</p>
  :
  : @param $addr A string with the domain.
  : @return A sequence of strings for the person or organization names associated to the domain name.
  :
- : <br/><br/><b> Attention : This function is still not implemented. </b> <br/>
+ : <p><b> Attention : This function is still not implemented. </b></p> 
  :
  :)
 declare function conversion:name-from-domain ( $domain as xs:string ) as xs:string*{

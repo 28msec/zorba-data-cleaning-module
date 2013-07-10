@@ -17,29 +17,29 @@ xquery version "1.0";
  :)
 
 (:~
- : This library module provides phonetic string similarity functions, comparing strings with basis on how they sound.
- : 
- : These metrics are particularly effective in matching names, since names are often spelled in different 
- : ways that sound the same.
- : 
- : The logic contained in this module is not specific to any particular XQuery implementation.
+ : <p>This library module provides phonetic string similarity functions, comparing strings with basis on how they sound.</p>
+ : <p/>
+ : <p>These metrics are particularly effective in matching names, since names are often spelled in different 
+ : ways that sound the same.</p>
+ : <p/>
+ : <p>The logic contained in this module is not specific to any particular XQuery implementation.</p>
  :
  : @author Bruno Martins
  : @project Zorba/Data Cleaning/Phonectic String Similarity
  :)
 
-module namespace simp = "http://www.zorba-xquery.com/modules/data-cleaning/phonetic-string-similarity";
+module namespace simp = "http://zorba.io/modules/data-cleaning/phonetic-string-similarity";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
 declare option ver:module-version "2.0";
 
 (:~
- : Returns the Soundex key for a given string.
- :
- : <br/>
- : Example usage : <code>soundex-key("Robert")</code>
- : <br/>
- : The function invocation in the example above returns : <code>"R163"</code>
+ : <p>Returns the Soundex key for a given string.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code>soundex-key("Robert")</code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code>"R163"</code></p>
  :
  : @param $s1 The string.
  : @return The Soundex key for the given input string.
@@ -55,12 +55,12 @@ declare function simp:soundex-key ( $s1 as xs:string ) as xs:string {
 };
 
 (:~
- : Checks if two strings have the same Soundex key.
- :
- : <br/>
- : Example usage : <code>soundex( "Robert" , "Rupert" )</code>
- : <br/>
- : The function invocation in the example above returns : <code>true</code>
+ : <p>Checks if two strings have the same Soundex key.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code>soundex( "Robert" , "Rupert" )</code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code>true</code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -72,13 +72,13 @@ declare function simp:soundex ( $s1 as xs:string, $s2 as xs:string ) as xs:boole
 };
 
 (:~
- : Returns the Metaphone key for a given string.
- : The Metaphone algorithm produces variable length keys as its output, as opposed to Soundex's fixed-length keys.
- :
- : <br/>
- : Example usage : <code>metaphone-key("ALEKSANDER")</code>
- : <br/>
- : The function invocation in the example above returns : <code>"ALKSNTR"</code>
+ : <p>Returns the Metaphone key for a given string.</p>
+ : <p>The Metaphone algorithm produces variable length keys as its output, as opposed to Soundex's fixed-length keys.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code>metaphone-key("ALEKSANDER")</code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code>"ALKSNTR"</code></p>
  :
  : @param $s1 The string.
  : @return The Metaphone key for the given input string.
@@ -99,12 +99,12 @@ declare function simp:metaphone-key ( $s1 as xs:string ) as xs:string {
 };
 
 (:~
- : Checks if two strings have the same Metaphone key.
- :
- : <br/>
- : Example usage : <code>metaphone("ALEKSANDER", "ALEXANDRE")</code>
- : <br/>
- : The function invocation in the example above returns : <code>true</code>
+ : <p>Checks if two strings have the same Metaphone key.</p>
+ : <p/>
+ : 
+ : <p>Example usage : <code>metaphone("ALEKSANDER", "ALEXANDRE")</code></p>
+ : <p/>
+ : <p>The function invocation in the example above returns : <code>true</code></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
