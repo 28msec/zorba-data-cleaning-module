@@ -19,10 +19,9 @@ xquery version "3.0";
 (:~
  : <p>This library module provides data normalization functions for processing calendar dates, 
  : temporal values, currency values, units of measurement, location names and postal addresses.
- : <p/>
- : <p>These functions are particularly useful for converting different data representations into cannonical formats.
- : <p/>
- : <p>The logic contained in this module is not specific to any particular XQuery implementation.
+ : These functions are particularly useful for converting different data representations into cannonical formats.</p>
+ :
+ : <p>The logic contained in this module is not specific to any particular XQuery implementation.</p>
  :
  : @author Bruno Martins and Diogo Simões
  : @project Zorba/Data Cleaning/Normalization

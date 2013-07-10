@@ -20,11 +20,9 @@ xquery version "1.0";
  : <p>This library module provides character-based string similarity functions 
  : that view strings as sequences of characters, generally computing a similarity score
  : that corresponds to the cost of transforming one string into another.
- : <p/>
- : <p>These functions are particularly useful for matching near duplicate strings  
- : in the presence of typographical errors. 
- : <p/>
- : <p>The logic contained in this module is not specific to any particular XQuery implementation.
+ : These functions are particularly useful for matching near duplicate strings  
+ : in the presence of typographical errors. </p>
+ : <p>The logic contained in this module is not specific to any particular XQuery implementation.</p>
  :
  : @author Bruno Martins and Diogo Simões
  : @project Zorba/Data Cleaning/Character-Based String Similarity
