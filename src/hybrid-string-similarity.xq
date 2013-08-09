@@ -39,7 +39,7 @@ import module namespace simt = "http://zorba.io/modules/data-cleaning/token-base
 import module namespace simc = "http://zorba.io/modules/data-cleaning/character-based-string-similarity";
 import module namespace simp = "http://zorba.io/modules/data-cleaning/phonetic-string-similarity";
 
-declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare namespace ver = "http://zorba.io/options/versioning";
 declare option ver:module-version "2.0";
 
 (:~

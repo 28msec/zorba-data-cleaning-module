@@ -29,7 +29,7 @@ xquery version "3.0";
 module namespace conversion = "http://zorba.io/modules/data-cleaning/conversion";
 
 declare namespace exref = "http://www.ecb.int/vocabulary/2002-08-01/eurofxref";
-declare namespace an = "http://www.zorba-xquery.com/annotations";
+declare namespace an = "http://zorba.io/annotations";
 
 import schema namespace wp = 'http://api.whitepages.com/schema/';
 
@@ -37,7 +37,7 @@ import module namespace http = "http://www.zorba-xquery.com/modules/http-client"
 
 import module namespace reflection = "http://www.zorba-xquery.com/modules/reflection";
 
-declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare namespace ver = "http://zorba.io/options/versioning";
 declare option ver:module-version "2.0";
 
 (:~ <p>The key to be used when accessing the White Pages Web service</p> :)

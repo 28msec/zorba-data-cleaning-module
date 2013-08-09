@@ -41,7 +41,7 @@ declare namespace math = "http://www.w3.org/2005/xpath-functions/math";
 
 import module namespace set  = "http://zorba.io/modules/data-cleaning/set-similarity";
 
-declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare namespace ver = "http://zorba.io/options/versioning";
 declare option ver:module-version "2.0";
 
 (:~
