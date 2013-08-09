@@ -31,8 +31,8 @@ module namespace normalization = "http://zorba.io/modules/data-cleaning/normaliz
 
 import module namespace http = "http://www.zorba-xquery.com/modules/http-client";
 
-declare namespace an = "http://www.zorba-xquery.com/annotations";
-declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare namespace an = "http://zorba.io/annotations";
+declare namespace ver = "http://zorba.io/options/versioning";
 declare option ver:module-version "2.0";
 
 (:~

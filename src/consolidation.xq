@@ -33,7 +33,7 @@ module namespace con = "http://zorba.io/modules/data-cleaning/consolidation";
 import module namespace set = "http://zorba.io/modules/data-cleaning/set-similarity";
 import module namespace simc = "http://zorba.io/modules/data-cleaning/character-based-string-similarity";
 
-declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare namespace ver = "http://zorba.io/options/versioning";
 declare option ver:module-version "2.0";
 
 (:~
