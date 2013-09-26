@@ -51,9 +51,9 @@ declare option ver:module-version "2.0";
  : this function returns the cosine similarity coefficient between sets of Soundex keys.</p>
  : <p/>
  : 
- : <p>Example usage : <code> soft-cosine-tokens-soundex("ALEKSANDER SMITH", "ALEXANDER SMYTH", " +") </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> soft-cosine-tokens-soundex("ALEKSANDER SMITH", "ALEXANDER SMYTH", " +") </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 1.0 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 1.0 </pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -75,9 +75,9 @@ declare function simh:soft-cosine-tokens-soundex ( $s1 as xs:string, $s2 as xs:s
  : this function returns the cosine similarity coefficient between sets of Metaphone keys.</p>
  : <p/>
  : 
- : <p>Example usage : <code> soft-cosine-tokens-metaphone("ALEKSANDER SMITH", "ALEXANDER SMYTH", " +" ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> soft-cosine-tokens-metaphone("ALEKSANDER SMITH", "ALEXANDER SMYTH", " +" ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 1.0 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 1.0 </pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -99,9 +99,9 @@ declare function simh:soft-cosine-tokens-metaphone ( $s1 as xs:string, $s2 as xs
  : bellow a given threshold are considered as matching tokens.</p>
  : <p/>
  : 
- : <p>Example usage : <code> soft-cosine-tokens-edit-distance("The FLWOR Foundation", "FLWOR Found.", " +", 0 ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> soft-cosine-tokens-edit-distance("The FLWOR Foundation", "FLWOR Found.", " +", 0 ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 0.408248290463863 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 0.408248290463863 </pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -135,9 +135,9 @@ declare function simh:soft-cosine-tokens-edit-distance ( $s1 as xs:string, $s2 a
  : a given threshold are considered as matching tokens.</p>
  : <p/>
  : 
- : <p>Example usage : <code> soft-cosine-tokens-jaro("The FLWOR Foundation", "FLWOR Found.", " +", 1 ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> soft-cosine-tokens-jaro("The FLWOR Foundation", "FLWOR Found.", " +", 1 ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 0.5 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 0.5 </pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -169,9 +169,9 @@ declare function simh:soft-cosine-tokens-jaro ( $s1 as xs:string, $s2 as xs:stri
  : similarity above a given threshold are considered as matching tokens.</p>
  : <p/>
  : 
- : <p>Example usage : <code> soft-cosine-tokens-jaro-winkler("The FLWOR Foundation", "FLWOR Found.", " +", 1, 4, 0.1 ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> soft-cosine-tokens-jaro-winkler("The FLWOR Foundation", "FLWOR Found.", " +", 1, 4, 0.1 ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 0.45 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 0.45 </pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -202,9 +202,9 @@ declare function simh:soft-cosine-tokens-jaro-winkler ( $s1 as xs:string, $s2 as
  : <p>similarity function to discover token identity.</p>
  : <p/>
  : 
- : <p>Example usage : <code> monge-elkan-jaro-winkler("Comput. Sci. and Eng. Dept., University of California, San Diego", "Department of Computer Scinece, Univ. Calif., San Diego", 4, 0.1) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> monge-elkan-jaro-winkler("Comput. Sci. and Eng. Dept., University of California, San Diego", "Department of Computer Scinece, Univ. Calif., San Diego", 4, 0.1) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 0.992 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 0.992 </pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
