@@ -40,9 +40,9 @@ declare option ver:module-version "2.0";
  : of edits needed to transform one string into the other, with the allowable edit operations 
  : being insertion, deletion, or substitution of a single character.</p>
  : <p/>
- : <p>Example usage : <code>edit-distance("FLWOR", "FLOWER")</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">edit-distance("FLWOR", "FLOWER")</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>2</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">2</pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -67,9 +67,9 @@ declare function simc:edit-distance ( $s1 as xs:string, $s2 as xs:string ) as xs
  : the Jaro-Winkler value is, the more similar the strings are. The coefficient is 
  : normalized such that 0 equates to no similarity and 1 is an exact match.</p>
  : <p/>
- : <p>Example usage : <code>jaro("FLWOR Found.", "FLWOR Foundation")</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">jaro("FLWOR Found.", "FLWOR Foundation")</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>0.5853174603174603</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">0.5853174603174603</pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -98,9 +98,9 @@ declare function simc:jaro ( $s1 as xs:string, $s2 as xs:string ) as xs:double {
  : <p>This similarity coefficient corresponds to an extension of the Jaro similarity coefficient that weights or
  : penalizes strings based on their similarity at the beginning of the string, up to a given prefix size.</p>
  : <p/>
- : <p>Example usage : <code>jaro-winkler("DWAYNE", "DUANE", 4, 0.1 )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">jaro-winkler("DWAYNE", "DUANE", 4, 0.1 )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>0.8577777777777778</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">0.8577777777777778</pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -123,9 +123,9 @@ declare function simc:jaro-winkler ( $s1 as xs:string, $s2 as xs:string, $prefix
  : variable cost adjustment to the cost of a gap (i.e., an insertion or deletion) in the 
  : distance metric.</p>
  : <p/>
- : <p>Example usage : <code>needleman-wunsch("KAK", "KQRK", 1, 1)</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">needleman-wunsch("KAK", "KQRK", 1, 1)</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>0</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">0</pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -148,9 +148,9 @@ declare function simc:needleman-wunsch ( $s1 as xs:string, $s2 as xs:string, $sc
 (:~
  : <p>Returns the Smith-Waterman distance between two strings.</p>
  : <p/>
- : <p>Example usage : <code>smith-waterman("ACACACTA", "AGCACACA", 2, 1)</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">smith-waterman("ACACACTA", "AGCACACA", 2, 1)</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>12</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">12</pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.

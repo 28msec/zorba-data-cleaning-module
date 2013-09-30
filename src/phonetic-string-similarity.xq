@@ -37,9 +37,9 @@ declare option ver:module-version "2.0";
  : <p>Returns the Soundex key for a given string.</p>
  : <p/>
  : 
- : <p>Example usage : <code>soundex-key("Robert")</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">soundex-key("Robert")</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>"R163"</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">"R163"</pre></p>
  :
  : @param $s1 The string.
  : @return The Soundex key for the given input string.
@@ -58,9 +58,9 @@ declare function simp:soundex-key ( $s1 as xs:string ) as xs:string {
  : <p>Checks if two strings have the same Soundex key.</p>
  : <p/>
  : 
- : <p>Example usage : <code>soundex( "Robert" , "Rupert" )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">soundex( "Robert" , "Rupert" )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>true</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">true</pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -76,9 +76,9 @@ declare function simp:soundex ( $s1 as xs:string, $s2 as xs:string ) as xs:boole
  : <p>The Metaphone algorithm produces variable length keys as its output, as opposed to Soundex's fixed-length keys.</p>
  : <p/>
  : 
- : <p>Example usage : <code>metaphone-key("ALEKSANDER")</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">metaphone-key("ALEKSANDER")</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>"ALKSNTR"</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">"ALKSNTR"</pre></p>
  :
  : @param $s1 The string.
  : @return The Metaphone key for the given input string.
@@ -102,9 +102,9 @@ declare function simp:metaphone-key ( $s1 as xs:string ) as xs:string {
  : <p>Checks if two strings have the same Metaphone key.</p>
  : <p/>
  : 
- : <p>Example usage : <code>metaphone("ALEKSANDER", "ALEXANDRE")</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">metaphone("ALEKSANDER", "ALEXANDRE")</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>true</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">true</pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.

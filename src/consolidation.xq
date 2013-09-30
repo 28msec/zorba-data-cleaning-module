@@ -41,9 +41,9 @@ declare option ver:module-version "2.0";
  : <p>If more then one answer is possible, returns the first node according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>most-frequent( ( "a", "a", "b") )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">most-frequent( ( "a", "a", "b") )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>("a")</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">("a")</pre></p>
  :
  : @param $s A sequence of nodes.
  : @return The most frequent node in the input sequence.
@@ -58,9 +58,9 @@ declare function con:most-frequent ( $s ) as item(){
  : <p>If more then one answer is possible, return the first node according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>least-frequent( ( "a", "a", "b") )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">least-frequent( ( "a", "a", "b") )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>("b")</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">("b")</pre></p>
  :
  : @param $s A sequence of nodes.
  : @return The least frequent node in the input sequence.
@@ -76,9 +76,9 @@ declare function con:least-frequent ( $s ) as item(){
  : <p>If more then one answer is possible, return the first string according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>con:longest( ( "a", "aa", "aaa") )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">con:longest( ( "a", "aa", "aaa") )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>("aaa")</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">("aaa")</pre></p>
  :
  : @param $s A sequence of strings.
  : @return The longest string in the input sequence.
@@ -94,9 +94,9 @@ declare function con:longest ( $s as xs:string* ) as xs:string? {
  : <p>If more then one answer is possible, return the first string according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>shortest( ( "a", "aa", "aaa") )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">shortest( ( "a", "aa", "aaa") )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>("a")</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">("a")</pre></p>
  :
  : @param $s A sequence of strings.
  : @return The shortest string in the input sequence.
@@ -112,9 +112,9 @@ declare function con:shortest( $s as xs:string* ) as xs:string? {
  : <p>If more then one answer is possible, return the first string according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>most-tokens( ( "a b c", "a b", "a"), " +" )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">most-tokens( ( "a b c", "a b", "a"), " +" )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>("a b c")</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">("a b c")</pre></p>
  :
  : @param $s A sequence of strings.
  : @param $r A regular expression forming the delimiter character(s) which mark the boundaries between adjacent tokens.
@@ -131,9 +131,9 @@ declare function con:most-tokens ( $s as xs:string*, $r as xs:string ) as xs:str
  : <p>If more then one answer is possible, return the first string according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>least-tokens( ( "a b c", "a b", "a"), " +" )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">least-tokens( ( "a b c", "a b", "a"), " +" )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>("a")</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">("a")</pre></p>
  :
  : @param $s A sequence of strings.
  : @param $r A regular expression forming the delimiter character(s) which mark the boundaries between adjacent tokens.
@@ -149,9 +149,9 @@ declare function con:least-tokens ( $s as xs:string*, $r as xs:string ) as xs:st
  : <p>Returns the strings from an input sequence of strings that match a particular regular expression.</p>
  : <p/>
  : 
- : <p>Example usage : <code>matching( ( "a A b", "c AAA d", "e BB f"), "A+" )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">matching( ( "a A b", "c AAA d", "e BB f"), "A+" )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>( "a A b", "c AAA d")</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">( "a A b", "c AAA d")</pre></p>
  :
  : @param $s A sequence of strings.
  : @param $r The regular expression to be used in the matching.
@@ -168,9 +168,9 @@ declare function con:matching ( $s as xs:string*, $r as xs:string ) as xs:string
  : <p>If more then one answer is possible, the function returns the first string according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>super-string( ( "aaa bbb ccc", "aaa bbb", "aaa ddd", "eee fff" ) )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">super-string( ( "aaa bbb ccc", "aaa bbb", "aaa ddd", "eee fff" ) )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>( "aaa bbb" )</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">( "aaa bbb" )</pre></p>
  :
  : @param $s A sequence of strings.
  : @return The string that appears more frequently as part of the other strings in the sequence.
@@ -193,9 +193,9 @@ declare function con:superstring ( $s as xs:string* ) as xs:string? {
  : input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>most-similar-edit-distance( ( "aaabbbccc", "aaabbb", "eeefff" ), "aaab" )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">most-similar-edit-distance( ( "aaabbbccc", "aaabbb", "eeefff" ), "aaab" )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>( "aaabbb" )</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">( "aaabbb" )</pre></p>
  :
  : @param $s A sequence of strings.
  : @param $m The string towards which we want to measure the edit distance.
@@ -213,9 +213,9 @@ declare function con:most-similar-edit-distance ( $s as xs:string*, $m as xs:str
  : value for the edit distance metric), return the first string according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>least-similar-edit-distance( ( "aaabbbccc", "aaabbb", "eeefff" ), "aaab" )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">least-similar-edit-distance( ( "aaabbbccc", "aaabbb", "eeefff" ), "aaab" )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>( "eeefff" )</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">( "eeefff" )</pre></p>
  :
  : @param $s A sequence of strings.
  : @param $m The string towards which we want to measure the edit distance.
@@ -233,9 +233,9 @@ declare function con:least-similar-edit-distance ( $s as xs:string*, $m as xs:st
  : <p>If more then one answer is possible, return the first node according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>most-elements( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;a/&gt;, &lt;b/&gt;) )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">most-elements( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;a/&gt;, &lt;b/&gt;) )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>(&lt;a&gt;&lt;b/&gt;&lt;/a&gt;)</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">(&lt;a&gt;&lt;b/&gt;&lt;/a&gt;)</pre></p>
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of descending elements in the input sequence.
@@ -251,9 +251,9 @@ declare function con:most-elements ( $s ) as element(){
  : <p>If more then one answer is possible, return the first node according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>most-attributes( ( &lt;a att1="a1" att2="a2"/&gt;, &lt;b att1="a1" /&gt;, &lt;c/&gt; ) )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">most-attributes( ( &lt;a att1="a1" att2="a2"/&gt;, &lt;b att1="a1" /&gt;, &lt;c/&gt; ) )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>(&lt;a att1="a1" att2="a2"/&gt;)</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">(&lt;a att1="a1" att2="a2"/&gt;)</pre></p>
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of descending attributes in the input sequence.
@@ -269,9 +269,9 @@ declare function con:most-attributes ( $s ) as element(){
  : <p>If more then one answer is possible, return the first node according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>most-nodes( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;a/&gt;, &lt;b/&gt;) )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">most-nodes( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;a/&gt;, &lt;b/&gt;) )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>(&lt;a&gt;&lt;b/&gt;&lt;/a&gt;)</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">(&lt;a&gt;&lt;b/&gt;&lt;/a&gt;)</pre></p>
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of descending nodes in the input sequence.
@@ -287,9 +287,9 @@ declare function con:most-nodes ( $s ) as element(){
  : <p>If more then one answer is possible, return the first node according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>least-elements( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">least-elements( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>(&lt;d/&gt;)</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">(&lt;d/&gt;)</pre></p>
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of descending elements in the input sequence.
@@ -305,9 +305,9 @@ declare function con:least-elements ( $s ) as element(){
  : <p>If more then one answer is possible, return the first node according to the order of the input sequence.</p>                  
  : <p/>
  : 
- : <p>Example usage : <code>least-attributes( ( &lt;a att1="a1" att2="a2"/&gt;, &lt;b att1="a1" /&gt;, &lt;c/&gt; ) )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">least-attributes( ( &lt;a att1="a1" att2="a2"/&gt;, &lt;b att1="a1" /&gt;, &lt;c/&gt; ) )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>(&lt;c/&gt;)</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">(&lt;c/&gt;)</pre></p>
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of descending attributes in the input sequence.
@@ -323,9 +323,9 @@ declare function con:least-attributes ( $s ) as element(){
  : <p>If more then one answer is possible, return the first node according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>least-nodes( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">least-nodes( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>(&lt;d/&gt;)</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">(&lt;d/&gt;)</pre></p>
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of descending nodes in the input sequence.
@@ -341,9 +341,9 @@ declare function con:least-nodes ( $s ) as element(){
  : <p>If more then one answer is possible, return the first node according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>most-distinct-elements( ( &lt;a&gt;&lt;b/&gt;&lt;c/&gt;&lt;d/&gt;&lt;/a&gt;, &lt;a&gt;&lt;b/&gt;&lt;b/&gt;&lt;c/&gt;&lt;/a&gt;, &lt;a/&gt; ) )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">most-distinct-elements( ( &lt;a&gt;&lt;b/&gt;&lt;c/&gt;&lt;d/&gt;&lt;/a&gt;, &lt;a&gt;&lt;b/&gt;&lt;b/&gt;&lt;c/&gt;&lt;/a&gt;, &lt;a/&gt; ) )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>(&lt;a&gt;&lt;b/&gt;&lt;c/&gt;&lt;d/&gt;&lt;/a&gt;)</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">(&lt;a&gt;&lt;b/&gt;&lt;c/&gt;&lt;d/&gt;&lt;/a&gt;)</pre></p>
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of distinct descending elements in the input sequence.
@@ -359,9 +359,9 @@ declare function con:most-distinct-elements ( $s ) as element(){
  : <p>If more then one answer is possible, return the first node according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>most-distinct-attributes( ( &lt;a att1="a1" att2="a2" att3="a3"/&gt;, &lt;a att1="a1" att2="a2"&gt;&lt;b att2="a2" /&gt;&lt;/a&gt;, &lt;c/&gt; ) )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">most-distinct-attributes( ( &lt;a att1="a1" att2="a2" att3="a3"/&gt;, &lt;a att1="a1" att2="a2"&gt;&lt;b att2="a2" /&gt;&lt;/a&gt;, &lt;c/&gt; ) )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>(&lt;a att1="a1" att2="a2" att3="a3"/&gt;)</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">(&lt;a att1="a1" att2="a2" att3="a3"/&gt;)</pre></p>
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of distinct descending attributes in the input sequence.
@@ -377,9 +377,9 @@ declare function con:most-distinct-attributes ( $s ) as element(){
  : <p>If more then one answer is possible, return the first node according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code>most-distinct-nodes( ( &lt;a>&lt;b/>&lt;/a&gt;, &lt;a>&lt;a/&gt;&lt;/a&gt;, &lt;b/&gt;) )</code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery">most-distinct-nodes( ( &lt;a>&lt;b/>&lt;/a&gt;, &lt;a>&lt;a/&gt;&lt;/a&gt;, &lt;b/&gt;) )</pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code>(&lt;a&gt;&lt;b/&gt;&lt;/a&gt;)</code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery">(&lt;a&gt;&lt;b/&gt;&lt;/a&gt;)</pre></p>
  :
  : @param $s A sequence of nodes.
  : @return The node having the largest number of distinct descending nodes in the input sequence.
@@ -395,9 +395,9 @@ declare function con:most-distinct-nodes ( $s ) as element(){
  : <p>If more then one answer is possible, return the first node according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code> least-distinct-elements( ( &lt;a>&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> least-distinct-elements( ( &lt;a>&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> (&lt;d/&gt;) </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> (&lt;d/&gt;) </pre></p>
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of distinct descending elements in the input sequence.
@@ -413,9 +413,9 @@ declare function con:least-distinct-elements ( $s ) as element(){
  : <p>If more then one answer is possible, return the first node according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code> least-distinct-attributes( ( &lt;a att1="a1" att2="a2"/&gt;, &lt;b att1="a1" /&gt;, &lt;c/&gt; ) ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> least-distinct-attributes( ( &lt;a att1="a1" att2="a2"/&gt;, &lt;b att1="a1" /&gt;, &lt;c/&gt; ) ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> (&lt;c/&gt;) </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> (&lt;c/&gt;) </pre></p>
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of distinct descending attributes in the input sequence.
@@ -431,9 +431,9 @@ declare function con:least-distinct-attributes ( $s ) as element(){
  : <p>If more then one answer is possible, return the first node according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code> least-distinct-nodes( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> least-distinct-nodes( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;b&gt;&lt;c/&gt;&lt;/b&gt;, &lt;d/&gt;) ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> (&lt;d/&gt;) </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> (&lt;d/&gt;) </pre></p>
  :
  : @param $s A sequence of nodes.
  : @return The node having the smallest number of distinct descending nodes in the input sequence.
@@ -448,9 +448,9 @@ declare function con:least-distinct-nodes ( $s ) as element(){
  : produce a non-empty set of nodes in all the cases.</p>
  : <p/>
  : 
- : <p>Example usage : <code> all-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;c&gt;&lt;d/&gt;&lt;/c&gt;, &lt;d/&gt;), (".//b") ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> all-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;c&gt;&lt;d/&gt;&lt;/c&gt;, &lt;d/&gt;), (".//b") ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> (&lt;a&gt;&lt;b/&gt;&lt;/a&gt;) </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> (&lt;a&gt;&lt;b/&gt;&lt;/a&gt;) </pre></p>
  :
  : @param $s A sequence of elements.
  : @param $paths A sequence of strings denoting XPath expressions.
@@ -474,9 +474,9 @@ declare function con:all-xpaths ( $s as element()* , $paths as xs:string* ) as e
  : produce a non-empty set of nodes for some of the cases.</p>
  : <p/>
  : 
- : <p>Example usage : <code> some-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;d&gt;&lt;c/&gt;&lt;/d&gt;, &lt;d/&gt;), (".//b", ".//c") ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> some-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;d&gt;&lt;c/&gt;&lt;/d&gt;, &lt;d/&gt;), (".//b", ".//c") ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt; , &lt;d&gt;&lt;c/&gt;&lt;/d&gt; ) </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt; , &lt;d&gt;&lt;c/&gt;&lt;/d&gt; ) </pre></p>
  :
  : @param $s A sequence of elements.
  : @param $paths A sequence of strings denoting XPath expressions.
@@ -502,9 +502,9 @@ declare function con:some-xpaths ( $s as element()* , $paths as xs:string* ) as 
  : <p>If more then one answer is possible, return the first element according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code> most-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;d&gt;&lt;c/&gt;&lt;b/&gt;&lt;/d&gt;, &lt;d/&gt;) , (".//b", ".//c") ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> most-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;d&gt;&lt;c/&gt;&lt;b/&gt;&lt;/d&gt;, &lt;d/&gt;) , (".//b", ".//c") ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> ( &lt;d&gt;&lt;c/&gt;&lt;b/&gt;&lt;/d&gt; ) </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> ( &lt;d&gt;&lt;c/&gt;&lt;b/&gt;&lt;/d&gt; ) </pre></p>
  :
  : @param $s A sequence of elements.
  : @param $paths A sequence of strings denoting XPath expressions.
@@ -533,9 +533,9 @@ declare function con:most-xpaths ( $s as element()* , $paths as xs:string* ) as 
  : <p>If more then one answer is possible, return the first element according to the order of the input sequence.</p>
  : <p/>
  : 
- : <p>Example usage : <code> least-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;d&gt;&lt;c/&gt;&lt;b/&gt;&lt;/d&gt;, &lt;d/&gt;) , (".//b", ".//c") ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> least-xpaths( ( &lt;a&gt;&lt;b/&gt;&lt;/a&gt;, &lt;d&gt;&lt;c/&gt;&lt;b/&gt;&lt;/d&gt;, &lt;d/&gt;) , (".//b", ".//c") ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> ( $lt;d/&gt; ) </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> ( $lt;d/&gt; ) </pre></p>
  :
  : @param $s A sequence of elements.
  : @param $paths A sequence of strings denoting XPath expressions.
@@ -562,9 +562,9 @@ declare function con:least-xpaths ( $s as element()* , $paths as xs:string* ) as
  : <p>Returns the nodes from an input sequence of nodes that validate against a given XML Schema.</p>
  : <p/>
  : 
- : <p>Example usage : <code> validating-schema ( ( &lt;a/&gt; , &lt;b/&gt; ), &lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;&lt;xs:element name="a" /&gt;&lt;/xs:schema&gt; ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> validating-schema ( ( &lt;a/&gt; , &lt;b/&gt; ), &lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;&lt;xs:element name="a" /&gt;&lt;/xs:schema&gt; ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> ( &lt;a/&gt; ) </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> ( &lt;a/&gt; ) </pre></p>
  :
  : @param $s A sequence of elements.
  : @param $schema An element encoding an XML Schema.

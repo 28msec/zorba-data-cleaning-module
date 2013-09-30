@@ -37,9 +37,9 @@ declare option ver:module-version "2.0";
  : <p>Returns the union between two sets, using the deep-equal() function to compare the XML nodes from the sets.</p>
  : <p/>
  : 
- : <p>Example usage : <code> deep-union ( ( "a", "b", "c") , ( "a", "a", <d/> ) ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> deep-union ( ( "a", "b", "c") , ( "a", "a", <d/> ) ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> ("a", "b", "c", <d/> ) </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> ("a", "b", "c", <d/> ) </pre></p>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
@@ -57,9 +57,9 @@ declare function set:deep-union ( $s1 , $s2 ) as item()*{
  : <p>Returns the intersection between two sets, using the deep-equal() function to compare the XML nodes from the sets.</p>
  : <p/>
  : 
- : <p>Example usage : <code> deep-intersect ( ( "a", "b", "c") , ( "a", "a", <d/> ) ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> deep-intersect ( ( "a", "b", "c") , ( "a", "a", <d/> ) ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> ("a") </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> ("a") </pre></p>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
@@ -78,9 +78,9 @@ declare function set:deep-intersect ( $s1 , $s2 ) as item()*{
  : <p>Removes exact duplicates from a set, using the deep-equal() function to compare the XML nodes from the sets.</p>
  : <p/>
  : 
- : <p>Example usage : <code> distinct ( ( "a", "a", <b/> ) ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> distinct ( ( "a", "a", <b/> ) ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> ("a", <b/> ) </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> ("a", <b/> ) </pre></p>
  :
  : @param $s A set.
  : @return The set provided as input without the exact duplicates (i.e., returns the distinct nodes from the set provided as input).
@@ -98,9 +98,9 @@ declare function set:distinct ( $s ) as item()*{
  : (i.e., the size of the intersection) over the size of the smallest input set.</p>
  : <p/>
  : 
- : <p>Example usage : <code> overlap ( ( "a", "b", <c/> ) , ( "a", "a", "b" ) ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> overlap ( ( "a", "b", <c/> ) , ( "a", "a", "b" ) ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 1.0 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 1.0 </pre></p>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
@@ -117,9 +117,9 @@ declare function set:overlap ( $s1 , $s2 ) as xs:double {
  : (i.e., the size of the intersection) over the sum of the cardinalities for the input sets.</p>
  : <p/>
  : 
- : <p>Example usage : <code> dice ( ( "a", "b", <c/> ) , ( "a", "a", "d") ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> dice ( ( "a", "b", <c/> ) , ( "a", "a", "d") ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 0.4 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 0.4 </pre></p>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.
@@ -136,9 +136,9 @@ declare function set:dice ( $s1 , $s2 ) as xs:double {
  : union of the input sets.</p>
  : <p/>
  : 
- : <p>Example usage : <code> jaccard ( ( "a", "b", <c/> ) , ( "a", "a", "d") ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> jaccard ( ( "a", "b", <c/> ) , ( "a", "a", "d") ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 0.25 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 0.25 </pre></p>
  :
  : @param $s1 The first set.
  : @param $s2 The second set.

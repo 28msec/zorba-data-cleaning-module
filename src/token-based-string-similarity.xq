@@ -48,9 +48,9 @@ declare option ver:module-version "2.0";
  : <p>Returns the individual character n-grams forming a string.</p>
  : <p/>
  : 
- : <p>Example usage : <code> ngrams("FLWOR", 2 ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> ngrams("FLWOR", 2 ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> ("_F" , "FL" , "LW" , "WO" , "LW" , "WO" , "OR" , "R_") </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> ("_F" , "FL" , "LW" , "WO" , "LW" , "WO" , "OR" , "R_") </pre></p>
  :
  : @param $s The input string.
  : @param $n The number of characters to consider when extracting n-grams.
@@ -77,9 +77,9 @@ declare function simt:ngrams ( $s as xs:string, $n as xs:integer ) as xs:string*
  : using stringdescriptors based on sets of character n-grams or sets of tokens extracted from two strings.</p>
  : <p/>
  : 
- : <p>Example usage : <code> cosine( ("aa","bb") , ("bb","aa")) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> cosine( ("aa","bb") , ("bb","aa")) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 1.0 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 1.0 </pre></p>
  :
  : @param $desc1 The descriptor for the first string.
  : @param $desc2 The descriptor for the second string.
@@ -100,9 +100,9 @@ declare function simt:cosine ( $desc1 as xs:string*, $desc2 as xs:string* ) as x
  : <p>Returns the Dice similarity coefficient between sets of character n-grams extracted from two strings.</p>
  : <p/>
  : 
- : <p>Example usage : <code> dice-ngrams("DWAYNE", "DUANE", 2 ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> dice-ngrams("DWAYNE", "DUANE", 2 ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 0.4615384615384616 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 0.4615384615384616 </pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -118,9 +118,9 @@ declare function simt:dice-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as xs
  : <p>Returns the overlap similarity coefficient between sets of character n-grams extracted from two strings.</p>
  : <p/>
  : 
- : <p>Example usage : <code> overlap-ngrams("DWAYNE", "DUANE", 2 ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> overlap-ngrams("DWAYNE", "DUANE", 2 ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 0.5 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 0.5 </pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -136,9 +136,9 @@ declare function simt:overlap-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as
  : <p>Returns the Jaccard similarity coefficient between sets of character n-grams extracted from two strings.</p>
  : <p/>
  : 
- : <p>Example usage : <code> jaccard-ngrams("DWAYNE", "DUANE", 2 ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> jaccard-ngrams("DWAYNE", "DUANE", 2 ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 0.3 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 0.3 </pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -156,9 +156,9 @@ declare function simt:jaccard-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as
  : the term-frequency heuristic from Information Retrieval).</p>
  : <p/>
  : 
- : <p>Example usage : <code> cosine-ngrams("DWAYNE", "DUANE", 2 ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> cosine-ngrams("DWAYNE", "DUANE", 2 ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 0.2401922307076307 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 0.2401922307076307 </pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -176,9 +176,9 @@ declare function simt:cosine-ngrams ( $s1 as xs:string, $s2 as xs:string, $n as 
  : <p>Returns the Dice similarity coefficient between sets of tokens extracted from two strings.</p>
  : <p/>
  : 
- : <p>Example usage : <code> dice-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> dice-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 0.4 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 0.4 </pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -194,9 +194,9 @@ declare function simt:dice-tokens ( $s1 as xs:string, $s2 as xs:string, $r as xs
  : <p>Returns the overlap similarity coefficient between sets of tokens extracted from two strings.</p>
  : <p/>
  : 
- : <p>Example usage : <code> overlap-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> overlap-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 0.5 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 0.5 </pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -212,9 +212,9 @@ declare function simt:overlap-tokens ( $s1 as xs:string, $s2 as xs:string, $r as
  : <p>Returns the Jaccard similarity coefficient between sets of tokens extracted from two strings.</p>
  : <p/>
  : 
- : <p>Example usage : <code> jaccard-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> jaccard-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 0.25 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 0.25 </pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
@@ -232,9 +232,9 @@ declare function simt:jaccard-tokens ( $s1 as xs:string, $s2 as xs:string, $r as
  : term-frequency heuristic from Information Retrieval).</p>
  : <p/>
  : 
- : <p>Example usage : <code> cosine-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </code></p>
+ : <p>Example usage : <pre class="ace-static" ace-mode="xquery"> cosine-tokens("The FLWOR Foundation", "FLWOR Found.", " +" ) </pre></p>
  : <p/>
- : <p>The function invocation in the example above returns : <code> 0.408248290463863 </code></p>
+ : <p>The function invocation in the example above returns : <pre class="ace-static" ace-mode="xquery"> 0.408248290463863 </pre></p>
  :
  : @param $s1 The first string.
  : @param $s2 The second string.
