@@ -35,7 +35,7 @@ import schema namespace wp = 'http://api.whitepages.com/schema/';
 
 import module namespace http = "http://www.zorba-xquery.com/modules/http-client";
 
-import module namespace reflection = "http://www.zorba-xquery.com/modules/reflection";
+import module namespace reflection = "http://zorba.io/modules/reflection";
 
 declare namespace ver = "http://zorba.io/options/versioning";
 declare option ver:module-version "2.0";
