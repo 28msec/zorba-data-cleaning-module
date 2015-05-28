@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+MESSAGE(STATUS "")
+MESSAGE(STATUS "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+MESSAGE(STATUS "Configuring external module <data-cleaning>")
+MESSAGE(STATUS "-------------------------------------------------------------")
+MESSAGE(STATUS "")
+
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 PROJECT (zorba_data-cleaning_module)
@@ -32,3 +38,9 @@ EXPECTED_FAILURE (zorba_data-cleaning_module/data-cleaning/normalization/normali
 ADD_SUBDIRECTORY("src")
 
 DONE_DECLARING_ZORBA_URIS()
+
+MESSAGE(STATUS "")
+MESSAGE(STATUS "-------------------------------------------------------------")
+MESSAGE(STATUS "Configuration SUCCEEDED for external module <data-cleaning>")
+MESSAGE(STATUS "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+
