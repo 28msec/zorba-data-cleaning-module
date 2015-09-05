@@ -25,7 +25,7 @@ xquery version "1.0";
  : <p>The logic contained in this module is not specific to any particular XQuery implementation.</p>
  :
  : @author Bruno Martins
- : @project Zorba/Data Cleaning/Phonectic String Similarity
+ : @project Zorba/Data Cleaning/Phonetic String Similarity
  :)
 
 module namespace simp = "http://zorba.io/modules/data-cleaning/phonetic-string-similarity";
